@@ -11,21 +11,6 @@ typedef unsigned char byte;
 #include "../Lantern/SIP.ino"
 
 int tests_run=0;
-bool pktConstructed = false;
-bool pktWrote = false;
-
-void constructPkt(float solar_batt, float node_batt, byte interrupt, int seq)
-{
-  //dummy function, just check it is called
-  pktConstructed = true;
-}
-
-bool writeDataToFile()
-{
-  //dummy function, just check it is called
-  pktWrote = true;
-  return true;
-}
 
 
 static char* test_update_state(void) { 
@@ -60,8 +45,6 @@ static char* test_has_int_event(void) {
 }
 
 void reset_test_state(void){
-  pktConstructed = false;
-  pktWrote = false;
   prev_solat_batt = -1;
 }
 

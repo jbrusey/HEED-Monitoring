@@ -11,7 +11,7 @@ int seq = 0;
   float batt_volt = getBatteryVoltage();
   
   if (hasEvent(temp)) {
-    String pkt = constructMQTTPacket(temp, batt_volt, seq);
+    String pkt = constructPkt(temp, batt_volt, seq);
 
     connectGSM();
     connectMQTT();

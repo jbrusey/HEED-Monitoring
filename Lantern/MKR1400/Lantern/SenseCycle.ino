@@ -19,11 +19,11 @@ void doSenseCycle()
     connectMQTT();
     
     bool transmit_res = transmit(MQTT_TOPIC, pkt);
+    bool csvWriteRes = writeDataToFile(pkt);
     
     disconnectMQTT();
     disconnectGSM();
-    if (transmit_res) { 
-      //writeDataToFile(pkt)
+    if (transmit_res || csvWriteRes) { 
       updateState(solar_batt_volt); 
     }
     else {} //Do something for failure
