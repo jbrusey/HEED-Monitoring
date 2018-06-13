@@ -1,0 +1,208 @@
+Disable re-size on boot, enable ssh and wifi
+1. Place a file named “ssh” (without any extension) onto the boot partition of the SD card
+2. Delete:
+init=/usr/lib/raspi-config/init_resize.sh
+from cmdline.txt
+3. create a file called
+wpa_supplicant.conf
+with
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+network={
+    ssid="....."
+    psk="....."
+    key_mgmt=WPA-PSK
+}
+
+
+#Resize
+sudo fdisk /dev/mmcblk0
+Command: p
+Command: d
+Partition number: 2
+
+Command: n
+Partition type: p
+Partition number: 2
+First sector: 94208
+Last sector: 4592339
+Remove the signature?: n
+
+Command: p
+Command: w
+sudo reboot
+
+
+sudo resize2fs /dev/mmcblk0p2
+df -h
+
+
+#Update all
+sudo apt-get update
+sudo rpi-update
+sudo reboot
+
+
+
+Standard pi setup
+	 - hostname
+	 - passwords
+	 - enable ssh
+	 - enable i2c
+	 - gpu to 16
+	 
+
+
+sudo apt-get update
+sudo apt-get -y upgrade
+sudo apt-get -y install supervisor emacs git subversion usbmount
+python-setuptools python-pip i2c-tools python-smbus autossh ppp screen elinks autossh
+
+
+sudo pip install pyserial
+sudo pip install paho-mqtt
+
+#Disable swapping
+sudo systemctl disable dphys-swapfile
+sudo apt-get -y remove dphys-swapfile
+
+sudo apt-get -y autoremove
+sudo apt-get -y clean
+sudo reboot
+
+
+#Enable usb auto mounting
+Edit /lib/systemd/system/systemd-udevd.service and change the line
+MountFlags=slave
+to
+MountFlags=shared
+
+
+#setup pi face
+wget https://raw.github.com/piface/PiFace-Real-Time-Clock/master/install-piface-real-time-clock.sh
+chmod +x install-piface-real-time-clock.sh
+sudo ./install-piface-real-time-clock.sh
+
+cd /etc/rc2.d
+sudo ln -s ../init.d/pifacertc S01pifacertc
+cd ../rc5.d
+sudo ln -s ../init.d/pifacertc S01pifacertc
+
+sudo reboot
+sudo hwclock --systohc
+
+
+#Generate ssh key and add to pi user on cogentee
+ssh-keygen -t rsa
+#check you can ssh to cogentee
+
+
+Remove all references of "console=", for example, if the line reads:
+
+dwc_otg.lpm_enable=0 console=serial0,115200 console=tty1 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait
+
+Change it to:
+
+dwc_otg.lpm_enable=0 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait
+
+
+sudo emacs /lib/systemd/system/hciuart.service
+
+Change after and exec start
+After=dev-ttyS0.device
+ExecStart=/usr/bin/hciattach /dev/ttyS0 bcm43xx 460800 noflow -
+
+sudo emacs /etc/network/interfaces
+
+At the bottom of the file add a new interface configuration with the following text:
+auto fona
+iface fona inet ppp
+	provider fona
+
+#https://learn.adafruit.com/fona-tethering-to-raspberry-pi-or-beaglebone-black/setup
+
+#install wiringpi
+mkdir ~/git
+cd ~/git
+git clone git://git.drogon.net/wiringPi
+cd ./wiringPi
+git pull origin
+./build
+
+Add the following lines to /etc/rc.local:
+    /usr/bin/tvservice -o
+    gpio -g mode 17 out
+    gpio -g write 17 1
+    
+#Install code
+cd ~
+mkdir git
+cd git
+git clone
+
+sudo  rsync -rv  RPI/opt/ /opt
+sudo  rsync -rv  RPI/etc/ /etc/
+
+cd /opt/HELP
+sudo python setup.py develop
+
+sudo chmod 755 /etc/init.d/autossh 
+sudo update-rc.d autossh defaults
+sudo update-rc.d autossh enable
+
+#Disable tv series (only when all setup is sorted)
+Add the line to /etc/rc.local:
+    /usr/bin/tvservice -o (-p to re-enable).
+
+#Disable ACT LED & WiFi & BT & Audio (only when all setup is sorted)
+
+Add to /boot/config.txt
+
+# disable audio (loads snd_bcm2835)
+dtparam=audio=off
+gpu_mem=16
+
+# Disable the ACT LED.
+dtparam=act_led_trigger=none
+dtparam=act_led_activelow=off
+
+# Disable the PWR LED.
+dtparam=pwr_led_trigger=none
+dtparam=pwr_led_activelow=off
+
+# turn and wifi bluetooth off
+#dtoverlay=pi3-disable-wifi
+dtoverlay=pi3-disable-bt
+
+
+#Reboot
+check:
+1. ppp0 comes up
+ifconfig ppp0
+2. IAM code is running
+ps -ef | grep IAM
+3. Serial forwarder has started
+ps -ef | grep sf
+3. flat looger is running
+ps -ef | grep Flat
+
+#poweroff
+#plug into laptop
+
+fdisk /dev/disk2
+dd if=/dev/disk2 bs=512 count=7494037 of=f.img
+
+#Edit already created
+
+Set hostname
+Expand partion
+disable SPI
+sudo emacs /etc/default/auto-ssh
+
+reboot
+ssh-keygen -t rsa
+sudo apt-get update
+sudo apt-get -y upgrade
+sudo apt -y autoremove
+sudo rpi-update
+sudo reboot
