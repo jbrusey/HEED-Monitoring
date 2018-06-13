@@ -2,7 +2,6 @@
 #include "Arduino.h"
 #include "struct.h"
 
-
 /**
  * Setups the program by
  * 1. Starting USB serial if in debug mode

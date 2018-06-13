@@ -27,7 +27,7 @@ void getBatteryVoltage(Data* readings)
  */
 void getSolarBatteryVoltage(Data* readings)
 {
-  readings->solarBatt <- (analogRead(A1) / ADC_BITS ) * ADC_VREF;
+  readings->solarBatt = (analogRead(A1) / ADC_BITS ) * ADC_VREF;
 }
 
 

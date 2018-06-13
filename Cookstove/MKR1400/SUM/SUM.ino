@@ -1,7 +1,5 @@
 #include "SUM.h" //Header file with consts/config
 
-
-
 /**
  * Setups the program by
  * 1. Starting USB serial if in debug mode
