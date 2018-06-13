@@ -1,5 +1,6 @@
 #include "Lantern.h"
 #include "Arduino.h"
+#include "struct.h"
 
 
 /**
@@ -19,10 +20,10 @@ void setup() {
   USBDevice.detach();
 #endif
   setupRTC();
-  setupSD();
+  //setupSD();
   setupAnalogSensors();
   setupADXL345();
-  setRTCAlarm(RTC_SAMPLE_TIME);
+  //setRTCAlarm(RTC_SAMPLE_TIME);
 }
 
 

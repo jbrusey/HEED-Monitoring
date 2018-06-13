@@ -63,3 +63,7 @@ void nodeSleep(){
   rtc.standbyMode();
 }
 
+void getTime(Data* readings){
+  readings->unixtime = rtc.getEpoch();
+}
+

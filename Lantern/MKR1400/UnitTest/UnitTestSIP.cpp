@@ -1,4 +1,5 @@
 // -*- c -*-
+#pragma GCC diagnostic ignored "-Wwrite-strings"
 
 typedef unsigned char byte;
 
@@ -7,45 +8,47 @@ typedef unsigned char byte;
 #include <stdbool.h>
 #include <math.h>
 #include "minunit.h"
+#include "../Lantern/struct.h"
 #include "../Lantern/Lantern.h"
 #include "../Lantern/SIP.ino"
 
 int tests_run=0;
+Data* readings = new Data();
 
-
-static char* test_update_state(void) { 
-  float new_state = 3.3;
-  updateState(new_state);
-  mu_assert("prev state should be set to 3.3", prev_solat_batt == new_state);
+static char* test_update_state(void) {
+  readings->solarBatt=3.3;
+  updateState(readings);
+  mu_assert("prev state should be set to 3.3", prev_solat_batt == readings->solarBatt);
   return 0;
 }
 
-static char* test_has_no_event(void) { 
-  float cv = 3.3;
-  byte inter = 0x83;
+static char* test_has_no_event(void) {
+  readings->solarBatt=3.3;
+  readings->interrupt=0x83;
   prev_solat_batt = 3.3;
-  mu_assert("test_has_no_event: should be false", !hasEvent(cv, inter));
+  mu_assert("test_has_no_event: should be false", !hasEvent(readings));
   return 0;
 }
 
-static char* test_has_batt_event(void) { 
-  float cv = 3.3;
-  byte inter = 0x83;
+static char* test_has_batt_event(void) {
+  readings->solarBatt=3.3;
+  readings->interrupt=0x83;
   prev_solat_batt = 3.1;
-  mu_assert("test_has_batt_event: should be true", hasEvent(cv, inter));
+  mu_assert("test_has_batt_event: should be true", hasEvent(readings));
   return 0;
 }
 
-static char* test_has_int_event(void) { 
-  float cv = 3.3;
-  byte inter = 0x9B;
+static char* test_has_int_event(void) {
+  readings->solarBatt=3.3;
+  readings->interrupt=0x9B;
   prev_solat_batt = 3.3;
-  mu_assert("test_has_int_event: should be true", hasEvent(cv, inter));
+  mu_assert("test_has_int_event: should be true", hasEvent(readings));
   return 0;
-}
+  }
 
 void reset_test_state(void){
   prev_solat_batt = -1;
+  readings = new Data();
 }
 
 static char* all_tests(void) {

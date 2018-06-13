@@ -7,26 +7,31 @@ int seq = 0;
  */
 void doSenseCycle()
 {
-  float solar_batt_volt = getSolarBatteryVoltage();
-  float node_batt_volt = getBatteryVoltage();
-  byte interrupt = adxl345CheckForInterrupt();
+  Data* readings = new Data();
   
-  if(hasEvent(solar_batt_volt, interrupt))
+  getTime(readings);
+  getSolarBatteryVoltage(readings);
+  getBatteryVoltage(readings);
+  adxl345GetInterrupt(readings);
+  getLanternState(readings);
+  
+  if(hasEvent(readings))
   {
-    String pkt = constructPkt(solar_batt_volt, node_batt_volt, interrupt, seq);
+    readings->seq = seq; 
+    String pkt = constructPkt(readings);
     
     connectGSM();
     connectMQTT();
-    
+
     bool transmit_res = transmit(MQTT_TOPIC, pkt);
     bool csvWriteRes = writeDataToFile(pkt);
     
     disconnectMQTT();
     disconnectGSM();
     if (transmit_res || csvWriteRes) { 
-      updateState(solar_batt_volt); 
+      updateState(readings); 
     }
     else {} //Do something for failure
-    seq++; //increment sequence number
-  }
+    seq++; //increment sequence number*/
+    }
 }

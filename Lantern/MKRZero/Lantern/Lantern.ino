@@ -1,5 +1,6 @@
 #include "Lantern.h"
 #include "Arduino.h"
+#include "struct.h"
 
 
 /**

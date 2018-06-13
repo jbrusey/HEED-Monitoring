@@ -1,4 +1,5 @@
 // -*- c -*-
+#pragma GCC diagnostic ignored "-Wwrite-strings"
 
 //bring in required standard libraries
 #include <stdio.h>
@@ -10,12 +11,16 @@
 typedef unsigned char byte;
 typedef unsigned char String;
 
+#include "../Lantern/struct.h"
+
 //function prototypes
-String constructPkt(float solar_batt, float node_batt, byte interrupt, int seq);
+String constructPkt(Data* readings);
 bool writeDataToFile(String pkt);
-float getSolarBatteryVoltage();
-float getBatteryVoltage();
-byte adxl345CheckForInterrupt();
+void getSolarBatteryVoltage(Data* readings);
+void getBatteryVoltage(Data* readings);
+void adxl345GetInterrupt(Data* readings);
+void getLanternState(Data* readings);
+void getTime(Data* readingreadings);
 
 //Bring in minunit and the code to be tested
 #include "minunit.h"
@@ -23,13 +28,11 @@ byte adxl345CheckForInterrupt();
 #include "../Lantern/SIP.ino"
 #include "../Lantern/SenseCycle.ino"
 
-
 int tests_run=0;
 bool pktConstructed = false;
 bool pktWrote = false;
 
-
-String constructPkt(float solar_batt, float node_batt, byte interrupt, int seq)
+String constructPkt(Data* readings)
 {
   //dummy function, just check it is called
   pktConstructed = true;
@@ -46,25 +49,33 @@ bool writeDataToFile(String pkt)
 //initial value for solarBattery
 float solarBattery = 3.3;
 //dummy method to retrun the solar battery voltage
-float getSolarBatteryVoltage()
+void getSolarBatteryVoltage(Data* readings)
 {
-  return solarBattery;
+  readings->solarBatt = solarBattery;
 }
 
 //initial value for the nodes battery
 float nodeBattery = 3.3;
 //dummy method to return the node battery voltage
-float getBatteryVoltage()
+void getBatteryVoltage(Data* readings)
 {
-  return nodeBattery;
+  readings->nodeBatt = solarBattery;
+}
+
+void getLanternState(Data* readings)
+{
+}
+
+void getTime(Data* readings)
+{
 }
 
 //initial value for the adxl345 interrupt
 float adxl345Int = 0x83;
-byte adxl345CheckForInterrupt()
+//dummy method to return the adxl345 interrupt register
+void adxl345GetInterrupt(Data* readings)
 {
-  //dummy method to return the adxl345 interrupt register
-  return adxl345Int;
+  readings->interrupt = adxl345Int;
 }
 
 //dummy method to set the sensor values, simulates the physical values

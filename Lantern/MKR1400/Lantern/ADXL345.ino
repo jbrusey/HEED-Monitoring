@@ -74,28 +74,16 @@ void setupADXL345() {
 }
 
 /**
- * Setups the ADXL345 sensor by powering on and setting the registers required.
- * @return The ADXL345's INT_SOURCE register as a byte
+ * Get any interrupt on the ADXL345 buffer, and checks for activity or inactivity triggers
+ * * @param pointer to a data struct
  */
-byte adxl345CheckForInterrupt(){
-  return adxl.getInterruptSource();
+void adxl345GetInterrupt(Data* reading){
+  byte interrupt = adxl.getInterruptSource();
+  reading->interrupt = interrupt;
+  reading->activity = adxl.triggered(interrupt, ADXL345_ACTIVITY);
+  reading->inactivity = adxl.triggered(interrupt, ADXL345_INACTIVITY);
 }
 
-/**
- * Checks if the interrupt detected activity
- * @return True if activity; False otherwise
- */
-bool adxl345IsActivity(byte interrupt){
-  return adxl.triggered(interrupt, ADXL345_ACTIVITY);
-}
-
-/**
- * Checks if the interrupt detected inactivity
- * @return True if inactivity; False otherwise
- */
-bool adxl345IsInactivity(byte interrupt){
-  return adxl.triggered(interrupt, ADXL345_INACTIVITY);
-}
 
   
 

@@ -7,17 +7,24 @@ int seq = 0;
  */
 void doSenseCycle()
 {
-  float solar_batt_volt = getSolarBatteryVoltage();
-  float node_batt_volt = getBatteryVoltage();
-  byte interrupt = adxl345CheckForInterrupt();
+  Data* readings = new Data();
+   
+  getTime(readings);
+  getSolarBatteryVoltage(readings);
+  getBatteryVoltage(readings);
+  adxl345GetInterrupt(readings);
+  getLanternState(readings);
   
-  if(hasEvent(solar_batt_volt, interrupt))
+  if(hasEvent(readings))
   {
-    String pkt = constructPkt(solar_batt_volt, node_batt_volt, interrupt, seq);
+    readings->seq = seq; 
+    String pkt = constructPkt(readings);
+    
     if (writeDataToFile(pkt)) 
     { 
-      updateState(solar_batt_volt);
+      updateState(readings);
     }
+    else {} //Do something for failure
     seq++;
   }
 }

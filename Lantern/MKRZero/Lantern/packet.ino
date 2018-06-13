@@ -1,5 +1,5 @@
 /**
- * Constructs a data string from the sensed values
+ * Constructs a data string from the sensed values 
  * @param pointer to data structure
  * @return A string of all the sensor values as a csv
  */
