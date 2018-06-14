@@ -7,15 +7,20 @@ int seq = 0;
  */
  void doSenseCycle()
 {
-  float temp = getTemperature(); 
+  
+  float temp = getTemperatureThermocouple(); 
+
+  float Si7021Data[2];
+  getSi7021Data(Si7021Data);
+  
   float batt_volt = getBatteryVoltage();
   
   if (hasEvent(temp)) {
     
     connectGSM();
     connectMQTT();
-    
-    String pkt = constructPkt(temp, batt_volt, seq);
+
+    String pkt = constructPkt(temp, Si7021Data[0], Si7021Data[1], batt_volt, seq);
     bool transmit_res = transmit(MQTT_TOPIC, pkt);
     
     disconnectMQTT();

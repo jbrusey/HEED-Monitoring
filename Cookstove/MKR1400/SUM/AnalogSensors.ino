@@ -1,9 +1,11 @@
 //Include 1-wire and thermocouple libraries
 #include <OneWire.h>
 #include <DallasTemperature.h>
+#include <SparkFun_Si7021_Breakout_Library.h>
 
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
+Weather Si7021;
 
 
 /**
@@ -18,6 +20,14 @@ void setupAnalogSensors() {
   //Set MAX3150 power pin to output and make sure it is off
   pinMode(MAX31850_POWER_PIN, OUTPUT);
   digitalWrite(MAX31850_POWER_PIN, LOW); //turn LED off
+
+  //Set Si7021 power and gnd pins to output and make sure they are off
+  pinMode(Si7021_POWER_PIN, OUTPUT);
+  pinMode(Si7021_GND_PIN, OUTPUT);
+  digitalWrite(Si7021_POWER_PIN, LOW);
+  digitalWrite(Si7021_GND_PIN, LOW);
+
+  Si7021.begin();
 
   //Turn the built in LED off 
   pinMode(LED_BUILTIN, OUTPUT);
@@ -48,16 +58,51 @@ void unpowerMAX31850() {
  * interface
  * @return Current thermnocouple temperature
  */
-float getTemperature() {
+float getTemperatureThermocouple() {
   powerMAX31850(); //turn on sensor
-  debug("Read temperature");
+  debug("Read temperature (thermocouple)");
 
   sensors.requestTemperatures(); // Send the command to get temperatures
   float temp = sensors.getTempCByIndex(MAX31850_ADDR); //get temp
-  debug(String("Temp: ") + String(temp) + " C");
+  debug(String("Temp (thermocouple): ") + String(temp) + " C");
   
   unpowerMAX31850(); //turn off sensor
   return temp;
+}
+
+/**
+ * Power up the Si7021
+ */
+void powerSi7021() { 
+  digitalWrite(Si7021_POWER_PIN, HIGH);
+  delay(DIGITAL_ON_WAIT);//Slight delay to allow the switch to happen
+  debug("Si7021 On");
+}
+
+/**
+ * Remove power from the Si7021
+ */
+void unpowerSi7021() {
+  digitalWrite(Si7021_POWER_PIN, LOW);
+  debug("Si7021 Off");
+}
+
+/**
+ * Gets the current temperature for the Si7021 sensor
+ * interface
+ * @return Current Si7021 sensor temperature
+ */
+void getSi7021Data(float *result) {
+  
+  powerSi7021(); //turn on sensor
+  debug("Read temperature + humidity (Si7021 sensor)");
+
+  result[0] = Si7021.getTemp(); // Send the command to get temperatures
+  result[1] = Si7021.getRH(); // Send the command to get humidity
+  debug(String("Temp (Si7021): ") + String(result[0]) + " C");
+  debug(String("Humidity (Si7021): ") + String(result[1]) + " %");
+
+  unpowerSi7021(); //turn off sensor
 }
 
 
