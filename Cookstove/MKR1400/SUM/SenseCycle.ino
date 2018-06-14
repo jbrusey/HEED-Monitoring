@@ -11,15 +11,16 @@ int seq = 0;
   float batt_volt = getBatteryVoltage();
   
   if (hasEvent(temp)) {
-    String pkt = constructPkt(temp, batt_volt, seq);
-
+    
     connectGSM();
     connectMQTT();
     
+    String pkt = constructPkt(temp, batt_volt, seq);
     bool transmit_res = transmit(MQTT_TOPIC, pkt);
     
     disconnectMQTT();
     disconnectGSM();
+    
     if (transmit_res) { updateState(temp); }
     else {} //Do something for failure
     seq++; //increment sequence number
