@@ -14,11 +14,11 @@ const String MQTT_TOPIC = String("SUM/") + NODE_ID + "/temperature";
     client.begin(MQTT_SERVER, net);  //Start a connection
     //Set options: Keep alive for 10 hours, clean session, 1 second timeout
     client.setOptions(MQTT_KEEP_ALIVE, MQTT_CLEAN_SESSION, MQTT_TIMEOUT);
-    debug("\nconnecting to broker...");
+    debug("connecting to broker...");
     while (!client.connect("arduino")) {
       delay(MQTT_CONNECT_RETRY_TIME);
     }
-    debug("connected!\n");
+    debug("connected!");
   }
 }
 
