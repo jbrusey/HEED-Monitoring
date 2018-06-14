@@ -39,6 +39,7 @@ void disconnectMQTT() {
  */
 bool transmit(String topic, String dataString) {
   bool res = client.publish(topic, dataString);
+  debug("Threshold reached. Data sent!");
   return res;
 }
 
