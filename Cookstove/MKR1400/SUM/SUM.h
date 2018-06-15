@@ -3,11 +3,11 @@
 
 //DEBUG
 #define PRINTF 1                  //Comment out to remove debuf messages
-#define SERIAL_SPEED 9600         //Serial speed
+#define SERIAL_SPEED 9600        //Serial speed
 
 //Macro for print time
 #ifdef PRINTF
-# define debug(msg) _PRINT_TIME(msg)
+# define debug(msg) _PRINT_TIME(String(msg))
 #else
 # define debug(msg) do {} while(0)
 #endif
@@ -39,7 +39,9 @@
 
 #define DIGITAL_ON_WAIT 10          //Wait 10ms to ensure digital pin has switched high
 
-#define SIP_TEMP_THRESH 0.5          //Temperature threshold (0.5C suggested, set to -1 for sense-and-send)
+#define SIP_TEMP_THERMOCOUPLE_THRESH 0.5       //Temperature threshold (0.5C suggested, set to -1 for sense-and-send)
+#define SIP_TEMP_SI7021_THRESH 0.5            //Temperature threshold (0.5C suggested, set to -1 for sense-and-send)
+#define SIP_HUMIDITY_THRESH 2                 //Humidity threshold (2% suggested, set to -1 for sense-and-send)
 
 #define RTC_Y2K 946684800           //Unixtime stamp for 2000-01-01 00:00:00 used to set RTC as we don't care about actual time here
 #define RTC_SAMPLE_TIME 25          //SET RTC alarm off every xth second in a minute

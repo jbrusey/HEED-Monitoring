@@ -15,7 +15,7 @@ int seq = 0;
   
   float batt_volt = getBatteryVoltage();
   
-  if (hasEvent(temp)) {
+  if (hasEvent(temp, Si7021Data[0], Si7021Data[1])) {
     
     connectGSM();
     connectMQTT();
@@ -26,7 +26,7 @@ int seq = 0;
     disconnectMQTT();
     disconnectGSM();
     
-    if (transmit_res) { updateState(temp); }
+    if (transmit_res) { updateState(temp, Si7021Data[0], Si7021Data[1]); }
     else {} //Do something for failure
     seq++; //increment sequence number
   }
