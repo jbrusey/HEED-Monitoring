@@ -1,8 +1,9 @@
 struct Data {
   uint32_t unixtime;
   float solarBatt;
-  float lanternState;
   byte interrupt;
+  float usage;
+  float charging;
   bool inactivity;
   bool activity;
   float nodeBatt;

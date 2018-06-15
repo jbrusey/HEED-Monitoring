@@ -22,7 +22,7 @@ void setupSD() {
   }
 
   debug(fileName);
-  if (!file.open(fileName,  O_APPEND | O_CREAT | O_WRITE )) { //CHECK WHAT THIS DOES
+  if (!file.open(fileName, O_CREAT | O_WRITE )) { //O_APPEND | 
     debug("Card failed, or not present");
     exit(0);
   }

@@ -36,7 +36,6 @@ void loop() {
   debug("Start Sense");
   doSenseCycle();
   debug("End Sense");
-  debugln();
   //nodeSleep();
   delay(5000);
  }
