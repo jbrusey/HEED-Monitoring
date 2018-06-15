@@ -23,15 +23,14 @@
 #define ONE_WIRE_BUS 2                        //Arduino Pin the MAX31850 data line is connected to
 
 #define Si7021_POWER_PIN A3                   //Arduino Pin the Si7021 power is connected to
-#define Si7021_GND_PIN A2                     //Arduino Pin the Si7021 GND is connected to
 
 #define ADC_BITS 1023      //Max value extect from the ADC
 #define INT_BATTERY_DIVIDER_MAX 4.2 //Max voltage that can be sensed from the internal voltage divider with 3.3v reference
 
 #define MQTT_SERVER "159.65.25.153" //MQTT broker address
 //#define MQTT_SERVER "help-data.coventry.ac.uk" //MQTT broker address
-//#define MQTT_USER "HELP"
-//#define MQTT_PASS "pervasive"
+//#define MQTT_USER ""
+//#define MQTT_PASS ""
 #define MQTT_KEEP_ALIVE 36000       //MQTT keep alive time (10hours)
 #define MQTT_CLEAN_SESSION false    //MQTT start a clean session on connection
 #define MQTT_TIMEOUT 1000           //MQTT 1s timeout

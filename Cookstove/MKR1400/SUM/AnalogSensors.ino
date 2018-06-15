@@ -2,6 +2,7 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 #include <SparkFun_Si7021_Breakout_Library.h>
+#include <Wire.h>
 
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
@@ -21,11 +22,9 @@ void setupAnalogSensors() {
   pinMode(MAX31850_POWER_PIN, OUTPUT);
   digitalWrite(MAX31850_POWER_PIN, LOW); //turn LED off
 
-  //Set Si7021 power and gnd pins to output and make sure they are off
+  //Set Si7021 power pin to output and make sure they are off
   pinMode(Si7021_POWER_PIN, OUTPUT);
-  pinMode(Si7021_GND_PIN, OUTPUT);
   digitalWrite(Si7021_POWER_PIN, LOW);
-  digitalWrite(Si7021_GND_PIN, LOW);
 
   Si7021.begin();
 
