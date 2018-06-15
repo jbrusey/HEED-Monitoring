@@ -11,10 +11,11 @@ String constructPkt(Data* reading)
   String dataString = String(reading->unixtime) + sep +
                       String(NODE_ID) + sep +
                       String(reading->solarBatt) + sep +
-                      String(reading->lanternState) + sep +
+                      String(reading->charging) + sep +
+                      String(reading->usage) + sep +
                       String(reading->interrupt, HEX) + sep +
                       String(reading->inactivity) + sep +
-                      String(reading->activity) + sep +
+                      String(reading->activity) + sep +          
                       String(reading->nodeBatt) + sep +
                       String(reading->seq);
   debug(dataString);
