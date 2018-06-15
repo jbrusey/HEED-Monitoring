@@ -14,10 +14,12 @@ typedef unsigned char String;
 const String MQTT_TOPIC = 1;
 
 //function prototypes
-String constructPkt(float temp, float node_batt, int seq);
+String constructPkt(float temp, float temp_Si7021, float humidity, float node_batt, int seq);
 //bool writeDataToFile(String pkt);
-float getTemperature();
+float getTemperatureThermocouple();
+void getSi7021Data(float *result);
 float getBatteryVoltage();
+
 void connectGSM();
 void disconnectGSM();
 void connectMQTT();
@@ -43,10 +45,11 @@ void disconnectMQTT(){}
 
 bool transmit(String topic, String dataString) {
   pktTx = true;
+  return pktTx;
 }
 
 
-String constructPkt(float temp, float node_batt, int seq)
+String constructPkt(float temp, float temp_Si7021, float humidity, float node_batt, int seq)
 {
   //dummy function, just check it is called
   pktConstructed = true;
@@ -60,12 +63,21 @@ String constructPkt(float temp, float node_batt, int seq)
 //  return true;
 //}
 
-//initial value for solarBattery
-float temp = 25;
+//initial value for temperature from
+float temp_th = 25;
+float temp_si = 24;
+float humidity = 50;
+
 //dummy method to retrun the solar battery voltage
-float getTemperature()
+float getTemperatureThermocouple()
 {
-  return temp;
+  return temp_th;
+}
+
+void getSi7021Data(float *result)
+{
+  result[0] = temp_si;
+  result[1] = humidity;
 }
 
 //initial value for the nodes battery
@@ -77,27 +89,31 @@ float getBatteryVoltage()
 }
 
 //dummy method to set the sensor values, simulates the physical values
-void setSensorValues(float t, float nb){
-  temp = t;
+void setSensorValues(float tt, float ts, float h, float nb){
+  temp_th = tt;
+  temp_si = ts;
+  humidity = h;
   nodeBattery = nb;
   }
 
 void reset_test_state(void){
   pktConstructed = false;
 //pktWrote = false;
-  prev_temp = -1;
+  prev_temp_thermocouple = -1;
+  prev_temp_Si7021 = -1;
+  prev_humidity = -1;
 }
 
 static char* test_sense(void) {
 
-  setSensorValues(28, 3.3);
+  setSensorValues(28, 26, 50, 3.3);
   doSenseCycle();
   mu_assert("Cycle 1: Transmit seq should be 1", seq==1);
   mu_assert("Cycle 1: Pkt constructed", pktConstructed);
 //mu_assert("Cycle 1: Pkt wrote", pktWrote);
   mu_assert("Cycle 1: Pkt TX", pktTx);
 
-  
+
   //reset unit test params
   pktConstructed = false;
 //pktWrote = false;
@@ -109,13 +125,13 @@ static char* test_sense(void) {
   mu_assert("Cycle 2: Pkt not constructed", !pktConstructed);
 //mu_assert("Cycle 2: Pkt not wrote", !pktWrote);
   mu_assert("Cycle 2: Pkt not TX", !pktTx);
-  
+
   //reset unit test params
   pktConstructed = false;
 //pktWrote = false;
   pktTx = false;
 
-  setSensorValues(27, 3.3);
+  setSensorValues(27, 24, 34, 3.3);
   doSenseCycle();
   mu_assert("Cycle 3: Transmit seq should be 2", seq==2);
   mu_assert("Cycle 3: Pkt constructed", pktConstructed);
@@ -133,20 +149,20 @@ static char* test_sense(void) {
 //mu_assert("Cycle 4: Pkt not wrote", !pktWrote);
   mu_assert("Cycle 4: Pkt not TX", !pktTx);
 
-  
+
   //reset unit test params
   pktConstructed = false;
 //pktWrote = false;
   pktTx = false;
 
-  setSensorValues(40, 3.3);
+  setSensorValues(40, 56, 34, 3.3);
   doSenseCycle();
   mu_assert("Cycle 5: Transmit seq should be 3", seq==3);
   mu_assert("Cycle 5: Pkt constructed", pktConstructed);
 //mu_assert("Cycle 5: Pkt wrote", pktWrote);
   mu_assert("Cycle 5: Pkt TX", pktTx);
 
-  
+
   return 0;
 }
 

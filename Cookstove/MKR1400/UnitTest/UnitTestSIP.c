@@ -16,29 +16,41 @@ typedef unsigned char String;
 #include "../SUM/SIP.ino"
 
 
-static char* test_update_state(void) { 
-  float new_state = 25.1;
-  updateState(new_state);
-  mu_assert("prev state should be set to 3.3", prev_temp == new_state);
+static char* test_update_state(void) {
+  float new_temp_thermocouple = 25.1;
+  float new_temp_Si7021 = 23.5;
+  float new_humidity = 60;
+  updateState(new_temp_thermocouple, new_temp_Si7021, new_humidity);
+  mu_assert("prev state should be set to 3.3", prev_temp_thermocouple == new_temp_thermocouple);
   return 0;
 }
 
-static char* test_has_no_event(void) { 
-  float cv = 29.2;
-  prev_temp = 29;
-  mu_assert("test_has_no_event: should be false", !hasEvent(cv));
+static char* test_has_no_event(void) {
+  float current_temp_thermocouple = 29.2;
+  float current_temp_Si7021 = 0;
+  float current_humidity = 0;
+  prev_temp_thermocouple = 29;
+  prev_temp_Si7021 = 0;
+  prev_humidity = 0;
+  mu_assert("test_has_no_event: should be false", !hasEvent(current_temp_thermocouple, current_temp_Si7021, current_humidity));
   return 0;
 }
 
-static char* test_has_event(void) { 
-  float cv = 25;
-  prev_temp = 25.6;
-  mu_assert("test_has_batt_event: should be true", hasEvent(cv));
+static char* test_has_event(void) {
+  float current_temp_thermocouple = 25;
+  float current_temp_Si7021 = 0;
+  float current_humidity = 0;
+  prev_temp_thermocouple = 25.6;
+  prev_temp_Si7021 = 0;
+  prev_humidity = 0;
+  mu_assert("test_has_batt_event: should be true", hasEvent(current_temp_thermocouple, current_temp_Si7021, current_humidity));
   return 0;
 }
 
 void reset_test_state(void){
-  prev_temp = -1;
+  prev_temp_thermocouple = -1;
+  prev_temp_Si7021 = -1;
+  prev_humidity = -1;
 }
 
 static char* all_tests(void) {
