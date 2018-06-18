@@ -22,4 +22,4 @@ setup(name='HELP',
       description='HELP logger',
       author='Ross Wilkins',
       author_email='ross.wilkins@coventry.ac.uk',
-      packages=['STAR'])
+      packages=['Energy'])

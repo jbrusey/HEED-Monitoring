@@ -24,8 +24,8 @@ Partition number: 2
 Command: n
 Partition type: p
 Partition number: 2
-First sector: 94208
-Last sector: 4592339
+First sector: 98304  [double check this value with the start block of existing partition]
+Last sector: 7592339
 Remove the signature?: n
 
 Command: p
@@ -55,8 +55,7 @@ Standard pi setup
 
 sudo apt-get update
 sudo apt-get -y upgrade
-sudo apt-get -y install supervisor emacs git subversion usbmount
-python-setuptools python-pip i2c-tools python-smbus autossh ppp screen elinks autossh
+sudo apt-get -y install supervisor emacs git subversion usbmount python-setuptools python-pip i2c-tools python-smbus autossh ppp screen elinks autossh
 
 
 sudo pip install pyserial
@@ -96,7 +95,7 @@ sudo hwclock --systohc
 ssh-keygen -t rsa
 #check you can ssh to cogentee
 
-
+sudo emacs /boot/cmdline.txt
 Remove all references of "console=", for example, if the line reads:
 
 dwc_otg.lpm_enable=0 console=serial0,115200 console=tty1 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait
@@ -135,10 +134,9 @@ Add the following lines to /etc/rc.local:
     gpio -g write 17 1
     
 #Install code
-cd ~
-mkdir git
-cd git
-git clone
+cd ~/git
+git clone https://github.com/rwilkins87/HELP-Monitoring-Interns.git
+cd ~/git/HELP-Monitoring-Interns/Streetlight/RPI
 
 sudo  rsync -rv  RPI/opt/ /opt
 sudo  rsync -rv  RPI/etc/ /etc/
