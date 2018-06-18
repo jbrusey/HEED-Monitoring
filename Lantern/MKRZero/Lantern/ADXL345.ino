@@ -26,7 +26,7 @@ void configureADXL345(){
  */
 void configureActivityInterrupt(){
    //Set the link bit, we only want 
-  //adxl.setLinkBit(LINK_BIT_ENABLE); // where is this function from
+  adxl.setLinkBit(LINK_BIT_ENABLE);
   adxl.setActivityXYZ(ACTIVITY_X_AXIS_ENABLE, 
                       ACTIVITY_Y_AXIS_ENABLE, 
                       ACTIVITY_Z_AXIS_ENABLE);
