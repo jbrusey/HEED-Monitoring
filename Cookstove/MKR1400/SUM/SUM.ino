@@ -31,7 +31,8 @@ void loop() {
   debug("Start Sense");
   doSenseCycle(); //sense and send
   debug("End Sense");
-  nodeSleep(); //go back to sleep
+  //nodeSleep(); //go back to sleep
+  delay(60000); // for debugging purposes only - keeps USB connection on
 }
 
 

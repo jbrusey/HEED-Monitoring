@@ -19,6 +19,7 @@ int seq = 0;
     connectMQTT();
 
     getGSMTime(readings);
+    readings->seq = seq;
 
     String pkt = constructPkt(readings);
     bool transmit_res = transmit(MQTT_TOPIC, pkt);

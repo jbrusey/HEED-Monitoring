@@ -24,7 +24,7 @@
 
 #define Si7021_POWER_PIN A3                   //Arduino Pin the Si7021 power is connected to
 
-#define ADC_BITS 1023      //Max value extect from the ADC
+#define ADC_BITS 1023.0      //Max value extect from the ADC
 #define INT_BATTERY_DIVIDER_MAX 4.2 //Max voltage that can be sensed from the internal voltage divider with 3.3v reference
 
 #define MQTT_SERVER "159.65.25.153" //MQTT broker address
@@ -38,7 +38,7 @@
 
 #define DIGITAL_ON_WAIT 10          //Wait 10ms to ensure digital pin has switched high
 
-#define SIP_TEMP_THERMOCOUPLE_THRESH 0.5       //Temperature threshold (0.5C suggested, set to -1 for sense-and-send)
+#define SIP_TEMP_THERMOCOUPLE_THRESH 0.5      //Temperature threshold (0.5C suggested, set to -1 for sense-and-send)
 #define SIP_TEMP_SI7021_THRESH 0.5            //Temperature threshold (0.5C suggested, set to -1 for sense-and-send)
 #define SIP_HUMIDITY_THRESH 2                 //Humidity threshold (2% suggested, set to -1 for sense-and-send)
 
