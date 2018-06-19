@@ -59,7 +59,7 @@ void getSolarBatteryVoltage(Data* readings)
  * Dummy value for the lantern state 
  * * @param pointer to a data struct
  */
-float getLanternState(Data* readings)
+void getLanternState(Data* readings)
 {
   analogReference(AR_INTERNAL1V0); //We need to change for this sensor modality
   powerStateOpAmps();
