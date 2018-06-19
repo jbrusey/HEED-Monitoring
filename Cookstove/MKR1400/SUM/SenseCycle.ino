@@ -2,32 +2,35 @@
 int seq = 0;
 
 /**
- * The function takes readings from the abalog sensors. The data is then checked if it is eventful, 
- * and if so is stored is transmitted over GSM and MQTT.
+ * The function takes readings from the analog sensors. The data is then checked if it is eventful, 
+ * and if so, it is stored to an SD card and is transmitted over GSM and MQTT.
  */
  void doSenseCycle()
 {
-  
-  float temp = getTemperatureThermocouple(); 
+  Data* readings = new Data();
 
-  float Si7021Data[2];
-  getSi7021Data(Si7021Data);
+  getTemperatureThermocouple(readings);
+  getSi7021Data(readings);
+  getBatteryVoltage(readings);
   
-  float batt_volt = getBatteryVoltage();
-  
-  if (hasEvent(temp, Si7021Data[0], Si7021Data[1])) {
+  if (hasEvent(readings)) {
     
     connectGSM();
     connectMQTT();
 
-    String pkt = constructPkt(temp, Si7021Data[0], Si7021Data[1], batt_volt, seq);
+    getGSMTime(readings);
+
+    String pkt = constructPkt(readings);
     bool transmit_res = transmit(MQTT_TOPIC, pkt);
+    bool csvWriteRes = writeDataToFile(pkt);
     
     disconnectMQTT();
     disconnectGSM();
     
-    if (transmit_res) { updateState(temp, Si7021Data[0], Si7021Data[1]); }
-    else {} //Do something for failure
+    if (transmit_res || csvWriteRes) { 
+      updateState(readings); 
+    }
+    else { } //Do something for failure
     seq++; //increment sequence number
   }
 }

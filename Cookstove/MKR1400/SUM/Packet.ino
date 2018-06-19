@@ -5,10 +5,17 @@
  * @param seq The packet sequence number
  * @return A string of all the sensor values as a csv
  */
- String constructPkt(float temp, float tempSi7021, float humidity, float node_batt, int seq) {
+ String constructPkt(Data* readings) {
   String sep = ",";  //CSV seperator
-  String dataString = String(NODE_ID) + sep + gsmAccess.getTime() + sep + temp + sep + tempSi7021 + sep + humidity + sep + node_batt + sep + seq;
+  String dataString = String(readings->unixtime) + sep +
+                      String(NODE_ID) + sep + 
+                      String(readings->tempThermocouple) + sep +
+                      String(readings->tempSi7021) + sep +
+                      String(readings->humidity) + sep +
+                      String(readings->nodeBatt) + sep +
+                      String(readings->seq);
   debug(dataString);
+  
   return dataString;
 }
 

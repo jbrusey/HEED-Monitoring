@@ -55,18 +55,17 @@ void unpowerMAX31850() {
 /**
  * Gets the current temperature for the MAX31850 1-wire 
  * interface
- * @return Current thermnocouple temperature
+ * @param pointer to a data struct
  */
-float getTemperatureThermocouple() {
+void getTemperatureThermocouple(Data* readings) {
   powerMAX31850(); //turn on sensor
   debug("Read temperature (thermocouple)");
 
   sensors.requestTemperatures(); // Send the command to get temperatures
-  float temp = sensors.getTempCByIndex(MAX31850_ADDR); //get temp
-  debug(String("Temp (thermocouple): ") + String(temp) + " C");
+  readings->tempThermocouple = sensors.getTempCByIndex(MAX31850_ADDR); //get temp
+  debug(String("Temp (thermocouple): ") + String(readings->tempThermocouple) + " C");
   
   unpowerMAX31850(); //turn off sensor
-  return temp;
 }
 
 /**
@@ -89,17 +88,17 @@ void unpowerSi7021() {
 /**
  * Gets the current temperature for the Si7021 sensor
  * interface
- * @return Current Si7021 sensor temperature
+ * @param pointer to a data struct
  */
-void getSi7021Data(float *result) {
+void getSi7021Data(Data* readings) {
   
   powerSi7021(); //turn on sensor
   debug("Read temperature + humidity (Si7021 sensor)");
 
-  result[0] = Si7021.getTemp(); // Send the command to get temperatures
-  result[1] = Si7021.getRH(); // Send the command to get humidity
-  debug(String("Temp (Si7021): ") + String(result[0]) + " C");
-  debug(String("Humidity (Si7021): ") + String(result[1]) + " %");
+  readings->tempSi7021 = Si7021.getTemp(); // Send the command to get temperatures
+  readings->humidity = Si7021.getRH(); // Send the command to get humidity
+  debug(String("Temp (Si7021): ") + String(readings->tempSi7021) + " C");
+  debug(String("Humidity (Si7021): ") + String(readings->humidity) + " %");
 
   unpowerSi7021(); //turn off sensor
 }
@@ -108,11 +107,11 @@ void getSi7021Data(float *result) {
 /**
  * Gets the battery voltage from the MKR Zero's internal
  * voltage divider
- * @return Node battery voltage (0-3.3V)
+ * @param pointer to a data struct
  */
-float getBatteryVoltage()
+void getBatteryVoltage(Data* readings)
 {
-  return ( analogRead(ADC_BATTERY) / ADC_BITS ) * INT_BATTERY_DIVIDER_MAX;
+  readings->nodeBatt = ( analogRead(ADC_BATTERY) / ADC_BITS ) * INT_BATTERY_DIVIDER_MAX;
 }
 
 
