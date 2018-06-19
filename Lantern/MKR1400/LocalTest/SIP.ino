@@ -14,9 +14,9 @@ float prev_charging = -1;
 bool hasEvent(Data* readings)
 {
   return fabs(readings->solarBatt - prev_solat_batt) >= SIP_SOLAR_BATTERY_THRESH || //if solar battery has changed
-  readings->interrupt != INT_SOURCE_NO_INTERRUPT ||                                 //or we have an interrupt
-  fabs(readings->usage - prev_usage) >= SIP_STATE_THRESH ||                         //or we have a change of lantern state
-  fabs(readings->charging - prev_charging) >= SIP_STATE_THRESH;
+    readings->interrupt != INT_SOURCE_NO_INTERRUPT ||                                 //or we have an interrupt
+    fabs(readings->usage - prev_usage) >= SIP_STATE_THRESH ||                         //or we have a change of lantern state
+    fabs(readings->charging - prev_charging) >= SIP_STATE_THRESH;
 } 
 
 
