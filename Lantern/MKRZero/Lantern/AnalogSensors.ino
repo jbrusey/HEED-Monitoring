@@ -61,7 +61,7 @@ void getSolarBatteryVoltage(Data* readings)
  */
 float getLanternState(Data* readings)
 {
-  analogReference(AR_EXTERNAL); //We need to change for this sensor modality
+  analogReference(AR_INTERNAL1V0); //We need to change for this sensor modality
   powerStateOpAmps();
   readings->usage = analogRead(A2) / STATE_MV_CONVERSION;
   readings->charging = analogRead(A3) / STATE_MV_CONVERSION;
