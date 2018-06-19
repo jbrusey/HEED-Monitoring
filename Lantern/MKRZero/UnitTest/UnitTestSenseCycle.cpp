@@ -153,9 +153,9 @@ static char* test_sense(void) {
 
   setSensorValues(3.2, 3.3, 0x9A, 200.9, 600.2);
   doSenseCycle();
-  mu_assert("Cycle 6: Transmit seq should be 5", seq==5);
-  mu_assert("Cycle 6: Pkt constructed", pktConstructed);
-  mu_assert("Cycle 6: Pkt wrote", pktWrote);
+  mu_assert("Cycle 7: Transmit seq should be 5", seq==5);
+  mu_assert("Cycle 7: Pkt constructed", pktConstructed);
+  mu_assert("Cycle 7: Pkt wrote", pktWrote);
   
   return 0;
 }
