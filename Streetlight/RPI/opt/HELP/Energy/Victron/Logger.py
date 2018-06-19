@@ -153,7 +153,7 @@ class vedirect:
                     self.data.append(json_str)
 
                     #transmit the data
-                    mqtt.single("Street/1/Energy", json_str, hostname=MQTT_SERVER)
+                    mqtt.single("Street/"+HOST_NAME+"/Energy", json_str, hostname=MQTT_SERVER)
 
                     self.transmit(json_str)
                     self.last_sense = timestamp #And update the timestamp
