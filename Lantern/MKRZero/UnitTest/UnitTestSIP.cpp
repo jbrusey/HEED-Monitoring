@@ -17,37 +17,85 @@ Data* readings = new Data();
 
 static char* test_update_state(void) {
   readings->solarBatt=3.3;
+  readings->usage=400.2;
+  readings->charging=100.9;
   updateState(readings);
-  mu_assert("prev state should be set to 3.3", prev_solat_batt == readings->solarBatt);
+  mu_assert("prev solarBatt should be set to 3.3", prev_solat_batt == readings->solarBatt);
+  mu_assert("prev usage should be set to 400.2", prev_usage == readings->usage);
+  mu_assert("prev charging should be set to 100.9", prev_charging == readings->charging);
   return 0;
 }
 
 static char* test_has_no_event(void) {
-  readings->solarBatt=3.3;
-  readings->interrupt=0x83;
+  readings->solarBatt = 3.3;
+  readings->interrupt = 0x83;
+  readings->usage = 400.2;
+  readings->charging = 100.9;
+
   prev_solat_batt = 3.3;
+  prev_usage = 400.2;
+  prev_charging = 100.9;
   mu_assert("test_has_no_event: should be false", !hasEvent(readings));
   return 0;
 }
 
 static char* test_has_batt_event(void) {
-  readings->solarBatt=3.3;
-  readings->interrupt=0x83;
+  readings->solarBatt = 3.3;
+  readings->interrupt = 0x83;
+  readings->usage = 400.2;
+  readings->charging = 100.9;
+
   prev_solat_batt = 3.1;
+  prev_usage = 400.2;
+  prev_charging = 100.9;
+  
   mu_assert("test_has_batt_event: should be true", hasEvent(readings));
   return 0;
 }
 
 static char* test_has_int_event(void) {
-  readings->solarBatt=3.3;
-  readings->interrupt=0x9B;
+  readings->solarBatt = 3.3;
+  readings->interrupt = 0x9B;
+  readings->usage = 400.2;
+  readings->charging = 100.9;
+
   prev_solat_batt = 3.3;
+  prev_usage = 400.2;
+  prev_charging = 100.9;
   mu_assert("test_has_int_event: should be true", hasEvent(readings));
   return 0;
   }
 
+static char* test_has_usage_event(void) {
+  readings->solarBatt = 3.3;
+  readings->interrupt = 0x83;
+  readings->usage = 400.2;
+  readings->charging = 100.9;
+
+  prev_solat_batt = 3.3;
+  prev_usage = 550.2;
+  prev_charging = 100.9;
+  mu_assert("test_has_usage_event: should be true", hasEvent(readings));
+  return 0;
+}
+
+
+static char* test_has_charging_event(void) {
+  readings->solarBatt = 3.3;
+  readings->interrupt = 0x83;
+  readings->usage = 400.2;
+  readings->charging = 100.9;
+
+  prev_solat_batt = 3.3;
+  prev_usage = 400.2;
+  prev_charging = 350.9;
+  mu_assert("test_has_charging_event: should be true", hasEvent(readings));
+  return 0;
+}
 void reset_test_state(void){
   prev_solat_batt = -1;
+  prev_usage = -1;
+  prev_charging = -1;
   readings = new Data();
 }
 
@@ -61,6 +109,9 @@ static char* all_tests(void) {
   reset_test_state();
   mu_run_test(test_has_int_event);
   reset_test_state();
+  mu_run_test(test_has_usage_event);
+  reset_test_state();
+  mu_run_test(test_has_charging_event);
   return 0;
 }
 
