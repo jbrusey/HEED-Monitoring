@@ -23,7 +23,7 @@ void getTemperatureThermocouple(Data* readings);
 void getSi7021Data(Data* readings);
 void getBatteryVoltage(Data* readings);
 bool writeDataToFile(String dataString);
-
+void getTime(Data* readings);
 
 
 //Bring in minunit and the code to be tested
@@ -37,6 +37,8 @@ Data* readings = new Data();
 bool pktConstructed = false;
 bool pktWrote = false;
 bool pktTx = false;
+
+void getTime(Data* readings){}
 
 String constructPkt(Data* readings)
 {
