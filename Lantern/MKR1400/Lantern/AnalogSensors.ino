@@ -35,7 +35,7 @@ void getSolarBatteryVoltage(Data* readings)
  * Dummy value for the lantern state 
  * * @param pointer to a data struct
  */
-float getLanternState(Data* readings)
+void getLanternState(Data* readings)
 {
   readings->lanternState <- 15;
 }
