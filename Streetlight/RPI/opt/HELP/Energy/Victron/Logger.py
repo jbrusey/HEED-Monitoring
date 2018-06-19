@@ -143,7 +143,8 @@ class vedirect:
             try:
                 pkt = self.read_data_single();
                 if pkt != None:
-                    pkt["time"]=timestamp
+                    pkt["time"] = timestamp
+                    pkt["host"] = HOST_NAME
                     #Turn packet into a JSON string
                     json_str = json.dumps(pkt) + "\n"
                     if '\\' in json_str: #serial out of sync break fast
