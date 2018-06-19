@@ -4,7 +4,7 @@
 SdFat SD;
 #define SD_CS_PIN 4
 
-char fileName[9] = "Data.csv";
+char fileName[10] = "SUM_" NODE_ID ".csv";
 
 SdFile file;
 
@@ -22,7 +22,7 @@ void setupSD() {
   }
 
   debug(fileName);
-  if (!file.open(fileName,  O_APPEND | O_CREAT | O_WRITE )) { //CHECK WHAT THIS DOES
+  if (!file.open(fileName, O_APPEND | O_CREAT | O_WRITE )) {
     debug("Card failed, or not present");
     exit(0);
   }

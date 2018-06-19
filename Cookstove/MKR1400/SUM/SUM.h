@@ -1,4 +1,4 @@
-#define NODE_ID 1                 //Set ID of the arduino (make sure this is unique)
+#define NODE_ID "1"                 //Set ID of the arduino (make sure this is unique)
 #define STARTUP_DELAY 10000        //How long to delay before the node starts
 
 //DEBUG
