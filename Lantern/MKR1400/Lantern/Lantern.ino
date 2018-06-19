@@ -19,7 +19,7 @@ void setup() {
   USBDevice.detach();
 #endif
   setupRTC();
-  //setupSD();
+  setupSD();
   setupAnalogSensors();
   setupADXL345();
   //setRTCAlarm(RTC_SAMPLE_TIME);
@@ -35,7 +35,6 @@ void loop() {
   debug("Start Sense");
   doSenseCycle();
   debug("End Sense");
-  debugln();
   //nodeSleep();
   delay(5000);
  }

@@ -59,7 +59,6 @@ void setRTCAlarm(int seconds) {
  */
 void nodeSleep(){
   debug("Sleeping");
-  debugln();
   rtc.standbyMode();
 }
 

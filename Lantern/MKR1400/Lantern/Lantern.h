@@ -20,10 +20,8 @@
 //Macro for print time
 #ifdef PRINTF
 # define debug(msg) _PRINT_TIME(msg)
-# define debugln() _newline()
 #else
 # define debug(msg) do {} while(0)
-# define debugln() do {} while(0)
 #endif
 
 #define ADC_MIN 0                 //Min value extect from the ADC
