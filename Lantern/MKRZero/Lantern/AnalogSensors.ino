@@ -47,7 +47,7 @@ void getBatteryVoltage(Data* readings)
 /**
  * Gets the battery voltage from the Lantern monitoris
  * voltage divider
- * * @param pointer to a data struct
+ * @param pointer to a data struct
  */
 void getSolarBatteryVoltage(Data* readings)
 {
@@ -57,7 +57,7 @@ void getSolarBatteryVoltage(Data* readings)
 
 /**
  * Dummy value for the lantern state 
- * * @param pointer to a data struct
+ * @param pointer to a data struct
  */
 void getLanternState(Data* readings)
 {

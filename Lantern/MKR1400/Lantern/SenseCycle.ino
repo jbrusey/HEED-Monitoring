@@ -24,7 +24,7 @@ void doSenseCycle()
     connectMQTT();
 
     bool transmit_res = transmit(MQTT_TOPIC, pkt);
-    bool csvWriteRes = writeDataToFile(pkt);
+    bool csvWriteRes = writeDataToFile(readings);
     
     disconnectMQTT();
     disconnectGSM();

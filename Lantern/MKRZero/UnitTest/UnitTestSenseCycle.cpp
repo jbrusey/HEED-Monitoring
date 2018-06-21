@@ -14,33 +14,37 @@ typedef unsigned char String;
 #include "../Lantern/struct.h"
 
 //function prototypes
-String constructPkt(Data* readings);
-bool writeDataToFile(String pkt);
+bool writeDataToFile(Data* readings);
 void getSolarBatteryVoltage(Data* readings);
 void getBatteryVoltage(Data* readings);
 void adxl345GetInterrupt(Data* readings);
 void getLanternState(Data* readings);
 void getTime(Data* readingreadings);
 void getLanternState(Data* readings);
+void digitalWrite(uint8_t pin, uint8_t value);
+
+
 
 //Bring in minunit and the code to be tested
 #include "minunit.h"
 #include "../Lantern/Lantern.h"
+
+#undef SIP_SOLAR_BATTERY_THRESH
+#undef SIP_STATE_THRESH
+#define SIP_SOLAR_BATTERY_THRESH 0.1
+#define SIP_STATE_THRESH 50
+#undef LEDS
+
 #include "../Lantern/SIP.ino"
 #include "../Lantern/SenseCycle.ino"
 
 int tests_run=0;
-bool pktConstructed = false;
 bool pktWrote = false;
 
-String constructPkt(Data* readings)
-{
-  //dummy function, just check it is called
-  pktConstructed = true;
-  return (char)pktConstructed;
-}
+void digitalWrite(uint8_t pin, uint8_t value){}
 
-bool writeDataToFile(String pkt)
+
+bool writeDataToFile(Data* readings)
 {
   //dummy function, just check it is called
   pktWrote = true;
@@ -96,65 +100,52 @@ static char* test_sense(void) {
   setSensorValues(3.3, 3.3, 0x83, 400.9, 100.2);
   doSenseCycle();
   mu_assert("Cycle 1: Transmit seq should be 1", seq==1);
-  mu_assert("Cycle 1: Pkt constructed", pktConstructed);
   mu_assert("Cycle 1: Pkt wrote", pktWrote);
   
   //reset unit test params
-  pktConstructed = false;
   pktWrote = false;
 
   doSenseCycle();
   mu_assert("Cycle 2: Transmit seq should be 1", seq==1);
-  mu_assert("Cycle 2: Pkt not constructed", !pktConstructed);
   mu_assert("Cycle 2: Pkt not wrote", !pktWrote);
   
   //reset unit test params
-  pktConstructed = false;
   pktWrote = false;
 
   setSensorValues(3.1, 3.3, 0x83, 400.9, 100.2);
   doSenseCycle();
   mu_assert("Cycle 3: Transmit seq should be 2", seq==2);
-  mu_assert("Cycle 3: Pkt constructed", pktConstructed);
   mu_assert("Cycle 3: Pkt wrote", pktWrote);
   
   //reset unit test params
-  pktConstructed = false;
   pktWrote = false;
 
   doSenseCycle();
   mu_assert("Cycle 4: Transmit seq should be 2", seq==2);
-  mu_assert("Cycle 4: Pkt not constructed", !pktConstructed);
   mu_assert("Cycle 4: Pkt not wrote", !pktWrote);
   
   //reset unit test params
-  pktConstructed = false;
   pktWrote = false;
 
   setSensorValues(3.2, 3.3, 0x9A, 400.9, 100.2);
   doSenseCycle();
   mu_assert("Cycle 5: Transmit seq should be 3", seq==3);
-  mu_assert("Cycle 5: Pkt constructed", pktConstructed);
   mu_assert("Cycle 5: Pkt wrote", pktWrote);
 
   //reset unit test params
-  pktConstructed = false;
   pktWrote = false;
 
   setSensorValues(3.2, 3.3, 0x9A, 200.9, 100.2);
   doSenseCycle();
   mu_assert("Cycle 6: Transmit seq should be 4", seq==4);
-  mu_assert("Cycle 6: Pkt constructed", pktConstructed);
   mu_assert("Cycle 6: Pkt wrote", pktWrote);
 
   //reset unit test params
-  pktConstructed = false;
   pktWrote = false;
 
   setSensorValues(3.2, 3.3, 0x9A, 200.9, 600.2);
   doSenseCycle();
   mu_assert("Cycle 7: Transmit seq should be 5", seq==5);
-  mu_assert("Cycle 7: Pkt constructed", pktConstructed);
   mu_assert("Cycle 7: Pkt wrote", pktWrote);
   
   return 0;
@@ -163,7 +154,6 @@ static char* test_sense(void) {
 
 
 void reset_test_state(void){
-  pktConstructed = false;
   pktWrote = false;
   prev_solat_batt = -1;
 }

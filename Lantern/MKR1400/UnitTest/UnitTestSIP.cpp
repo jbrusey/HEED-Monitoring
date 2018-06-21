@@ -10,6 +10,12 @@ typedef unsigned char byte;
 #include "minunit.h"
 #include "../Lantern/struct.h"
 #include "../Lantern/Lantern.h"
+
+#undef SIP_SOLAR_BATTERY_THRESH
+#undef SIP_STATE_THRESH
+#define SIP_SOLAR_BATTERY_THRESH 0.1
+#define SIP_STATE_THRESH 50
+
 #include "../Lantern/SIP.ino"
 
 int tests_run=0;

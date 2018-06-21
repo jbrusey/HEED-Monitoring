@@ -2,8 +2,9 @@
 #define STARTUP_DELAY 5000         //How long to delay before the node starts
 
 //DEBUG
-#define PRINTF 1                //Comment out to remove debuf messages
-#define SERIAL_SPEED 9600         //Serial speed
+//#define PRINTF 1                //Comment out to remove debug messages
+#define LEDS 1                  //Comment out to remove led debug messages
+#define SERIAL_SPEED 9600       //Serial speed
 
 //Macro for print time
 #ifdef PRINTF
@@ -28,8 +29,8 @@
 #define ADC_BITS 1023.0             //number of bits
 
 //SIP THRESHHOLD
-#define SIP_SOLAR_BATTERY_THRESH 0.1 // Threshold to define when the solar lantern battery is eventful
-#define SIP_STATE_THRESH 50 // Threshold to define when the solar state has changed (needs testing)
+#define SIP_SOLAR_BATTERY_THRESH -1 // Threshold to define when the solar lantern battery is eventful
+#define SIP_STATE_THRESH -1 // Threshold to define when the solar state has changed (needs testing)
 
 #define INT_SOURCE_NO_INTERRUPT 0x83  //DATA_READY, Watermark, and Overun are always active so interrupt source will always read 0x83 if no other interrupt has been triggered
 #define INACTIVITY_TIME 30

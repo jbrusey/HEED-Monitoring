@@ -18,7 +18,7 @@ const String MQTT_TOPIC = 1;
 
 //function prototypes
 String constructPkt(Data* readings);
-bool writeDataToFile(String pkt);
+bool writeDataToFile(Data* readings);
 void getSolarBatteryVoltage(Data* readings);
 void getBatteryVoltage(Data* readings);
 void adxl345GetInterrupt(Data* readings);
@@ -35,6 +35,13 @@ bool transmit(String topic, String dataString);
 //Bring in minunit and the code to be tested
 #include "minunit.h"
 #include "../Lantern/Lantern.h"
+
+#undef SIP_SOLAR_BATTERY_THRESH
+#undef SIP_STATE_THRESH
+#define SIP_SOLAR_BATTERY_THRESH 0.1
+#define SIP_STATE_THRESH 50
+#undef LEDS
+
 #include "../Lantern/SIP.ino"
 #include "../Lantern/SenseCycle.ino"
 
@@ -62,7 +69,7 @@ String constructPkt(Data* readings)
   return (char)pktConstructed;
 }
 
-bool writeDataToFile(String pkt)
+bool writeDataToFile(Data* readings)
 {
   //dummy function, just check it is called
   pktWrote = true;
