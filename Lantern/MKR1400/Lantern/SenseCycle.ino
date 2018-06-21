@@ -1,4 +1,19 @@
 int seq = 0;
+Data* readings = new Data();
+
+
+
+void resetReadings(Data* readings){
+  readings->unixtime=0;
+  readings->solarBatt=0;
+  readings->usage=0;
+  readings->charging=0;
+  readings->interrupt=0;
+  readings->inactivity=0;
+  readings->activity=0;
+  readings->nodeBatt=0;
+  readings->seq=0;
+}
 
 /**
  * The function takes readings from the battery sensors, and checks the ADXL345 for
@@ -7,8 +22,6 @@ int seq = 0;
  */
 void doSenseCycle()
 {
-  Data* readings = new Data();
-  
   getTime(readings);
   getSolarBatteryVoltage(readings);
   getBatteryVoltage(readings);
@@ -32,6 +45,7 @@ void doSenseCycle()
       updateState(readings); 
     }
     else {} //Do something for failure
+    resetReadings(readings);
     seq++; //increment sequence number*/
     }
 }

@@ -16,7 +16,7 @@ SdFile file;
 void setupSD() {
   debug("Setting up SD");
   
-  if (!SD.begin(SD_CS_PIN)) {
+  if (!SD.begin(SD_CS_PIN, SPI_HALF_SPEED)) {
     debug("Card failed, or not present");
     exit(0); //NEed to turn LED on or similar
   }
@@ -25,27 +25,25 @@ void setupSD() {
 }
 
 
-void _write(Data* reading){
-  String sep = ","; //CSV seperator
-  
+void _write(Data* reading){  
   file.print(reading->unixtime);
-  file.print(sep);
+  file.print(",");
   file.print(NODE_ID);
-  file.print(sep);
+  file.print(",");
   file.print(reading->solarBatt);
-  file.print(sep);
+  file.print(",");
   file.print(reading->usage);
-  file.print(sep);
+  file.print(",");
   file.print(reading->charging);
-  file.print(sep);
+  file.print(",");
   file.print(reading->interrupt, HEX);
-  file.print(sep);
+  file.print(",");
   file.print(reading->inactivity);
-  file.print(sep);
+  file.print(",");
   file.print(reading->activity);
-  file.print(sep);
+  file.print(",");
   file.print(reading->nodeBatt);
-  file.print(sep);
+  file.print(",");
   file.println(reading->seq);
 }
 
@@ -69,11 +67,10 @@ bool writeDataToFile(Data* reading)
   delay(10);
 
   // Force data to SD and update the directory entry to avoid data loss.
-  if (!file.close()) {
+  if (!file.close() || file.getWriteError()) {
     debug("write error");
     return false;
   }
- 
   debug("SD Write end");
   return true;
 }
