@@ -2,12 +2,26 @@
 #include <SPI.h>
 #include "SdFat.h"
 SdFat SD;
-#define SD_CS_PIN SDCARD_SS_PIN
+#define SD_CS_PIN 4
 
 char fileName[10] = "SUM_" NODE_ID ".csv";
 
 SdFile file;
 
+
+void _write(Data* reading){ 
+  file.print(reading->unixtime);
+  file.print(",");
+  file.print(reading->tempThermocouple);
+  file.print(",");
+  file.print(reading->tempSi7021);
+  file.print(",");
+  file.print(reading->humidity);
+  file.print(",");
+  file.print(reading->nodeBatt);
+  file.print(",");
+  file.println(reading->seq);
+}
 
 /**
  * Configure the RTC for use. This function checks to
@@ -16,7 +30,7 @@ SdFile file;
 void setupSD() {
   debug("Setting up SD");
   
-  if (!SD.begin(SD_CS_PIN)) {
+  if (!SD.begin(SD_CS_PIN, SPI_HALF_SPEED)) {
     debug("Card failed, or not present");
     exit(0);
   }
@@ -36,16 +50,25 @@ void setupSD() {
  * @param dataString The String to be saved to SD card
  * @return True if the String was saved
  */
-bool writeDataToFile(String dataString)
+bool writeDataToFile(Data* reading)
 {
   debug("SD Write start");
-  file.println(dataString);
+  if (!file.open(fileName, O_APPEND | O_CREAT | O_WRITE )) {
+    debug("Card failed, or not present");
+    return false;
+  }
+  delay(10);
+
+  _write(reading);
   
-  // Force data to SD and update the directory entry to avoid data loss.
-  if (!file.sync() || file.getWriteError()) {
+  //file.println(dataString);
+  delay(10);
+
+  if (!file.close() || file.getWriteError()) {
     debug("write error");
     return false;
   }
+ 
   debug("SD Write end");
   return true;
 }

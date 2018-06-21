@@ -18,12 +18,11 @@ const String MQTT_TOPIC = 1;
 
 //function prototypes
 String constructPkt(Data* readings);
-bool writeDataToFile(String pkt);
+bool writeDataToFile(Data* readings);
 void getTemperatureThermocouple(Data* readings);
 void getSi7021Data(Data* readings);
 void getBatteryVoltage(Data* readings);
 void getGSMTime(Data* readings);
-bool writeDataToFile(String dataString);
 
 void connectGSM();
 void disconnectGSM();
@@ -38,7 +37,6 @@ bool transmit(String topic, String dataString);
 #include "../SUM/SenseCycle.ino"
 
 int tests_run=0;
-Data* readings = new Data();
 bool pktConstructed = false;
 bool pktWrote = false;
 bool pktTx = false;
@@ -63,7 +61,7 @@ String constructPkt(Data* readings)
   return (char)pktConstructed;
 }
 
-bool writeDataToFile(String pkt)
+bool writeDataToFile(Data* readings)
 {
   //dummy function, just check it is called
   pktWrote = true;
