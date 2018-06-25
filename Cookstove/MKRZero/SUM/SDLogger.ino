@@ -34,12 +34,6 @@ void setupSD() {
     debug("Card failed, or not present");
     exit(0);
   }
-
-  debug(fileName);
-  if (!file.open(fileName, O_APPEND | O_CREAT | O_WRITE )) {
-    debug("Card failed, or not present");
-    exit(0);
-  }
   
   debug("Card initialized");
 }
