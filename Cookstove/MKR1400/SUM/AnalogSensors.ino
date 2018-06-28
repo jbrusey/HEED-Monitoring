@@ -26,13 +26,34 @@ void setupAnalogSensors() {
   pinMode(Si7021_POWER_PIN, OUTPUT);
   digitalWrite(Si7021_POWER_PIN, LOW);
 
-  Si7021.begin();
+  //Si7021.begin();
+  setupSi7021(); // low level version of Si7021.begin() function
 
   //Turn the built in LED off 
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, LOW);
   
   debug("Digital pins Set");
+}
+
+void setupSi7021()
+{
+  Wire.begin();
+
+  Wire.beginTransmission(0x40);
+  Wire.write(0xFC);
+  Wire.write(0xC9);
+  Wire.endTransmission();
+  Wire.requestFrom(0x40,1);
+  
+  if(Wire.read() == 0x15)
+  {
+    debug("Si7021 detected");
+    //Serial.println(ID_Temp_Hum, HEX);
+  }
+  else
+    debug("Si7021 not detected!");
+    //Serial.println(ID_Temp_Hum, HEX);
 }
 
 /**
