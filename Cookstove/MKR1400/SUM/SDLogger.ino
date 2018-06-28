@@ -31,13 +31,13 @@ void setupSD() {
   debug("Setting up SD");
   
   if (!SD.begin(SD_CS_PIN, SPI_HALF_SPEED)) {
-    debug("Card failed, or not present");
-    exit(0);
+    debug("SD card failed, or not present");
+    return;
   }
 
   debug(fileName);
 
-  debug("Card initialized");
+  debug("SD card initialized");
 }
 
 
@@ -48,23 +48,22 @@ void setupSD() {
  */
 bool writeDataToFile(Data* reading)
 {
-  debug("SD Write start");
+  debug("SD: Write start");
   if (!file.open(fileName, O_APPEND | O_CREAT | O_WRITE )) {
-    debug("Card failed, or not present");
+    debug("SD: card failed, or not present");
     return false;
   }
   delay(10);
-
   _write(reading);
   
   //file.println(dataString);
   delay(10);
 
   if (!file.close() || file.getWriteError()) {
-    debug("write error");
+    debug("SD: write error");
     return false;
   }
  
-  debug("SD Write end");
+  debug("SD: Write end");
   return true;
 }

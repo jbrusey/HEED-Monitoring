@@ -17,7 +17,7 @@ const char GPRS_PASSWORD[] = SECRET_GPRS_PASSWORD;
  */
  void connectGSM() {
   bool GSMConnected = false;
-  debug("connecting to cellular network...");
+  debug("GSM: Connecting to cellular network...");
 
   // After starting the modem with GSM.begin()
   // attach the shield to the GPRS network with the APN, login and password
@@ -26,7 +26,7 @@ const char GPRS_PASSWORD[] = SECRET_GPRS_PASSWORD;
         (gprs.attachGPRS(GPRS_APN, GPRS_LOGIN, GPRS_PASSWORD) == GPRS_READY)) 
     {
       gsmAccess.lowPowerMode();
-      debug("GSM ready");
+      debug("GSM: Ready");
       GSMConnected = true;
     } 
     else {
@@ -42,5 +42,5 @@ void getGSMTime(Data* readings) {
 void disconnectGSM() {
   gprs.detachGPRS();
   gsmAccess.shutdown();
-  debug("GSM disconnected");
+  debug("GSM: Disconnected");
 }

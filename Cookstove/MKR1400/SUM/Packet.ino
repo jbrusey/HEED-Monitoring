@@ -14,7 +14,7 @@
                       String(readings->humidity) + sep +
                       String(readings->nodeBatt) + sep +
                       String(readings->seq);
-  debug(dataString);
+  debug("Data string created: " + dataString);
   
   return dataString;
 }

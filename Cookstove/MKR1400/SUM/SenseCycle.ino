@@ -19,7 +19,6 @@ void resetReadings(Data* readings){
 {
   getTemperatureThermocouple(readings);
   getSi7021Data(readings);
-  getBatteryVoltage(readings);
   
   if (hasEvent(readings)) {
     
@@ -27,14 +26,16 @@ void resetReadings(Data* readings){
     connectMQTT();
 
     getGSMTime(readings);
+    getBatteryVoltage(readings);
     readings->seq = seq;
 
     String pkt = constructPkt(readings);
     bool transmit_res = transmit(MQTT_TOPIC, pkt);
-    bool csvWriteRes = writeDataToFile(readings);
     
     disconnectMQTT();
     disconnectGSM();
+
+    bool csvWriteRes = writeDataToFile(readings);
     
     if (transmit_res || csvWriteRes) { 
       updateState(readings); 
