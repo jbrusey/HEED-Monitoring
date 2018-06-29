@@ -2,7 +2,7 @@
 #define STARTUP_DELAY 10000        //How long to delay before the node starts
 
 //DEBUG
-#define PRINTF 1                  //Comment out to remove debug messages
+//#define PRINTF 1                  //Comment out to remove debug messages
 #define SERIAL_SPEED 9600        //Serial speed
 
 //Macro for print time
