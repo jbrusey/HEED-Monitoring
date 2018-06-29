@@ -1,3 +1,4 @@
+//GLOBALS
 uint32_t seq = 0;
 #ifdef LEDS
 int state = false;
@@ -23,8 +24,7 @@ void resetReadings(Data* readings){
 }
 
 void doSenseCycle()
-{   
-  getTime(readings);
+{
   getSolarBatteryVoltage(readings);
   getBatteryVoltage(readings);
   adxl345GetInterrupt(readings);
@@ -32,6 +32,7 @@ void doSenseCycle()
   
   if(hasEvent(readings))
   {
+    getTime(readings);
     readings->seq = seq; 
     
     if (writeDataToFile(readings)) 

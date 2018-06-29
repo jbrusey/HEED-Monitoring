@@ -32,7 +32,7 @@ void setupSD() {
   
   if (!SD.begin(SD_CS_PIN, SPI_HALF_SPEED)) {
     debug("SD card failed, or not present");
-    return;
+    return; //Need to turn LED on or similar
   }
 
   debug(fileName);
@@ -59,6 +59,7 @@ bool writeDataToFile(Data* reading)
   //file.println(dataString);
   delay(10);
 
+  // Force data to SD and update the directory entry to avoid data loss.
   if (!file.close() || file.getWriteError()) {
     debug("SD: write error");
     return false;

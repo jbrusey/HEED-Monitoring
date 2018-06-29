@@ -1,7 +1,6 @@
+//GLOBALS
 int seq = 0;
 Data* readings = new Data();
-
-
 
 void resetReadings(Data* readings){
   readings->unixtime=0;
@@ -22,7 +21,6 @@ void resetReadings(Data* readings){
  */
 void doSenseCycle()
 {
-  getTime(readings);
   getSolarBatteryVoltage(readings);
   getBatteryVoltage(readings);
   adxl345GetInterrupt(readings);
@@ -30,17 +28,20 @@ void doSenseCycle()
   
   if(hasEvent(readings))
   {
-    readings->seq = seq; 
-    String pkt = constructPkt(readings);
-    
     connectGSM();
     connectMQTT();
 
+    getTime(readings);
+    readings->seq = seq; 
+
+    String pkt = constructPkt(readings);
     bool transmit_res = transmit(MQTT_TOPIC, pkt);
-    bool csvWriteRes = writeDataToFile(readings);
     
     disconnectMQTT();
     disconnectGSM();
+
+    bool csvWriteRes = writeDataToFile(readings);
+    
     if (transmit_res || csvWriteRes) { 
       updateState(readings); 
     }
