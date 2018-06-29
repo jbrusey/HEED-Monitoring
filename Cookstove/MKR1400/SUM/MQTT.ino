@@ -2,7 +2,7 @@
 #include <MQTT.h>
 MQTTClient client;
 
-//SETUP TOPIC STRTNG BASED ON NODE_ID 
+//SETUP TOPIC STRING BASED ON NODE_ID 
 const String MQTT_TOPIC = String("SUM/") + NODE_ID + "/temperature";
 
 /**
@@ -14,11 +14,11 @@ const String MQTT_TOPIC = String("SUM/") + NODE_ID + "/temperature";
     client.begin(MQTT_SERVER, net);  //Start a connection
     //Set options: Keep alive for 10 hours, clean session, 1 second timeout
     client.setOptions(MQTT_KEEP_ALIVE, MQTT_CLEAN_SESSION, MQTT_TIMEOUT);
-    debug("connecting to broker...");
+    debug("MQTT: Connecting to broker...");
     while (!client.connect("arduino")) {
       delay(MQTT_CONNECT_RETRY_TIME);
     }
-    debug("connected!");
+    debug("MQTT: Connected!");
   }
 }
 
@@ -28,7 +28,7 @@ const String MQTT_TOPIC = String("SUM/") + NODE_ID + "/temperature";
  */
 void disconnectMQTT() {
   client.disconnect();
-  debug("MQTT disconnected"); 
+  debug("MQTT: Disconnected"); 
 }
 
 /**
@@ -39,7 +39,12 @@ void disconnectMQTT() {
  */
 bool transmit(String topic, String dataString) {
   bool res = client.publish(topic, dataString);
-  debug("Threshold reached. Data sent!");
+  if (res) {
+    debug("MQTT: Data sent!");
+  }
+  else {
+    debug("ERROR: MQTT: Data not sent!");
+  }
   return res;
 }
 

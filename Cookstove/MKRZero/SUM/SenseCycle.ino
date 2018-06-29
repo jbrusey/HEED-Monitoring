@@ -15,14 +15,14 @@ void resetReadings(Data* readings){
  * and if so, it is stored to an SD card and is transmitted over GSM and MQTT.
  */
  void doSenseCycle()
-{
-
-  getTime(readings);
+{ 
   getTemperatureThermocouple(readings);
   getSi7021Data(readings);
-  getBatteryVoltage(readings);
   
   if (hasEvent(readings)) {
+    
+    getTime(readings);
+    getBatteryVoltage(readings);
     readings->seq = seq;
 
     String pkt = constructPkt(readings);

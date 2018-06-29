@@ -1,7 +1,7 @@
 //Include GSM library
 #include <MKRGSM.h>
 
-// initialize the library instance
+// initialize the library instances
 GSMClient net;
 GPRS gprs;
 GSM gsmAccess;
@@ -17,7 +17,7 @@ const char GPRS_PASSWORD[] = SECRET_GPRS_PASSWORD;
  */
  bool connectGSM() {
   bool GSMConnected = false;
-  debug("connecting to cellular network...");
+  debug("GSM: Connecting to cellular network...");
 
   // After starting the modem with GSM.begin()
   // attach the shield to the GPRS network with the APN, login and password
@@ -37,5 +37,5 @@ const char GPRS_PASSWORD[] = SECRET_GPRS_PASSWORD;
 void disconnectGSM() {
   gprs.detachGPRS();
   gsmAccess.shutdown();
-  debug("GSM disconnected");
+  debug("GSM: Disconnected");
 }

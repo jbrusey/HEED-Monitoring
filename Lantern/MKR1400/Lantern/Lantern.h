@@ -2,7 +2,7 @@
 #define STARTUP_DELAY 5000         //How long to delay before the node starts
 
 //DEBUG
-#define PRINTF 1                //Comment out to remove debuf messages
+#define PRINTF 1                //Comment out to remove debug messages
 #define SERIAL_SPEED 9600       //Serial speed
 
 #define SECRET_PINNUMBER     ""               // SIM Pin number
@@ -21,7 +21,7 @@
 #ifdef PRINTF
 # define debug(msg) _PRINT_TIME(String(msg))
 #else
-# define debug(msg) do {} while(0)
+# define debug(msg) _DO_NOTHING();
 #endif
 
 #define STATE_POWER_PIN 7                  //Arduino Pin the MAX31850 3V3 is connected to

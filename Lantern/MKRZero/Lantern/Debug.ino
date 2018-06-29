@@ -4,7 +4,7 @@
  void startSerial(){
   // Wait for serial USB port to open
   while(!SerialUSB);
-  debug("SUM Test");
+  debug("Lantern Test");
   }
 
 /**
@@ -18,3 +18,4 @@ void _PRINT_TIME(String msg) {
   SerialUSB.println(String(formattedtime) + ": " + msg);
 }
 
+void _DO_NOTHING() {}

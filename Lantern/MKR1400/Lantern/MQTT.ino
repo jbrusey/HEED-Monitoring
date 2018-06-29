@@ -37,7 +37,7 @@ bool connectMQTT() {
  */
 void disconnectMQTT() {
   client.disconnect();
-  debug("MQTT disconnected"); 
+  debug("MQTT: Disconnected"); 
 }
 
 /**
@@ -48,7 +48,11 @@ void disconnectMQTT() {
  */
 bool transmit(String topic, String dataString) {
   bool res = client.publish(topic, dataString);
-  if (!res) reportError(ERR_MQTT_TRANSMISSION_FAILED);
+  if (!res){
+    reportError(ERR_MQTT_TRANSMISSION_FAILED);
+    debug("ERROR: MQTT: Data not sent!");
+  }
+  else debug("MQTT: Data sent!");
   return res;
 }
 

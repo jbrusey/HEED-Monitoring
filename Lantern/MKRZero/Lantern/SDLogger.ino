@@ -17,15 +17,15 @@ void setupSD() {
   debug("Setting up SD");
   
   if (!SD.begin(SD_CS_PIN, SPI_HALF_SPEED)) {
-    debug("Card failed, or not present");
-    exit(0); //NEed to turn LED on or similar
+    debug("SD card failed, or not present");
+    return; //Need to turn LED on or similar
   }
   
 #ifdef PRINTF
    SD.errorPrint();
 #endif
 
-  debug("card initialized");
+  debug("SD card initialized");
 }
 
 
@@ -58,19 +58,20 @@ void _write(Data* reading){
  */
 bool writeDataToFile(Data* reading)
 {
-  debug("SD Write start");
+  debug("SD: Write start");
   if (!file.open(fileName, O_APPEND | O_CREAT | O_WRITE )) {
-    debug("Card failed, or not present");
+    debug("SD: card failed, or not present");
   }
   delay(10);
   
   _write(reading);
   delay(10);
-  
+
+    // Force data to SD and update the directory entry to avoid data loss.
   if (!file.close() || file.getWriteError()) {
-    debug("write error");
+    debug("SD: write error");
     return false;
   }
-  debug("SD Write end");
+  debug("SD: Write end");
   return true;
 }

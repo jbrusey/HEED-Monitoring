@@ -10,7 +10,7 @@
 #ifdef PRINTF
 # define debug(msg) _PRINT_TIME(msg)
 #else
-# define debug(msg) do {} while(0)
+# define debug(msg) _DO_NOTHING();
 #endif
 
 

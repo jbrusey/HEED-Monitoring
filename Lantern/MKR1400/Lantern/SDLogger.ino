@@ -17,11 +17,13 @@ void setupSD() {
   debug("Setting up SD");
   
   if (!SD.begin(SD_CS_PIN, SPI_HALF_SPEED)) {
-    debug("Card failed, or not present");
-    exit(0); //NEed to turn LED on or similar
+    debug("SD card failed, or not present");
+    return; //Need to turn LED on or similar
   }
+  
+  debug(fileName);
  
-  debug("card initialized");
+  debug("SD card initialized");
 }
 
 
@@ -51,7 +53,7 @@ void _write(Data* reading){
 
 /**
  * Logs a string to a datafile
- * @param dataString The String to be saved to SD card
+ * @param pointer to a data struct
  * @return True if the String was saved
  */
 bool writeDataToFile(Data* reading)
