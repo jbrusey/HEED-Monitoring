@@ -1,6 +1,7 @@
 //GLOBALS
 int seq = 0;
 Data* readings = new Data();
+bool first = true;
 
 void resetErrors(){
     /* the error code has been transmitted and so can now be reset.     
@@ -41,6 +42,7 @@ void doSenseCycle()
   
   if (last_errno != 1) readings->error = last_errno;  
   last_transmitted_errno = last_errno;
+  
   if(hasEvent(readings))
   {    
     readings->seq = seq; 
@@ -59,6 +61,13 @@ void doSenseCycle()
 
     bool csvWriteRes = writeDataToFile(readings);
     
+    if (transmit_res && csvWriteRes){
+      if (first){
+        nodeFunctional();
+        first = false;
+        }
+    }
+      
     if (transmit_res || csvWriteRes) { 
       updateState(readings);
       resetErrors(); 

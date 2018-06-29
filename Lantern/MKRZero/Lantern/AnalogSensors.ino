@@ -11,7 +11,7 @@ void setupAnalogSensors() {
   digitalWrite(STATE_POWER_PIN, LOW); //turn LED off
   
   pinMode(LED_BUILTIN, OUTPUT);
-  digitalWrite(LED_BUILTIN, LOW);
+  digitalWrite(LED_BUILTIN, HIGH);
   debug("Digital pins set");
 }
 
@@ -42,8 +42,9 @@ void unpowerStateOpAmps() {
 void getBatteryVoltage(Data* readings)
 {
   readings->nodeBatt = (analogRead(ADC_BATTERY) / ADC_BITS ) * INT_BATTERY_DIVIDER_MAX;
-  //debug("Node Battery:" + String(readings->nodeBatt));
-
+  if (readings->nodeBatt < BATTERY_LOW_VOLTAGE){
+    batteryLow=true;
+  }
 }
 
 /**

@@ -12,6 +12,7 @@ typedef unsigned char byte;
 typedef unsigned char String;
 
 #include "../Lantern/struct.h"
+#include "../Lantern/error.h"
 
 //function prototypes
 bool writeDataToFile(Data* readings);
@@ -22,6 +23,7 @@ void getLanternState(Data* readings);
 void getTime(Data* readingreadings);
 void getLanternState(Data* readings);
 void digitalWrite(uint8_t pin, uint8_t value);
+void nodeFunctional();
 
 
 
@@ -41,6 +43,7 @@ void digitalWrite(uint8_t pin, uint8_t value);
 int tests_run=0;
 bool pktWrote = false;
 
+void nodeFunctional(){}
 void digitalWrite(uint8_t pin, uint8_t value){}
 
 

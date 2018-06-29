@@ -17,6 +17,7 @@ String constructPkt(Data* reading)
                       String(reading->inactivity) + sep +
                       String(reading->activity) + sep +
                       String(reading->nodeBatt) + sep +
+                      String(reading->error) + sep +
                       String(reading->seq);
   debug(dataString);
   

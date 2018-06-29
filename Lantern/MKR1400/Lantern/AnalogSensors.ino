@@ -8,10 +8,10 @@ void setupAnalogSensors() {
 
   //Set State power pin to output and make sure it is off
   pinMode(STATE_POWER_PIN, OUTPUT);
-  digitalWrite(STATE_POWER_PIN, LOW); //turn LED off
+  digitalWrite(STATE_POWER_PIN, HIGH); //turn LED off
   
   pinMode(LED_BUILTIN, OUTPUT);
-  digitalWrite(LED_BUILTIN, LOW);
+  digitalWrite(LED_BUILTIN, HIGH);
   debug("Digital pins set");
 }
 

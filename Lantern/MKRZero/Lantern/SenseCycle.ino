@@ -1,15 +1,18 @@
 //GLOBALS
 uint32_t seq = 0;
-#ifdef LEDS
-int state = false;
-#endif
-/**
- * The function takes readings from the battery sensors, and checks the ADXL345 for
- * an interrupt. The data is then checked if it is eventful, and if so is stored 
- * to an SD card.
- */
+bool first = true;
 Data* readings = new Data();
 
+void resetErrors(){
+    /* the error code has been transmitted and so can now be reset.     
+   *  The method of resetting used here allows for errors to have 
+   *  occurred between sending the message and receiving
+   acknowledgement. */
+   if (last_transmitted_errno < last_errno && last_transmitted_errno != 0)
+    last_errno = last_errno / last_transmitted_errno;
+   else
+    last_errno = 1;
+}
 
 void resetReadings(Data* readings){
   readings->unixtime=0;
@@ -21,6 +24,7 @@ void resetReadings(Data* readings){
   readings->activity=0;
   readings->nodeBatt=0;
   readings->seq=0;
+  readings->error=0;
 }
 
 void doSenseCycle()
@@ -30,6 +34,9 @@ void doSenseCycle()
   adxl345GetInterrupt(readings);
   getLanternState(readings);
   
+  if (last_errno != 1) readings->error = last_errno;  
+  last_transmitted_errno = last_errno;
+  
   if(hasEvent(readings))
   {
     getTime(readings);
@@ -37,13 +44,13 @@ void doSenseCycle()
     
     if (writeDataToFile(readings)) 
     { 
-#ifdef LEDS   
-      state = !state;
-      digitalWrite(LED_BUILTIN, state);
-#endif
+      if (first){
+        nodeFunctional();
+        first = false;
+      }
       updateState(readings);
+      resetErrors(); 
     }
-    else {} //Do something for failure
     resetReadings(readings);
     seq++;
   }

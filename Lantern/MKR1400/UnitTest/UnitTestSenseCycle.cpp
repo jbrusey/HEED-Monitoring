@@ -15,6 +15,7 @@ typedef unsigned char String;
 const String MQTT_TOPIC = 1;
 
 #include "../Lantern/struct.h"
+#include "../Lantern/error.h"
 
 //function prototypes
 String constructPkt(Data* readings);
@@ -25,10 +26,11 @@ void adxl345GetInterrupt(Data* readings);
 void getLanternState(Data* readings);
 void getTime(Data* readingreadings);
 void getLanternState(Data* readings);
+void nodeFunctional();
 
-void connectGSM();
+bool connectGSM();
 void disconnectGSM();
-void connectMQTT();
+bool connectMQTT();
 void disconnectMQTT();
 bool transmit(String topic, String dataString);
 
@@ -50,9 +52,10 @@ bool pktConstructed = false;
 bool pktWrote = false;
 bool pktTx = false;
 
-void connectGSM(){}
+void nodeFunctional(){}
+bool connectGSM(){}
 void disconnectGSM(){}
-void connectMQTT(){}
+bool connectMQTT(){}
 void disconnectMQTT(){}
 
 bool transmit(String topic, String dataString)

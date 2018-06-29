@@ -7,6 +7,7 @@ struct Data {
   bool inactivity;
   bool activity;
   float nodeBatt;
+  uint32_t error;
   uint32_t seq;
 };
 

@@ -1,6 +1,8 @@
 #include "Lantern.h"
 #include "Arduino.h"
 #include "struct.h"
+#include "error.h"
+
 
 
 /**
@@ -33,11 +35,14 @@ void setup() {
  * putting the node to sleep
  */
 void loop() {
-  SerialUSB.println("\n-----------------");
-  
-  debug("Start Sense");
-  doSenseCycle(); //sense and send
-  debug("End Sense");
+ if (batteryLow) batteryError();
+  else{
+    SerialUSB.println("\n-----------------");
+    debug("Start Sense");
+    doSenseCycle();
+    debug("End Sense");
+  }
+   
   #ifdef PRINTF
     nodeSleep(); //go back to sleep
   #else
