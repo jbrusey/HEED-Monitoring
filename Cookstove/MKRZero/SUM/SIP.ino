@@ -13,11 +13,23 @@ float prev_humidity = 0;
  */
 bool hasEvent(Data* readings)
 {
-  if ((fabs(readings->tempThermocouple - prev_temp_thermocouple) >= SIP_TEMP_THERMOCOUPLE_THRESH) 
-  || (fabs(readings->tempSi7021 - prev_temp_Si7021) >= SIP_TEMP_SI7021_THRESH) 
-  || (fabs(readings->humidity - prev_humidity) >= SIP_HUMIDITY_THRESH)) 
+  if (fabs(readings->tempThermocouple - prev_temp_thermocouple) >= SIP_TEMP_THERMOCOUPLE_THRESH)
+  {
+    debug("Threshold reached! (" + String(readings->tempThermocouple - prev_temp_thermocouple) + "c from thermocouple)"); 
     return true;
+  }
+  else if (fabs(readings->tempSi7021 - prev_temp_Si7021) >= SIP_TEMP_SI7021_THRESH)
+  {
+    debug("Threshold reached! (" + String(readings->tempSi7021 - prev_temp_Si7021) + "c from Si7021 temp)"); 
+    return true;
+  }
+  else if (fabs(readings->humidity - prev_humidity) >= SIP_HUMIDITY_THRESH)
+  {
+    debug("Threshold reached! (" + String(readings->humidity - prev_humidity) + "% from humidity)"); 
+    return true;
+  }
 
+  debug("Threshold not reached. Skipping...");
   return false;
 }
 

@@ -4,6 +4,7 @@
 #include <SparkFun_Si7021_Breakout_Library.h>
 #include <Wire.h>
 
+// initialize the library instances
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 Weather Si7021;
@@ -26,7 +27,8 @@ void setupAnalogSensors() {
   pinMode(Si7021_POWER_PIN, OUTPUT);
   digitalWrite(Si7021_POWER_PIN, LOW);
 
-  Si7021.begin();
+  //Si7021.begin();
+  setupSi7021(); // low level version of Si7021.begin() function
 
   //Turn the built in LED off 
   pinMode(LED_BUILTIN, OUTPUT);
@@ -35,13 +37,33 @@ void setupAnalogSensors() {
   debug("Digital pins Set");
 }
 
+void setupSi7021()
+{
+  Wire.begin();
+
+  Wire.beginTransmission(0x40);
+  Wire.write(0xFC);
+  Wire.write(0xC9);
+  Wire.endTransmission();
+  Wire.requestFrom(0x40,1);
+  
+  if(Wire.read() == 0x15)
+  {
+    debug("Si7021 detected");
+    //Serial.println(ID_Temp_Hum, HEX);
+  }
+  else
+    debug("Si7021 not detected!");
+    //Serial.println(ID_Temp_Hum, HEX);
+}
+
 /**
  * Power up the MAX31850
  */
 void powerMAX31850() { 
   digitalWrite(MAX31850_POWER_PIN, HIGH);
   delay(DIGITAL_ON_WAIT);//Slight delay to allow the switch to happen
-  debug("MAX31850 On");
+  debug("MAX31850: On");
 }
 
 /**
@@ -49,7 +71,7 @@ void powerMAX31850() {
  */
 void unpowerMAX31850() {
   digitalWrite(MAX31850_POWER_PIN, LOW);
-  debug("MAX31850 Off");
+  debug("MAX31850: Off");
 }
 
 /**
@@ -59,11 +81,11 @@ void unpowerMAX31850() {
  */
 void getTemperatureThermocouple(Data* readings) {
   powerMAX31850(); //turn on sensor
-  debug("Read temperature (thermocouple)");
+  //debug("MAX31850: Reading temperature...");
 
   sensors.requestTemperatures(); // Send the command to get temperatures
   readings->tempThermocouple = sensors.getTempCByIndex(MAX31850_ADDR); //get temp
-  debug(String("Temp (thermocouple): ") + String(readings->tempThermocouple) + " C");
+  debug(String("MAX31850: Temp: ") + String(readings->tempThermocouple) + "c");
   
   unpowerMAX31850(); //turn off sensor
 }
@@ -74,7 +96,7 @@ void getTemperatureThermocouple(Data* readings) {
 void powerSi7021() { 
   digitalWrite(Si7021_POWER_PIN, HIGH);
   delay(DIGITAL_ON_WAIT);//Slight delay to allow the switch to happen
-  debug("Si7021 On");
+  debug("Si7021: On");
 }
 
 /**
@@ -82,7 +104,7 @@ void powerSi7021() {
  */
 void unpowerSi7021() {
   digitalWrite(Si7021_POWER_PIN, LOW);
-  debug("Si7021 Off");
+  debug("Si7021: Off");
 }
 
 /**
@@ -93,12 +115,12 @@ void unpowerSi7021() {
 void getSi7021Data(Data* readings) {
   
   powerSi7021(); //turn on sensor
-  debug("Read temperature + humidity (Si7021 sensor)");
+  //debug("Si7021: Reading temperature + humidity...");
 
   readings->tempSi7021 = Si7021.getTemp(); // Send the command to get temperatures
   readings->humidity = Si7021.getRH(); // Send the command to get humidity
-  debug(String("Temp (Si7021): ") + String(readings->tempSi7021) + " C");
-  debug(String("Humidity (Si7021): ") + String(readings->humidity) + " %");
+  debug(String("Si7021: Temp: ") + String(readings->tempSi7021) + "c");
+  debug(String("Si7021: Humidity: ") + String(readings->humidity) + "%");
 
   unpowerSi7021(); //turn off sensor
 }

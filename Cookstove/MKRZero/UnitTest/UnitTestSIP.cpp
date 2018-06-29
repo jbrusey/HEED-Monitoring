@@ -2,6 +2,11 @@
 #pragma GCC diagnostic ignored "-Wwrite-strings"
 
 typedef unsigned char byte;
+typedef unsigned char String;
+
+//function prototype
+void _DO_NOTHING();
+void _DO_NOTHING(){}
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,8 +16,6 @@ typedef unsigned char byte;
 #include "../SUM/struct.h"
 #include "../SUM/SUM.h"
 #include "../SUM/SIP.ino"
-
-typedef unsigned char String;
 
 int tests_run=0;
 Data* readings = new Data();

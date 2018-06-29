@@ -18,3 +18,5 @@ void _PRINT_TIME(String msg) {
   SerialUSB.println(String(formattedtime) + ": " + msg);
 }
 
+void _DO_NOTHING() {}
+
