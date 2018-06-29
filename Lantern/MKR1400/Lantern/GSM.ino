@@ -34,6 +34,10 @@ const char GPRS_PASSWORD[] = SECRET_GPRS_PASSWORD;
   return GSMConnected;
 }
 
+void getGSMTime(Data* readings) {
+  readings->unixtime = gsmAccess.getTime();
+}
+
 void disconnectGSM() {
   gprs.detachGPRS();
   gsmAccess.shutdown();

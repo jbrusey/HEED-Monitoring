@@ -19,7 +19,7 @@ String constructPkt(Data* reading)
                       String(reading->nodeBatt) + sep +
                       String(reading->error) + sep +
                       String(reading->seq);
-  debug(dataString);
+  debug("Data string created: " + dataString);
   
   return dataString;
 }

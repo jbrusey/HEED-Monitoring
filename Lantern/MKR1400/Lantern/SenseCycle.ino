@@ -50,10 +50,8 @@ void doSenseCycle()
     
     connectGSM();
     connectMQTT();
-
-    getTime(readings);
-    readings->seq = seq; 
-
+    
+    getGSMTime(readings);
     bool transmit_res = transmit(MQTT_TOPIC, pkt);
     
     disconnectMQTT();
