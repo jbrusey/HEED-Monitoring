@@ -27,6 +27,8 @@
 #define ADC_BITS 1023.0      //Max value extect from the ADC
 #define INT_BATTERY_DIVIDER_MAX 4.2 //Max voltage that can be sensed from the internal voltage divider with 3.3v reference
 
+#define BATTERY_LOW_VOLTAGE 3.35
+
 #define MQTT_SERVER "159.65.25.153" //MQTT broker address
 //#define MQTT_SERVER "help-data.coventry.ac.uk" //MQTT broker address
 //#define MQTT_USER ""

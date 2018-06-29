@@ -11,6 +11,7 @@
                       String(readings->tempSi7021) + sep +
                       String(readings->humidity) + sep +
                       String(readings->nodeBatt) + sep +
+                      String(readings->error) + sep +
                       String(readings->seq);
   debug("Data string created: " + dataString);
   

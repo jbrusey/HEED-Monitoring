@@ -32,7 +32,7 @@ void setupAnalogSensors() {
 
   //Turn the built in LED off 
   pinMode(LED_BUILTIN, OUTPUT);
-  digitalWrite(LED_BUILTIN, LOW);
+  digitalWrite(LED_BUILTIN, HIGH);
   
   debug("Digital pins Set");
 }
@@ -134,6 +134,9 @@ void getSi7021Data(Data* readings) {
 void getBatteryVoltage(Data* readings)
 {
   readings->nodeBatt = ( analogRead(ADC_BATTERY) / ADC_BITS ) * INT_BATTERY_DIVIDER_MAX;
+  if (readings->nodeBatt < BATTERY_LOW_VOLTAGE){
+    batteryLow = true;
+  }
 }
 
 

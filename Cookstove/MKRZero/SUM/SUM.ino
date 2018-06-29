@@ -1,5 +1,6 @@
 #include "SUM.h" //Header file with consts/config
 #include "struct.h" //Header file with data struct fetched in sense cycle
+#include "error.h"
 
 /**
  * Setups the program by
@@ -28,12 +29,14 @@ void setup() {
  * putting the node to sleep
  */
 void loop() {
-  SerialUSB.println("\n-----------------");
-  
-  debug("Start Sense");
-  doSenseCycle(); //sense and send
-  debug("End Sense");
-  
+ if (batteryLow) batteryError();
+  else{
+    SerialUSB.println("\n-----------------");
+    debug("Start Sense");
+    doSenseCycle();
+    debug("End Sense");
+  }
+   
   #ifdef PRINTF
     nodeSleep(); //go back to sleep
   #else
