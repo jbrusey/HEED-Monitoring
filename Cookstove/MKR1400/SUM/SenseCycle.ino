@@ -20,6 +20,7 @@ void resetReadings(Data* readings){
   readings->tempSi7021=0;
   readings->humidity=0;
   readings->nodeBatt=0;
+  readings->error=0;
   readings->seq=0;
 }
 
