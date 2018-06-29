@@ -1,8 +1,6 @@
 /**
  * Constructs a data string from the sensed values
- * @param temp The currently sensed solar lantern voltage
- * @param node_batt The currently sensed node battery voltage
- * @param seq The packet sequence number
+ * @param pointer to a data struct
  * @return A string of all the sensor values as a csv
  */
  String constructPkt(Data* readings) {

@@ -4,6 +4,7 @@
 #include <SparkFun_Si7021_Breakout_Library.h>
 #include <Wire.h>
 
+// initialize the library instances
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 Weather Si7021;

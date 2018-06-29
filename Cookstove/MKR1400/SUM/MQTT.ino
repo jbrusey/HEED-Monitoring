@@ -2,7 +2,7 @@
 #include <MQTT.h>
 MQTTClient client;
 
-//SETUP TOPIC STRTNG BASED ON NODE_ID 
+//SETUP TOPIC STRING BASED ON NODE_ID 
 const String MQTT_TOPIC = String("SUM/") + NODE_ID + "/temperature";
 
 /**
@@ -39,7 +39,12 @@ void disconnectMQTT() {
  */
 bool transmit(String topic, String dataString) {
   bool res = client.publish(topic, dataString);
-  debug("MQTT: Data sent!");
+  if (res) {
+    debug("MQTT: Data sent!");
+  }
+  else {
+    debug("ERROR: MQTT: Data not sent!");
+  }
   return res;
 }
 

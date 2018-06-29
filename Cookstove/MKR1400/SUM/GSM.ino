@@ -1,7 +1,7 @@
 //Include GSM library
 #include <MKRGSM.h>
 
-// initialize the library instance
+// initialize the library instances
 GSMClient net;
 GPRS gprs;
 GSM gsmAccess;

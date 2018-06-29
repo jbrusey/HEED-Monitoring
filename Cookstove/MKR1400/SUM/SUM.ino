@@ -29,9 +29,11 @@ void setup() {
  */
 void loop() {
   SerialUSB.println("\n-----------------");
+  
   debug("Start Sense");
   doSenseCycle(); //sense and send
   debug("End Sense");
+  
   #ifdef PRINTF
     nodeSleep(); //go back to sleep
   #else

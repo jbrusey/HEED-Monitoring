@@ -43,7 +43,7 @@ void setupSD() {
 
 /**
  * Logs a string to a datafile
- * @param dataString The String to be saved to SD card
+ * @param pointer to a data struct
  * @return True if the String was saved
  */
 bool writeDataToFile(Data* reading)
