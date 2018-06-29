@@ -25,7 +25,7 @@ Command: n
 Partition type: p
 Partition number: 2
 First sector: 98304  [double check this value with the start block of existing partition]
-Last sector: 7592339
+Last sector: 10592339
 Remove the signature?: n
 
 Command: p
@@ -90,7 +90,6 @@ sudo ln -s ../init.d/pifacertc S01pifacertc
 sudo reboot
 sudo hwclock --systohc
 
-
 #Generate ssh key and add to pi user on cogentee
 ssh-keygen -t rsa
 #check you can ssh to cogentee
@@ -136,7 +135,7 @@ Add the following lines to /etc/rc.local:
 #Install code
 cd ~/git
 git clone https://github.com/rwilkins87/HELP-Monitoring-Interns.git
-cd ~/git/HELP-Monitoring-Interns/Streetlight/RPI
+cd ~/git/HELP-Monitoring-Interns/Streetlight/
 
 sudo  rsync -rv  RPI/opt/ /opt
 sudo  rsync -rv  RPI/etc/ /etc/
