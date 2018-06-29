@@ -8,6 +8,7 @@
 #include <math.h>
 
 #include "../SUM/struct.h"
+#include "../SUM/error.h"
 
 //define missing types
 typedef unsigned char byte;
@@ -23,6 +24,7 @@ void getTemperatureThermocouple(Data* readings);
 void getSi7021Data(Data* readings);
 void getBatteryVoltage(Data* readings);
 void getGSMTime(Data* readings);
+void nodeFunctional();
 
 void connectGSM();
 void disconnectGSM();
@@ -47,6 +49,7 @@ void connectGSM(){}
 void disconnectGSM(){}
 void connectMQTT(){}
 void disconnectMQTT(){}
+void nodeFunctional(){}
 
 void _DO_NOTHING(){}
 

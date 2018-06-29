@@ -1,6 +1,18 @@
 //GLOBALS
 int seq = 0;
 Data* readings = new Data();
+bool first = true;
+
+void resetErrors(){
+    /* the error code has been transmitted and so can now be reset.     
+   *  The method of resetting used here allows for errors to have 
+   *  occurred between sending the message and receiving
+   acknowledgement. */
+   if (last_transmitted_errno < last_errno && last_transmitted_errno != 0)
+    last_errno = last_errno / last_transmitted_errno;
+   else
+    last_errno = 1;
+}
 
 void resetReadings(Data* readings){
   readings->unixtime=0;
@@ -19,17 +31,19 @@ void resetReadings(Data* readings){
 {
   getTemperatureThermocouple(readings);
   getSi7021Data(readings);
+  getBatteryVoltage(readings);
+  
+  if (last_errno != 1) readings->error = last_errno;  
+  last_transmitted_errno = last_errno;
   
   if (hasEvent(readings)) {
-    
+    readings->seq = seq;
+    String pkt = constructPkt(readings);
+
     connectGSM();
     connectMQTT();
 
     getGSMTime(readings);
-    getBatteryVoltage(readings);
-    readings->seq = seq;
-
-    String pkt = constructPkt(readings);
     bool transmit_res = transmit(MQTT_TOPIC, pkt);
     
     disconnectMQTT();
@@ -37,10 +51,18 @@ void resetReadings(Data* readings){
 
     bool csvWriteRes = writeDataToFile(readings);
     
-    if (transmit_res || csvWriteRes) { 
-      updateState(readings); 
+    if (transmit_res && csvWriteRes){
+      if (first){
+        nodeFunctional();
+        first = false;
+        }
     }
-    else { } //Do something for failure
+    
+    if (transmit_res || csvWriteRes) { 
+      updateState(readings);
+      resetErrors(); 
+    }
+    resetReadings(readings);
     seq++; //increment sequence number
   }
 }

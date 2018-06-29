@@ -1,7 +1,7 @@
 //GLOBALS
-float prev_temp_thermocouple = 0;
-float prev_temp_Si7021 = 0;
-float prev_humidity = 0;
+float prev_temp_thermocouple = -1;
+float prev_temp_Si7021 = -1;
+float prev_humidity = -1;
 
 /**
  * Checks if the temperature/humidity reading is "interesting" and needs to be sent. The functions defines data 

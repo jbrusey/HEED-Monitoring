@@ -20,6 +20,8 @@ void _write(Data* reading){
   file.print(",");
   file.print(reading->nodeBatt);
   file.print(",");
+  file.println(reading->error);
+  file.print(",");
   file.println(reading->seq);
 }
 
@@ -48,23 +50,25 @@ void setupSD() {
  */
 bool writeDataToFile(Data* reading)
 {
-  debug("SD: Write start");
+  bool csv_write_res = false;
+  debug("SD Write start");
   if (!file.open(fileName, O_APPEND | O_CREAT | O_WRITE )) {
-    debug("SD: card failed, or not present");
-    return false;
+    debug("Card failed, or not present");
+    reportError(ERR_CSV_OPEN);
+    return csv_write_res;
   }
+  
   delay(10);
   _write(reading);
-  
-  //file.println(dataString);
   delay(10);
 
   // Force data to SD and update the directory entry to avoid data loss.
   if (!file.close() || file.getWriteError()) {
-    debug("SD: write error");
-    return false;
+    debug("write error");
+    reportError(ERR_CSV_WRITE);
+    return csv_write_res;
   }
- 
-  debug("SD: Write end");
-  return true;
+  csv_write_res = true;
+  debug("SD Write end");
+  return csv_write_res;
 }
