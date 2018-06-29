@@ -1,6 +1,8 @@
 #include "Lantern.h"
 #include "Arduino.h"
 #include "struct.h"
+#include "error.h"
+
 
 /**
  * Setups the program by
@@ -20,21 +22,23 @@ void setup() {
 #endif
   setupRTC();
   setupSD();
-  //setupAnalogSensors();
+  setupAnalogSensors();
   //setupADXL345();
   //setRTCAlarm(RTC_SAMPLE_TIME);
 }
-
 
 /**
  * MAIN LOOP: Calls for the sensing procedure to run before 
  * putting the node to sleep
  */
 void loop() {
-  SerialUSB.println("\n-----------------");
-  debug("Start Sense");
-  doSenseCycle();
-  debug("End Sense");
+  if (batteryLow) batteryError();
+  else{
+    SerialUSB.println("\n-----------------");
+    debug("Start Sense");
+    doSenseCycle();
+    debug("End Sense");
+  }
   //nodeSleep();
   delay(5000);
  }

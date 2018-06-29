@@ -15,8 +15,8 @@ const char GPRS_PASSWORD[] = SECRET_GPRS_PASSWORD;
 /**
  * Connects the node to a GSM netwrok
  */
- void connectGSM() {
-  bool GSMConnected = false;
+ bool connectGSM() {
+  /*bool GSMConnected = false;
   debug("connecting to cellular network...");
 
   // After starting the modem with GSM.begin()
@@ -32,11 +32,12 @@ const char GPRS_PASSWORD[] = SECRET_GPRS_PASSWORD;
     else {
       delay(GSM_CONNECT_RETRY_TIME);
     }
-  }
-}
+  }*/
+  return true;
+ }
 
 void disconnectGSM() {
-  gprs.detachGPRS();
-  gsmAccess.shutdown();
-  debug("GSM disconnected");
+  //gprs.detachGPRS();
+  //gsmAccess.shutdown();
+  //debug("GSM disconnected");
 }

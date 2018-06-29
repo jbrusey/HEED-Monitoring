@@ -2,6 +2,16 @@ int seq = 0;
 Data* readings = new Data();
 
 
+void resetErrors(){
+    /* the error code has been transmitted and so can now be reset.     
+   *  The method of resetting used here allows for errors to have 
+   *  occurred between sending the message and receiving
+   acknowledgement. */
+   if (last_transmitted_errno < last_errno && last_transmitted_errno != 0)
+    last_errno = last_errno / last_transmitted_errno;
+   else
+    last_errno = 1;
+}
 
 void resetReadings(Data* readings){
   readings->unixtime=0;
@@ -13,6 +23,7 @@ void resetReadings(Data* readings){
   readings->activity=0;
   readings->nodeBatt=0;
   readings->seq=0;
+  readings->error=0;
 }
 
 /**
@@ -28,8 +39,10 @@ void doSenseCycle()
   adxl345GetInterrupt(readings);
   getLanternState(readings);
   
+  if (last_errno != 1) readings->error = last_errno;  
+  last_transmitted_errno = last_errno;
   if(hasEvent(readings))
-  {
+  {    
     readings->seq = seq; 
     String pkt = constructPkt(readings);
     
@@ -42,10 +55,10 @@ void doSenseCycle()
     disconnectMQTT();
     disconnectGSM();
     if (transmit_res || csvWriteRes) { 
-      updateState(readings); 
+      updateState(readings);
+      resetErrors(); 
     }
-    else {} //Do something for failure
     resetReadings(readings);
     seq++; //increment sequence number*/
-    }
+  }
 }

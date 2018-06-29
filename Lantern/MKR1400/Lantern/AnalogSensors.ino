@@ -42,6 +42,9 @@ void unpowerStateOpAmps() {
 void getBatteryVoltage(Data* readings)
 {
   readings->nodeBatt = (analogRead(ADC_BATTERY) / ADC_BITS ) * INT_BATTERY_DIVIDER_MAX;
+  if (readings->nodeBatt < BATTERY_LOW_VOLTAGE){
+    batteryLow=true;
+  }
 }
 
 /**

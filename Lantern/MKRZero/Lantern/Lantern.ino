@@ -37,7 +37,7 @@ void loop() {
   doSenseCycle();
   debug("End Sense");
   //nodeSleep();
-  delay(1000);
+  delay(5000);
  }
 
 

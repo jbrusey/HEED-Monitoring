@@ -14,19 +14,19 @@ SdFile file;
  * see if the card is present and can be initialized:
  */
 void setupSD() {
-  debug("Setting up SD");
+  //debug("Setting up SD");
   
-  if (!SD.begin(SD_CS_PIN, SPI_HALF_SPEED)) {
-    debug("Card failed, or not present");
-    exit(0); //NEed to turn LED on or similar
-  }
+  //if (!SD.begin(SD_CS_PIN, SPI_HALF_SPEED)) {
+ //   debug("Card failed, or not present");
+ //   exit(0); //NEed to turn LED on or similar
+ // }
  
-  debug("card initialized");
+ // debug("card initialized");
 }
 
 
 void _write(Data* reading){  
-  file.print(reading->unixtime);
+ /* file.print(reading->unixtime);
   file.print(",");
   file.print(NODE_ID);
   file.print(",");
@@ -44,7 +44,7 @@ void _write(Data* reading){
   file.print(",");
   file.print(reading->nodeBatt);
   file.print(",");
-  file.println(reading->seq);
+  file.println(reading->seq);*/
 }
 
 /**
@@ -54,7 +54,7 @@ void _write(Data* reading){
  */
 bool writeDataToFile(Data* reading)
 {
-  debug("SD Write start");
+  /*debug("SD Write start");
   if (!file.open(fileName, O_APPEND | O_CREAT | O_WRITE )) {
     debug("Card failed, or not present");
     return false;
@@ -71,6 +71,6 @@ bool writeDataToFile(Data* reading)
     return false;
   }
  
-  debug("SD Write end");
+  debug("SD Write end");*/
   return true;
 }

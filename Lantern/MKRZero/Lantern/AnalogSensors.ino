@@ -42,6 +42,8 @@ void unpowerStateOpAmps() {
 void getBatteryVoltage(Data* readings)
 {
   readings->nodeBatt = (analogRead(ADC_BATTERY) / ADC_BITS ) * INT_BATTERY_DIVIDER_MAX;
+  //debug("Node Battery:" + String(readings->nodeBatt));
+
 }
 
 /**
@@ -52,6 +54,8 @@ void getBatteryVoltage(Data* readings)
 void getSolarBatteryVoltage(Data* readings)
 {
   readings->solarBatt = (analogRead(A1) / ADC_BITS ) * ADC_VREF;
+  //debug("Solar Battery:" + String(readings->solarBatt));
+
 }
 
 
@@ -64,7 +68,9 @@ void getLanternState(Data* readings)
   analogReference(AR_INTERNAL1V0); //We need to change for this sensor modality
   powerStateOpAmps();
   readings->usage = analogRead(A2) / STATE_MV_CONVERSION;
+  //debug("Usage:" + String(readings->usage));
   readings->charging = analogRead(A3) / STATE_MV_CONVERSION;
+  //debug("Charging:" + String(readings->charging));
   unpowerStateOpAmps();
   analogReference(AR_DEFAULT);
 }

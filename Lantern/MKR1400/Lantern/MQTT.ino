@@ -8,18 +8,27 @@ const String MQTT_TOPIC = String("Lantern/") + NODE_ID + "/data";
 /**
  * Connects the node to the MQTT broker
  */
- void connectMQTT() {
+bool connectMQTT() {
+  bool mqtt_connected = false;
   if (!client.connected())
   {
     client.begin(MQTT_SERVER, net);  //Start a connection
     //Set options: Keep alive for 10 hours, clean session, 1 second timeout
     client.setOptions(MQTT_KEEP_ALIVE, MQTT_CLEAN_SESSION, MQTT_TIMEOUT);
     debug("connecting to broker...");
-    while (!client.connect("arduino")) {
-      delay(MQTT_CONNECT_RETRY_TIME);
+    bool res = client.connect("arduino");
+    if(res){
+      mqtt_connected = true;
+      debug("MQTT connected!");
     }
-    debug("connected!");
+    else
+    {
+      reportError(ERR_MQTT_CONNECTION_FAILED);
+      debug("MQTT can't connect!");
+    }  
   }
+  else mqtt_connected = true;
+  return mqtt_connected;
 }
 
 
@@ -39,6 +48,7 @@ void disconnectMQTT() {
  */
 bool transmit(String topic, String dataString) {
   bool res = client.publish(topic, dataString);
+  if (!res) reportError(ERR_MQTT_TRANSMISSION_FAILED);
   return res;
 }
 

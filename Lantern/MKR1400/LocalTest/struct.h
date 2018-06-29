@@ -10,5 +10,3 @@ struct Data {
   uint32_t seq;
 };
 
-
-

@@ -19,7 +19,7 @@
 
 //Macro for print time
 #ifdef PRINTF
-# define debug(msg) _PRINT_TIME(msg)
+# define debug(msg) _PRINT_TIME(String(msg))
 #else
 # define debug(msg) do {} while(0)
 #endif
@@ -37,6 +37,8 @@
 
 #define ADC_VREF 3.468                    //Max voltage that can be sensed from the voltage divider
 #define ADC_BITS 1023.0             //number of bits
+
+#define BATTERY_LOW_VOLTAGE 3.35
 
 //SIP THRESHHOLD
 #define SIP_SOLAR_BATTERY_THRESH -1 // Threshold to define when the solar lantern battery is eventful

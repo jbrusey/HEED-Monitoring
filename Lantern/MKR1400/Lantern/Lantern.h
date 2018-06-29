@@ -19,7 +19,7 @@
 
 //Macro for print time
 #ifdef PRINTF
-# define debug(msg) _PRINT_TIME(msg)
+# define debug(msg) _PRINT_TIME(String(msg))
 #else
 # define debug(msg) do {} while(0)
 #endif
@@ -27,7 +27,6 @@
 #define STATE_POWER_PIN 7                  //Arduino Pin the MAX31850 3V3 is connected to
 #define STATE_MV_CONVERSION 1.023
 #define DIGITAL_ON_WAIT 10          //Wait 10ms to ensure digital pin has switched high
-
 
 #define ADC_MIN 0                 //Min value extect from the ADC
 #define ADC_MAX 1023              //Max value extect from the ADC
@@ -38,11 +37,12 @@
 
 #define ADC_VREF 3.468                    //Max voltage that can be sensed from the voltage divider
 #define ADC_BITS 1023.0             //number of bits
-  
+
+#define BATTERY_LOW_VOLTAGE 3.35
+
 //SIP THRESHHOLD
 #define SIP_SOLAR_BATTERY_THRESH -1 // Threshold to define when the solar lantern battery is eventful
-#define SIP_STATE_THRESH -1 // Threshold to define when the solar state has changed (needs testing)
-
+#define SIP_STATE_THRESH -1 // Threshold to define when the solar state has changed (needs testing)ful
 
 #define INT_SOURCE_NO_INTERRUPT 0x83  //DATA_READY, Watermark, and Overun are always active so interrupt source will always read 0x83 if no other interrupt has been triggered
 #define INACTIVITY_TIME 30

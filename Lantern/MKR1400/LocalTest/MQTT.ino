@@ -8,8 +8,8 @@ const String MQTT_TOPIC = String("Lantern/") + NODE_ID + "/data";
 /**
  * Connects the node to the MQTT broker
  */
- void connectMQTT() {
-  if (!client.connected())
+ bool connectMQTT() {
+  /*if (!client.connected())
   {
     client.begin(MQTT_SERVER, net);  //Start a connection
     //Set options: Keep alive for 10 hours, clean session, 1 second timeout
@@ -19,7 +19,8 @@ const String MQTT_TOPIC = String("Lantern/") + NODE_ID + "/data";
       delay(MQTT_CONNECT_RETRY_TIME);
     }
     debug("connected!");
-  }
+  }*/
+  return true;
 }
 
 
@@ -27,8 +28,8 @@ const String MQTT_TOPIC = String("Lantern/") + NODE_ID + "/data";
  * Disonnects the node from the MQTT broker
  */
 void disconnectMQTT() {
-  client.disconnect();
-  debug("MQTT disconnected"); 
+  //client.disconnect();
+  //debug("MQTT disconnected"); 
 }
 
 /**
@@ -38,7 +39,7 @@ void disconnectMQTT() {
  * @return True if the String was saved
  */
 bool transmit(String topic, String dataString) {
-  bool res = client.publish(topic, dataString);
-  return res;
+  //bool res = client.publish(topic, dataString);
+  return true;
 }
 

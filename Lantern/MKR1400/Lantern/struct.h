@@ -8,6 +8,7 @@ struct Data {
   bool activity;
   float nodeBatt;
   uint32_t seq;
+  uint32_t error;
 };
 
 
