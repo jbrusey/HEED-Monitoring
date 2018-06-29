@@ -28,6 +28,7 @@ void connectGSM();
 void disconnectGSM();
 void connectMQTT();
 void disconnectMQTT();
+void _DO_NOTHING();
 bool transmit(String topic, String dataString);
 
 //Bring in minunit and the code to be tested
@@ -46,6 +47,8 @@ void connectGSM(){}
 void disconnectGSM(){}
 void connectMQTT(){}
 void disconnectMQTT(){}
+
+void _DO_NOTHING(){}
 
 bool transmit(String topic, String dataString)
 {
