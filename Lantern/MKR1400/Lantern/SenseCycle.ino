@@ -36,7 +36,6 @@ void resetReadings(Data* readings){
 void doSenseCycle()
 {
   getSolarBatteryVoltage(readings);
-  getBatteryVoltage(readings);
   adxl345GetInterrupt(readings);
   getLanternState(readings);
   
@@ -45,6 +44,8 @@ void doSenseCycle()
   
   if(hasEvent(readings))
   {    
+    
+    getBatteryVoltage(readings);
     readings->seq = seq; 
     String pkt = constructPkt(readings);
     
