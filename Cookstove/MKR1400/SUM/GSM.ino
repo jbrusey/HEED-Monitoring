@@ -25,7 +25,7 @@ const char GPRS_PASSWORD[] = SECRET_GPRS_PASSWORD;
       (gprs.attachGPRS(GPRS_APN, GPRS_LOGIN, GPRS_PASSWORD) == GPRS_READY)) 
   {
         gsmAccess.lowPowerMode();
-        debug("GSM ready");
+        debug("GSM: Ready");
         GSMConnected = true;
   } 
   else {

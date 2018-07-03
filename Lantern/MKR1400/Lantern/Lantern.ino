@@ -14,17 +14,17 @@
 void setup() {
   delay(STARTUP_DELAY); //avoids the node going to sleep straight away (avoids the node hanging during flashing)
 
-  #ifdef PRINTF
+  #ifdef DEBUG
     startSerial();
   #else
     USBDevice.detach();
+    //setRTCAlarm(RTC_SAMPLE_TIME);
   #endif
   
   setupRTC();
   setupSD();
   setupAnalogSensors();
   setupADXL345();
-  //setRTCAlarm(RTC_SAMPLE_TIME);
 }
 
 
@@ -41,10 +41,10 @@ void loop() {
     debug("End Sense");
   }
    
-  #ifdef PRINTF
-    nodeSleep(); //go back to sleep
+  #ifdef DEBUG
+    delay(5000); // keeps USB connection on instead
   #else
-    delay(5000); // for debugging purposes only - keeps USB connection on
+    nodeSleep(); //go back to sleep
   #endif
 }
 
