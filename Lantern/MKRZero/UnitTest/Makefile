@@ -1,10 +1,14 @@
 
 CC=gcc
-test: UnitTestSIP UnitTestSenseCycle
+test: UnitTestSIP UnitTestSenseCycle UnitTestHB
 	./UnitTestSIP
 	./UnitTestSenseCycle
+	./UnitTestHB
+
 
 clean:
 	rm ./UnitTestSIP
 	rm ./UnitTestSenseCycle
+	rm ./UnitTestHB
+
 

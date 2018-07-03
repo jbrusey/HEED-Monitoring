@@ -14,6 +14,7 @@ typedef unsigned char String;
 #include "../Lantern/struct.h"
 #include "../Lantern/error.h"
 
+
 //function prototypes
 bool writeDataToFile(Data* readings);
 void getSolarBatteryVoltage(Data* readings);
@@ -24,6 +25,7 @@ void getTime(Data* readingreadings);
 void getLanternState(Data* readings);
 void digitalWrite(uint8_t pin, uint8_t value);
 void nodeFunctional();
+bool isHeartbeat();
 
 
 
@@ -46,6 +48,9 @@ bool pktWrote = false;
 void nodeFunctional(){}
 void digitalWrite(uint8_t pin, uint8_t value){}
 
+bool isHeartbeat(){
+  return false;
+}
 
 bool writeDataToFile(Data* readings)
 {

@@ -40,6 +40,7 @@
 
 #define DIGITAL_ON_WAIT 10          //Wait 10ms to ensure digital pin has switched high
 
+#define HEART_LIMIT 1440
 #define SIP_TEMP_THERMOCOUPLE_THRESH 0.5      //Temperature threshold (0.5C suggested, set to -1 for sense-and-send)
 #define SIP_TEMP_SI7021_THRESH 0.5            //Temperature threshold (0.5C suggested, set to -1 for sense-and-send)
 #define SIP_HUMIDITY_THRESH 2                 //Humidity threshold (2% suggested, set to -1 for sense-and-send)

@@ -27,7 +27,7 @@ void doSenseCycle()
   adxl345GetInterrupt(readings);
   getLanternState(readings);
   
-  if(hasEvent(readings))
+  if(hasEvent(readings) || isHeartbeat())
   {
     readings->seq = seq; 
     String pkt = constructPkt(readings);
