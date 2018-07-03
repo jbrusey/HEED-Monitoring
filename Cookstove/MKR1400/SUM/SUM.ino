@@ -15,10 +15,11 @@ void setup() {
     startSerial();
   #else
     USBDevice.detach();
-    setRTCAlarm(RTC_SAMPLE_TIME);
   #endif
 
   setupRTC();
+  setRTCAlarm(RTC_SAMPLE_TIME);
+  
   setupSD();
   setupAnalogSensors();
   
@@ -30,8 +31,9 @@ void setup() {
  * putting the node to sleep
  */
 void loop() {
- if (batteryLow) batteryError();
-  else{
+ if (batteryLow) 
+    batteryError();
+ else{
     SerialUSB.println("\n-----------------");
     debug("Start Sense");
     doSenseCycle();
