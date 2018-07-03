@@ -2,13 +2,13 @@
 #define STARTUP_DELAY 5000         //How long to delay before the node starts
 
 //DEBUG
-//#define PRINTF 1                //Comment out to remove debug messages
+#define PRINTF 1                //Comment out to remove debug messages
 #define LEDS 1                  //Comment out to remove led debug messages
 #define SERIAL_SPEED 9600       //Serial speed
 
 //Macro for print time
 #ifdef PRINTF
-# define debug(msg) _PRINT_TIME(msg)
+# define debug(msg) _PRINT_TIME(String(msg))
 #else
 # define debug(msg) _DO_NOTHING();
 #endif
