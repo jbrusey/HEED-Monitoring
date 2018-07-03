@@ -44,9 +44,9 @@ void loop() {
   }
    
   #ifdef PRINTF
-    nodeSleep(); //go back to sleep
-  #else
     delay(5000); // for debugging purposes only - keeps USB connection on
+  #else
+    nodeSleep(); //go back to sleep
   #endif
  }
 
