@@ -9,7 +9,7 @@
 #define SERIAL_SPEED 9600                     //Serial speed
 
 //Macro for print time
-#ifdef PRINTF
+#ifdef DEBUG
 # define debug(msg) _PRINT_TIME(String(msg))
 #else
 # define debug(msg) _DO_NOTHING();

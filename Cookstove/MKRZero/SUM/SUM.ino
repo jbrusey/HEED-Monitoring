@@ -11,7 +11,7 @@
  * 5, Setting up the RTC to trigger every minute
  */
 void setup() {
-  #ifdef PRINTF
+  #ifdef DEBUG
     startSerial();
   #else
     USBDevice.detach();
@@ -21,6 +21,7 @@ void setup() {
   setupSD();
   setupAnalogSensors();
   setRTCAlarm(RTC_SAMPLE_TIME);
+
   delay(STARTUP_DELAY); //avoids the node going to sleep straight away (avoids the node hanging during flashing)
 }
 
@@ -37,7 +38,7 @@ void loop() {
     debug("End Sense");
   }
    
-  #ifdef PRINTF
+  #ifdef DEBUG
     nodeSleep(); //go back to sleep
   #else
     delay(5000); // for debugging purposes only - keeps USB connection on
