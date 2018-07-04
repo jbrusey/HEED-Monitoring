@@ -1,9 +1,11 @@
+#include "Credentials.h"                      //Header file with MQTT server and SIM credentials. Look below for sample.                  
+
 //GENERAL
 #define NODE_ID "1"                           //Set ID of the arduino (make sure this is unique)
 #define STARTUP_DELAY 5000                    //How long to delay before the node starts
 
 //DEBUG
-//#define DEBUG 1                               //Comment out to remove debug messages
+//#define DEBUG 1                             //Comment out to remove debug messages
 #define SERIAL_SPEED 9600                     //Serial speed
 
 //Macro for print time
@@ -14,17 +16,9 @@
 #endif
 
 //GSM
-#define SECRET_PINNUMBER     ""               // SIM Pin number
-#define SECRET_GPRS_APN      "giffgaff.com"   // replace GPRS APN
-#define SECRET_GPRS_LOGIN    "giffgaff"       // replace with GPRS login
-#define SECRET_GPRS_PASSWORD ""               // replace with GPRS password
 #define GSM_CONNECT_RETRY_TIME 500            // How long to retry between gsm connection tries (0.5s)
 
 //MQTT
-//#define MQTT_SERVER "159.65.25.153"         //Old MQTT broker address
-#define MQTT_SERVER "help-data.coventry.ac.uk"//New MQTT broker address
-#define MQTT_USER ""                          //MQTT User - LEAVE EMPTY WHEN COMMITING TO GIT!
-#define MQTT_PASS ""                          //MQTT Pass - LEAVE EMPTY WHEN COMMITING TO GIT!
 #define MQTT_KEEP_ALIVE 36000                 //MQTT keep alive time (10hours)
 #define MQTT_CLEAN_SESSION false              //MQTT start a clean session on connection
 #define MQTT_TIMEOUT 1000                     //MQTT 1s timeout
@@ -75,5 +69,17 @@
 #define LINK_BIT_ENABLE true
 
 
+// Below is how Credentials.h should look like:
+
+//CREDENTIALS - SIM
+//#define SECRET_PINNUMBER     ""               // SIM Pin number
+//#define SECRET_GPRS_APN      ""               // replace GPRS APN
+//#define SECRET_GPRS_LOGIN    ""               // replace with GPRS login
+//#define SECRET_GPRS_PASSWORD ""               // replace with GPRS password
+
+//CREDENTIALS - MQTT
+//#define MQTT_SERVER ""                        // MQTT broker address
+//#define MQTT_USER ""                          
+//#define MQTT_PASS ""        
 
 
