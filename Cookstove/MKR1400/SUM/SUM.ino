@@ -14,6 +14,7 @@ void setup() {
   #ifdef DEBUG
     startSerial();
   #else
+    delay(STARTUP_DELAY); //avoids the node going to sleep straight away (avoids the node hanging during flashing)
     USBDevice.detach();
   #endif
 
@@ -22,8 +23,6 @@ void setup() {
   
   setupSD();
   setupAnalogSensors();
-  
-  delay(STARTUP_DELAY); //avoids the node going to sleep straight away (avoids the node hanging during flashing)
 }
 
 /**
