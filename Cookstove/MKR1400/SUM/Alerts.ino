@@ -15,15 +15,17 @@ void nodeFunctional(){
   }
 }
 
-
-bool batteryState = LOW;
 void batteryError(){
   debug("battery dead");
-  if (batteryState == LOW) batteryState = HIGH;
-  else batteryState = LOW;
-  digitalWrite(LED_BUILTIN, batteryState);
+  uint8_t x = 0;
+  while (x < 3){
+    digitalWrite(LED_BUILTIN, HIGH);
+    delay(250);
+    digitalWrite(LED_BUILTIN, LOW);
+    delay(250);
+    x++;
+  }
 }
-
 
 /** reportError records a code to be sent on the next transmission.
 * @param errno error code
