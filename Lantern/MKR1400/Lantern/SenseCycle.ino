@@ -44,21 +44,26 @@ void doSenseCycle()
   
   if(hasEvent(readings) || isHeartbeat())
   {    
+    bool transmit_res = false;
+    bool csvWriteRes = false;
     
-    getBatteryVoltage(readings);
-    readings->seq = seq; 
-    String pkt = constructPkt(readings);
+    readings->seq = seq;
+    getBatteryVoltage(readings); 
     
-    connectGSM();
-    connectMQTT();
-    
-    getGSMTime(readings);
-    bool transmit_res = transmit(MQTT_TOPIC, pkt);
-    
-    disconnectMQTT();
-    disconnectGSM();
+    if (connectGSM())
+    {
+      if (connectMQTT())
+      {
+        getGSMTime(readings);
+        String pkt = constructPkt(readings);
+        transmit_res = transmit(MQTT_TOPIC, pkt);
+        
+        disconnectMQTT();
+      }
+      disconnectGSM();
+    }
 
-    bool csvWriteRes = writeDataToFile(readings);
+    csvWriteRes = writeDataToFile(readings);
     
     if (transmit_res && csvWriteRes){
       if (first){

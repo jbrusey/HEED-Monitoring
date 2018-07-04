@@ -44,7 +44,7 @@ void RTC_ISR() {}
 
 /**
  * Setup the RTC alarm to trigger an interrupt every minute
- * @param seconds The second of a minute to trigger an interruot
+ * @param seconds The second of a minute to trigger an interrupt
  */
 void setRTCAlarm(int seconds) {
   // Set RTC alarm to trigger an interrupt on every --:--:xx

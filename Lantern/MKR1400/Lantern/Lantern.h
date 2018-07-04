@@ -3,7 +3,7 @@
 #define STARTUP_DELAY 5000                    //How long to delay before the node starts
 
 //DEBUG
-#define DEBUG 1                               //Comment out to remove debug messages
+//#define DEBUG 1                               //Comment out to remove debug messages
 #define SERIAL_SPEED 9600                     //Serial speed
 
 //Macro for print time
@@ -21,7 +21,10 @@
 #define GSM_CONNECT_RETRY_TIME 500            // How long to retry between gsm connection tries (0.5s)
 
 //MQTT
-#define MQTT_SERVER "159.65.25.153"           //MQTT broker address
+//#define MQTT_SERVER "159.65.25.153"         //Old MQTT broker address
+#define MQTT_SERVER "help-data.coventry.ac.uk"//New MQTT broker address
+#define MQTT_USER ""                          //MQTT User - LEAVE EMPTY WHEN COMMITING TO GIT!
+#define MQTT_PASS ""                          //MQTT Pass - LEAVE EMPTY WHEN COMMITING TO GIT!
 #define MQTT_KEEP_ALIVE 36000                 //MQTT keep alive time (10hours)
 #define MQTT_CLEAN_SESSION false              //MQTT start a clean session on connection
 #define MQTT_TIMEOUT 1000                     //MQTT 1s timeout

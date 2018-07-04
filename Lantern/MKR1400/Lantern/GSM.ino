@@ -39,6 +39,7 @@ void getGSMTime(Data* readings) {
 }
 
 void disconnectGSM() {
+  //TODO: Implement some check if GPRS is still online, otherwise the program will freeze here
   gprs.detachGPRS();
   gsmAccess.shutdown();
   debug("GSM: Disconnected");

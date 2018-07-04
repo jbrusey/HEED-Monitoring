@@ -16,6 +16,7 @@ bool connectMQTT() {
     //Set options: Keep alive for 10 hours, clean session, 1 second timeout
     client.setOptions(MQTT_KEEP_ALIVE, MQTT_CLEAN_SESSION, MQTT_TIMEOUT);
     debug("MQTT: Connecting to broker...");
+    // TODO: Implement some timeout here - the connection process can sometimes freeze indefinetely
     bool res = client.connect("arduino");
     if(res){
       mqtt_connected = true;
