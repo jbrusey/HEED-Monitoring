@@ -10,7 +10,7 @@ SdFile file;
 
 
 /**
- * Configure the RTC for use. This function checks to
+ * Configure the SD card for use. This function checks to
  * see if the card is present and can be initialized:
  */
 void setupSD() {
