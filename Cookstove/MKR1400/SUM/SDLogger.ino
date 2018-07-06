@@ -1,5 +1,4 @@
 //Import SD card library and define variables
-#include <SPI.h>
 #include "SdFat.h"
 SdFat SD;
 #define SD_CS_PIN 4
@@ -20,7 +19,7 @@ void _write(Data* reading){
   file.print(",");
   file.print(reading->nodeBatt);
   file.print(",");
-  file.println(reading->error);
+  file.print(reading->error);
   file.print(",");
   file.println(reading->seq);
 }
