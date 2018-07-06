@@ -7,18 +7,43 @@
  */
 #include <SparkFun_ADXL345.h>         // SparkFun ADXL345 Library
 
+//libraries and global variables for SD card writing
+#include <SPI.h>
+#include "SdFat.h"
+#define SD_CS_PIN SS1
+
+char fileName[25] = "Acceleration_Profile.csv";
+SdFat SD;
+SdFile file;
+
+
 /*********** COMMUNICATION SELECTION ***********/
 ADXL345 adxl = ADXL345();             // USE FOR I2C COMMUNICATION
 
+/**
+ * Configure the SD card for use. This function checks to
+ * see if the card is present and can be initialized:
+ */
+void setupSD() {
+  Serial.print("Setting up SD:");
+
+  if (!SD.begin(SD_CS_PIN, SPI_HALF_SPEED)) {
+    Serial.println("SD card failed, or not present");
+    return; //Need to turn LED on or similar
+  }
+
+  Serial.println(fileName);
+
+  Serial.println("SD card initialized");
+}
 
 /******************** SETUP ********************/
 /*          Configure ADXL345 Settings         */
 void setup(){
   
   Serial.begin(9600);                 // Start the serial terminal
-  Serial.println("SparkFun ADXL345 Accelerometer Hook Up Guide Example");
-  Serial.println();
   
+  delay(5000);
   adxl.powerOn();                     // Power on the ADXL345
 
   adxl.setRangeSetting(8);           // Give the range settings
@@ -37,7 +62,7 @@ void setup(){
   adxl.doubleTapINT(0);
   adxl.singleTapINT(0);
   
-
+  setupSD();
 
 }
 
@@ -49,13 +74,28 @@ void loop(){
   int x,y,z;   
   adxl.readAccel(&x, &y, &z);         // Read the accelerometer values and store them in variables declared above x,y,z
 
+  file.open(fileName, O_APPEND | O_CREAT | O_WRITE );
+  
+  //outputting results to file in SD card.
+  delay(10);
+  file.print(x);
+  file.print(", ");
+  file.print(y);
+  file.print(", ");
+  file.println(z);
+  delay(10);
+
+
+  file.close();
+  
   // Output Results to Serial 
   Serial.print(x);
-  Serial.print(", ");
+  Serial.print(", ");  
   Serial.print(y);
-  Serial.print(", ");
+  Serial.print(", ");  
   Serial.println(z); 
-  delay(500);
+  
+  delay(80);
 
 }
 
