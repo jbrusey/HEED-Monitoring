@@ -32,6 +32,8 @@
 
 
 //SIP THRESHHOLD
+
+#define HEART_LIMIT 1440
 #define SIP_SOLAR_BATTERY_THRESH -1 // Threshold to define when the solar lantern battery is eventful
 #define SIP_STATE_THRESH -1 // Threshold to define when the solar state has changed (needs testing)
 

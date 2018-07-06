@@ -44,7 +44,7 @@ void RTC_ISR() {}
 
 /**
  * Setup the RTC alarm to trigger an interrupt every minute
- * @param seconds The second of a minute to trigger an interruot
+ * @param seconds The second of a minute to trigger an interrupt
  */
 void setRTCAlarm(int seconds) {
   // Set RTC alarm to trigger an interrupt on every --:--:xx
@@ -63,6 +63,10 @@ void setRTCAlarm(int seconds) {
  */
 void nodeSleep(){
   debug("Sleep");
-  rtc.standbyMode();
+  
+  // Equivalent of rtc.standbyMode(); from RTCZero.h library
+  SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
+  __DSB(); // Executes DSB (Data Synchronization Barrier) to ensure all ongoing memory accesses have completed
+  __WFI(); // Executes WFI (Wait For Interrupt) to place the device into the sleep mode specified by \ref system_set_sleepmode until woken by an interrupt
 }
 

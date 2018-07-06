@@ -36,22 +36,28 @@ void resetReadings(Data* readings){
   if (last_errno != 1) readings->error = last_errno;  
   last_transmitted_errno = last_errno;
   
-  if (hasEvent(readings)) {
+  if (hasEvent(readings) || isHeartbeat()) 
+  {
+    bool transmit_res = false;
+    bool csvWriteRes = false;
     
     readings->seq = seq;
     getBatteryVoltage(readings);
 
-    connectGSM();
-    connectMQTT();
+    if (connectGSM())
+    {
+      if (connectMQTT())
+      {
+        getGSMTime(readings);
+        String pkt = constructPkt(readings);
+        transmit_res = transmit(MQTT_TOPIC, pkt);
+        
+        disconnectMQTT();
+      }
+      disconnectGSM();
+    }
 
-    getGSMTime(readings);
-    String pkt = constructPkt(readings);
-    bool transmit_res = transmit(MQTT_TOPIC, pkt);
-    
-    disconnectMQTT();
-    disconnectGSM();
-
-    bool csvWriteRes = writeDataToFile(readings);
+    csvWriteRes = writeDataToFile(readings);
     
     if (transmit_res && csvWriteRes){
       if (first){

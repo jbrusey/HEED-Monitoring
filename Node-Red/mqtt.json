@@ -1,27 +1,52 @@
 [
     {
-        "id": "3ba5797e.be045e",
+        "id": "bc3c447c.c83b4",
         "type": "tab",
         "label": "SUM",
         "disabled": false,
         "info": ""
     },
     {
-        "id": "b2c9546.5c5f728",
+        "id": "a5b9aabe.9b6c28",
         "type": "tab",
         "label": "Street Light",
         "disabled": false,
         "info": ""
     },
     {
-        "id": "12672a2d.9d0a2e",
+        "id": "f4be8b12.8b3f48",
         "type": "tab",
         "label": "Lantern",
         "disabled": false,
         "info": ""
     },
     {
-        "id": "55d9f449.6d61e4",
+        "id": "82658df9.b3beb",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "Help-Data",
+        "broker": "help-data.coventry.ac.uk",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": ""
+    },
+    {
+        "id": "6fabe5d5.5b3ad4",
         "type": "mqtt-broker",
         "z": "",
         "name": "DigitalOcean",
@@ -32,109 +57,19 @@
         "compatmode": true,
         "keepalive": "60",
         "cleansession": true,
-        "willTopic": "",
-        "willQos": "0",
-        "willRetain": "false",
-        "willPayload": "",
         "birthTopic": "",
         "birthQos": "0",
         "birthRetain": "false",
-        "birthPayload": ""
+        "birthPayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": ""
     },
     {
-        "id": "31f422c1.128126",
-        "type": "ui_base",
-        "theme": {
-            "name": "theme-light",
-            "lightTheme": {
-                "default": "#0094CE",
-                "baseColor": "#0094CE",
-                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
-                "edited": true,
-                "reset": false
-            },
-            "darkTheme": {
-                "default": "#097479",
-                "baseColor": "#097479",
-                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
-                "edited": true,
-                "reset": false
-            },
-            "customTheme": {
-                "name": "Untitled Theme 1",
-                "default": "#4B7930",
-                "baseColor": "#4B7930",
-                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
-            },
-            "themeState": {
-                "base-color": {
-                    "default": "#0094CE",
-                    "value": "#0094CE",
-                    "edited": false
-                },
-                "page-titlebar-backgroundColor": {
-                    "value": "#0094CE",
-                    "edited": false
-                },
-                "page-backgroundColor": {
-                    "value": "#fafafa",
-                    "edited": false
-                },
-                "page-sidebar-backgroundColor": {
-                    "value": "#ffffff",
-                    "edited": false
-                },
-                "group-textColor": {
-                    "value": "#1bbfff",
-                    "edited": false
-                },
-                "group-borderColor": {
-                    "value": "#ffffff",
-                    "edited": false
-                },
-                "group-backgroundColor": {
-                    "value": "#ffffff",
-                    "edited": false
-                },
-                "widget-textColor": {
-                    "value": "#111111",
-                    "edited": false
-                },
-                "widget-backgroundColor": {
-                    "value": "#0094ce",
-                    "edited": false
-                },
-                "widget-borderColor": {
-                    "value": "#ffffff",
-                    "edited": false
-                },
-                "base-font": {
-                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
-                }
-            }
-        },
-        "site": {
-            "name": "Node-RED Dashboard",
-            "hideToolbar": "false",
-            "allowSwipe": "false",
-            "allowTempTheme": "true",
-            "dateFormat": "DD/MM/YYYY",
-            "sizes": {
-                "sx": 48,
-                "sy": 48,
-                "gx": 6,
-                "gy": 6,
-                "cx": 6,
-                "cy": 6,
-                "px": 0,
-                "py": 0
-            }
-        }
-    },
-    {
-        "id": "7182c176.2be9d",
+        "id": "72b2046b.847454",
         "type": "file",
-        "z": "b2c9546.5c5f728",
+        "z": "a5b9aabe.9b6c28",
         "name": "",
         "filename": "StreetEnergy_BMV-700.csv",
         "appendNewline": true,
@@ -145,26 +80,26 @@
         "wires": []
     },
     {
-        "id": "2df8e84c.2756e",
+        "id": "e63693b.a479b7",
         "type": "mqtt in",
-        "z": "b2c9546.5c5f728",
+        "z": "a5b9aabe.9b6c28",
         "name": "",
         "topic": "Street/+/0x203",
         "qos": "2",
-        "broker": "55d9f449.6d61e4",
+        "broker": "82658df9.b3beb",
         "x": 140,
         "y": 320,
         "wires": [
             [
-                "df2a2d7a.157158",
-                "7182c176.2be9d"
+                "639f6eae.62ebc8",
+                "72b2046b.847454"
             ]
         ]
     },
     {
-        "id": "df2a2d7a.157158",
+        "id": "639f6eae.62ebc8",
         "type": "debug",
-        "z": "b2c9546.5c5f728",
+        "z": "a5b9aabe.9b6c28",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -176,9 +111,9 @@
         "wires": []
     },
     {
-        "id": "ca9487f9.4f538",
+        "id": "ef3892c3.276a9",
         "type": "file",
-        "z": "b2c9546.5c5f728",
+        "z": "a5b9aabe.9b6c28",
         "name": "",
         "filename": "StreetEnergy_BlueSolar.csv",
         "appendNewline": true,
@@ -189,26 +124,26 @@
         "wires": []
     },
     {
-        "id": "b66fe6b6.bfd13",
+        "id": "54b627fb.e1ef88",
         "type": "mqtt in",
-        "z": "b2c9546.5c5f728",
+        "z": "a5b9aabe.9b6c28",
         "name": "",
         "topic": "Street/+/0xA042",
         "qos": "2",
-        "broker": "55d9f449.6d61e4",
+        "broker": "82658df9.b3beb",
         "x": 120,
         "y": 140,
         "wires": [
             [
-                "e12ea55a.e526e",
-                "ca9487f9.4f538"
+                "4554e199.98702",
+                "ef3892c3.276a9"
             ]
         ]
     },
     {
-        "id": "e12ea55a.e526e",
+        "id": "4554e199.98702",
         "type": "debug",
-        "z": "b2c9546.5c5f728",
+        "z": "a5b9aabe.9b6c28",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -220,26 +155,26 @@
         "wires": []
     },
     {
-        "id": "3f8a021f.f73fae",
+        "id": "e14c5036.1a1908",
         "type": "mqtt in",
-        "z": "3ba5797e.be045e",
+        "z": "bc3c447c.c83b4",
         "name": "",
         "topic": "SUM/1/temperature",
         "qos": "2",
-        "broker": "55d9f449.6d61e4",
+        "broker": "82658df9.b3beb",
         "x": 170,
         "y": 120,
         "wires": [
             [
-                "c993892e.702398",
-                "6d8be530.9fe21c"
+                "66fd7188.0c0ca8",
+                "9a05603d.8870e"
             ]
         ]
     },
     {
-        "id": "c993892e.702398",
+        "id": "66fd7188.0c0ca8",
         "type": "debug",
-        "z": "3ba5797e.be045e",
+        "z": "bc3c447c.c83b4",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -251,9 +186,9 @@
         "wires": []
     },
     {
-        "id": "6d8be530.9fe21c",
+        "id": "9a05603d.8870e",
         "type": "file",
-        "z": "3ba5797e.be045e",
+        "z": "bc3c447c.c83b4",
         "name": "",
         "filename": "SUMTest.csv",
         "appendNewline": true,
@@ -264,9 +199,9 @@
         "wires": []
     },
     {
-        "id": "6683b462.66ecdc",
+        "id": "6f760791.9023a",
         "type": "file",
-        "z": "12672a2d.9d0a2e",
+        "z": "f4be8b12.8b3f48",
         "name": "",
         "filename": "LanternTest.csv",
         "appendNewline": true,
@@ -277,26 +212,26 @@
         "wires": []
     },
     {
-        "id": "700a6ad0.655af4",
+        "id": "b56f3ad5.1c401",
         "type": "mqtt in",
-        "z": "12672a2d.9d0a2e",
+        "z": "f4be8b12.8b3f48",
         "name": "",
         "topic": "Lantern/1/data",
         "qos": "2",
-        "broker": "55d9f449.6d61e4",
+        "broker": "82658df9.b3beb",
         "x": 140,
         "y": 120,
         "wires": [
             [
-                "36de7c9d.9c3f8c",
-                "6683b462.66ecdc"
+                "53e8d7ae.e0253",
+                "6f760791.9023a"
             ]
         ]
     },
     {
-        "id": "36de7c9d.9c3f8c",
+        "id": "53e8d7ae.e0253",
         "type": "debug",
-        "z": "12672a2d.9d0a2e",
+        "z": "f4be8b12.8b3f48",
         "name": "",
         "active": true,
         "tosidebar": true,

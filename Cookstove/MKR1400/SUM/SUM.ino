@@ -14,15 +14,15 @@ void setup() {
   #ifdef DEBUG
     startSerial();
   #else
+    delay(STARTUP_DELAY); //avoids the node going to sleep straight away (avoids the node hanging during flashing)
     USBDevice.detach();
-    setRTCAlarm(RTC_SAMPLE_TIME);
   #endif
 
   setupRTC();
+  setRTCAlarm(RTC_SAMPLE_TIME);
+  
   setupSD();
   setupAnalogSensors();
-  
-  delay(STARTUP_DELAY); //avoids the node going to sleep straight away (avoids the node hanging during flashing)
 }
 
 /**
@@ -30,8 +30,9 @@ void setup() {
  * putting the node to sleep
  */
 void loop() {
- if (batteryLow) batteryError();
-  else{
+ if (batteryLow) 
+    batteryError();
+ else{
     SerialUSB.println("\n-----------------");
     debug("Start Sense");
     doSenseCycle();

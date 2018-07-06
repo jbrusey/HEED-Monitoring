@@ -37,7 +37,7 @@ void resetReadings(Data* readings){
   if (last_errno != 1) readings->error = last_errno;  
   last_transmitted_errno = last_errno;
 
-  if (hasEvent(readings)) {
+  if (hasEvent(readings) || isHeartbeat()) {
     
     getTime(readings);
     readings->seq = seq;

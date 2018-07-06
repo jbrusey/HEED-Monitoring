@@ -15,19 +15,19 @@ SdFile file;
  */
 void setupSD() {
   debug("Setting up SD");
-  
+
   if (!SD.begin(SD_CS_PIN, SPI_HALF_SPEED)) {
     debug("SD card failed, or not present");
     return; //Need to turn LED on or similar
   }
-  
+
   debug(fileName);
- 
+
   debug("SD card initialized");
 }
 
 
-void _write(Data* reading){  
+void _write(Data* reading){
   file.print(reading->unixtime);
   file.print(",");
   file.print(NODE_ID);
@@ -46,7 +46,7 @@ void _write(Data* reading){
   file.print(",");
   file.print(reading->nodeBatt);
   file.print(",");
-  file.println(reading->error);
+  file.print(reading->error);
   file.print(",");
   file.println(reading->seq);
 }
@@ -59,24 +59,24 @@ void _write(Data* reading){
 bool writeDataToFile(Data* reading)
 {
   bool csv_write_res = false;
-  debug("SD Write start");
+  debug("SD: Write start");
   if (!file.open(fileName, O_APPEND | O_CREAT | O_WRITE )) {
-    debug("Card failed, or not present");
+    debug("SD card failed, or not present");
     reportError(ERR_CSV_OPEN);
     return csv_write_res;
   }
-  
+
   delay(10);
   _write(reading);
   delay(10);
 
   // Force data to SD and update the directory entry to avoid data loss.
   if (!file.close() || file.getWriteError()) {
-    debug("write error");
+    debug("SD: Write error");
     reportError(ERR_CSV_WRITE);
     return csv_write_res;
   }
   csv_write_res = true;
-  debug("SD Write end");
+  debug("SD: Write end");
   return csv_write_res;
 }

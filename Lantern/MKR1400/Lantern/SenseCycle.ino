@@ -36,28 +36,34 @@ void resetReadings(Data* readings){
 void doSenseCycle()
 {
   getSolarBatteryVoltage(readings);
-  getBatteryVoltage(readings);
   adxl345GetInterrupt(readings);
   getLanternState(readings);
   
   if (last_errno != 1) readings->error = last_errno;  
   last_transmitted_errno = last_errno;
   
-  if(hasEvent(readings))
+  if(hasEvent(readings) || isHeartbeat())
   {    
-    readings->seq = seq; 
-    String pkt = constructPkt(readings);
+    bool transmit_res = false;
+    bool csvWriteRes = false;
     
-    connectGSM();
-    connectMQTT();
+    readings->seq = seq;
+    getBatteryVoltage(readings); 
     
-    getGSMTime(readings);
-    bool transmit_res = transmit(MQTT_TOPIC, pkt);
-    
-    disconnectMQTT();
-    disconnectGSM();
+    if (connectGSM())
+    {
+      if (connectMQTT())
+      {
+        getGSMTime(readings);
+        String pkt = constructPkt(readings);
+        transmit_res = transmit(MQTT_TOPIC, pkt);
+        
+        disconnectMQTT();
+      }
+      disconnectGSM();
+    }
 
-    bool csvWriteRes = writeDataToFile(readings);
+    csvWriteRes = writeDataToFile(readings);
     
     if (transmit_res && csvWriteRes){
       if (first){

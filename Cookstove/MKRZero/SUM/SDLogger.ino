@@ -9,7 +9,7 @@ char fileName[10] = "SUM_" NODE_ID ".csv";
 SdFile file;
 
 
-void _write(Data* reading){ 
+void _write(Data* reading){
   file.print(reading->unixtime);
   file.print(",");
   file.print(reading->tempThermocouple);
@@ -20,7 +20,7 @@ void _write(Data* reading){
   file.print(",");
   file.print(reading->nodeBatt);
   file.print(",");
-  file.println(reading->error);
+  file.print(reading->error);
   file.print(",");
   file.println(reading->seq);
 }
@@ -31,7 +31,7 @@ void _write(Data* reading){
  */
 void setupSD() {
   debug("Setting up SD");
-  
+
   if (!SD.begin(SD_CS_PIN, SPI_HALF_SPEED)) {
     debug("SD card failed, or not present");
     return;
@@ -57,7 +57,7 @@ bool writeDataToFile(Data* reading)
     reportError(ERR_CSV_OPEN);
     return csv_write_res;
   }
-  
+
   delay(10);
   _write(reading);
   delay(10);

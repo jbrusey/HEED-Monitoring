@@ -12,19 +12,20 @@
  * 5, Setting up the RTC to trigger every minute
  */
 void setup() {
-  delay(STARTUP_DELAY); //avoids the node going to sleep straight away (avoids the node hanging during flashing)
-
-  #ifdef PRINTF
+  #ifdef DEBUG
     startSerial();
   #else
     USBDevice.detach();
   #endif
   
   setupRTC();
+  setRTCAlarm(RTC_SAMPLE_TIME);
+  
   setupSD();
   setupAnalogSensors();
   setupADXL345();
-  //setRTCAlarm(RTC_SAMPLE_TIME);
+
+  delay(STARTUP_DELAY); //avoids the node going to sleep straight away (avoids the node hanging during flashing)
 }
 
 
@@ -33,20 +34,22 @@ void setup() {
  * putting the node to sleep
  */
 void loop() {
- if (batteryLow) batteryError();
-  else{
+ if (batteryLow) 
+    batteryError();
+ else{
     SerialUSB.println("\n-----------------");
     debug("Start Sense");
     doSenseCycle();
     debug("End Sense");
   }
    
-  #ifdef PRINTF
-    nodeSleep(); //go back to sleep
+  #ifdef DEBUG
+    delay(5000); // keeps USB connection on instead
   #else
-    delay(5000); // for debugging purposes only - keeps USB connection on
+    nodeSleep(); //go back to sleep
   #endif
 }
+
 
 
 
