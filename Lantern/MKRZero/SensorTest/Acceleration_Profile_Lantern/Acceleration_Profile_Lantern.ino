@@ -15,7 +15,7 @@
 char fileName[25] = "Acceleration_Profile.csv";
 SdFat SD;
 SdFile file;
-
+int count = 1;
 
 /*********** COMMUNICATION SELECTION ***********/
 ADXL345 adxl = ADXL345();             // USE FOR I2C COMMUNICATION
@@ -43,7 +43,7 @@ void setup(){
   
   Serial.begin(9600);                 // Start the serial terminal
   
-  delay(5000);
+  delay(2000);
   adxl.powerOn();                     // Power on the ADXL345
 
   adxl.setRangeSetting(8);           // Give the range settings
@@ -63,7 +63,9 @@ void setup(){
   adxl.singleTapINT(0);
   
   setupSD();
-
+  file.open(fileName, O_APPEND | O_CREAT | O_WRITE );
+  pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, HIGH);
 }
 
 /****************** MAIN CODE ******************/
@@ -74,28 +76,29 @@ void loop(){
   int x,y,z;   
   adxl.readAccel(&x, &y, &z);         // Read the accelerometer values and store them in variables declared above x,y,z
 
-  file.open(fileName, O_APPEND | O_CREAT | O_WRITE );
   
   //outputting results to file in SD card.
-  delay(10);
+  file.print(count);
+  file.print(", ");
   file.print(x);
   file.print(", ");
   file.print(y);
   file.print(", ");
   file.println(z);
-  delay(10);
-
-
-  file.close();
+  
+  file.sync();
   
   // Output Results to Serial 
+  Serial.print(count);
+  Serial.print(", ");
   Serial.print(x);
   Serial.print(", ");  
   Serial.print(y);
   Serial.print(", ");  
-  Serial.println(z); 
+  Serial.println(z);
   
-  delay(80);
+  count++;
+  delay(100);
 
 }
 
