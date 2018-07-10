@@ -20,23 +20,6 @@ int count = 1;
 /*********** COMMUNICATION SELECTION ***********/
 ADXL345 adxl = ADXL345();             // USE FOR I2C COMMUNICATION
 
-/**
- * Configure the SD card for use. This function checks to
- * see if the card is present and can be initialized:
- */
-void setupSD() {
-  Serial.print("Setting up SD:");
-
-  if (!SD.begin(SD_CS_PIN, SPI_HALF_SPEED)) {
-    Serial.println("SD card failed, or not present");
-    return; //Need to turn LED on or similar
-  }
-
-  Serial.println(fileName);
-
-  Serial.println("SD card initialized");
-}
-
 /******************** SETUP ********************/
 /*          Configure ADXL345 Settings         */
 void setup(){
@@ -68,6 +51,22 @@ void setup(){
   digitalWrite(LED_BUILTIN, HIGH);
 }
 
+/**
+ * Configure the SD card for use. This function checks to
+ * see if the card is present and can be initialized:
+ */
+void setupSD() {
+  Serial.print("Setting up SD:");
+
+  if (!SD.begin(SD_CS_PIN, SPI_HALF_SPEED)) {
+    Serial.println("SD card failed, or not present");
+    return; //Need to turn LED on or similar
+  }
+  
+  Serial.println(fileName);
+  Serial.println("SD card initialized");
+}
+
 /****************** MAIN CODE ******************/
 /*     Accelerometer Readings and Interrupt    */
 void loop(){
@@ -80,23 +79,22 @@ void loop(){
   //outputting results to file in SD card.
   file.print(count);
   file.print(", ");
-  file.print(x);
+  file.print(x+20);
   file.print(", ");
-  file.print(y);
+  file.print(y-60);
   file.print(", ");
-  file.println(z);
+  file.println(z-5);
   
   file.sync();
   
   // Output Results to Serial 
   Serial.print(count);
   Serial.print(", ");
-  Serial.print(x);
+  Serial.print(x+20);
   Serial.print(", ");  
-  Serial.print(y);
+  Serial.print(y-60);
   Serial.print(", ");  
-  Serial.println(z);
-  
+  Serial.println(z-5);
   count++;
   delay(100);
 
