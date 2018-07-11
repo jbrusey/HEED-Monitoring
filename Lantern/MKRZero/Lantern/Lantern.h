@@ -25,7 +25,7 @@
 
 #define INT_BATTERY_DIVIDER_MAX 4.2 //Max voltage that can be sensed from the internal voltage divider with 3.3v reference
 
-#define ADC_VREF 3.468                    //Max voltage that can be sensed from the voltage divider
+#define ADC_VREF 6.6                   //Max voltage that can be sensed from the voltage divider
 #define ADC_BITS 1023.0             //number of bits
 
 #define BATTERY_LOW_VOLTAGE 3.35
