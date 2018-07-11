@@ -5,10 +5,13 @@
  */
 void setupAnalogSensors() {
   analogReference(AR_DEFAULT); //3.3V
-
+  
+  pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, HIGH); //turn LED on until first successfull write
+  
   //Set State power pin to output and make sure it is off
   pinMode(STATE_POWER_PIN, OUTPUT);
-  digitalWrite(STATE_POWER_PIN, LOW); //turn LED off
+  digitalWrite(STATE_POWER_PIN, LOW); //turn state circuit off
   debug("Digital pins set");
 }
 

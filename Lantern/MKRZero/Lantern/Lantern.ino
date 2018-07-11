@@ -16,14 +16,12 @@
 void setup() {
   delay(STARTUP_DELAY); //avoids the node going to sleep straight away (avoids the node hanging during flashing)
 
-  #ifdef PRINTF
+  #ifdef DEBUG
     startSerial();
   #else
     USBDevice.detach();
   #endif
-
-  pinMode(LED_BUILTIN, OUTPUT);
-  
+    
   setupRTC();
   setupSD();
   setupAnalogSensors();
@@ -39,20 +37,18 @@ void setup() {
 void loop() {
  if (batteryLow) batteryError();
   else{
-    #ifdef PRINTF
+    #ifdef DEBUG
       SerialUSB.println("\n-----------------");
     #endif
-    //digitalWrite(LED_BUILTIN, HIGH);    //comment out to remove LED-based debugging
     debug("Start Sense");
     doSenseCycle();
     debug("End Sense");
-    //digitalWrite(LED_BUILTIN, LOW);     //comment out to remove LED-based debugging
   }
   
-  #ifdef PRINTF
+  #ifdef DEBUG
     delay(5000); // for debugging purposes only - keeps USB connection on
   #else
-    nodeSleep(); //uncomment in final product deployment
+    nodeSleep(); //send node to sleep
   #endif
  }
 
