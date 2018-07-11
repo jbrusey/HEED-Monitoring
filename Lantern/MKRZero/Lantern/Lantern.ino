@@ -21,6 +21,8 @@ void setup() {
   #else
     USBDevice.detach();
   #endif
+
+  pinMode(LED_BUILTIN, OUTPUT);
   
   setupRTC();
   setupSD();
@@ -37,16 +39,20 @@ void setup() {
 void loop() {
  if (batteryLow) batteryError();
   else{
-    SerialUSB.println("\n-----------------");
+    #ifdef PRINTF
+      SerialUSB.println("\n-----------------");
+    #endif
+    //digitalWrite(LED_BUILTIN, HIGH);    //comment out to remove LED-based debugging
     debug("Start Sense");
     doSenseCycle();
     debug("End Sense");
+    //digitalWrite(LED_BUILTIN, LOW);     //comment out to remove LED-based debugging
   }
-   
+  
   #ifdef PRINTF
     delay(5000); // for debugging purposes only - keeps USB connection on
   #else
-    nodeSleep(); //go back to sleep
+    nodeSleep(); //uncomment in final product deployment
   #endif
  }
 
