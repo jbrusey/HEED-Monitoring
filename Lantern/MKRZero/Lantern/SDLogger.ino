@@ -44,6 +44,8 @@ void _write(Data* reading){
   file.print(",");
   file.print(reading->activity);
   file.print(",");
+  file.print(reading->movement);
+  file.print(",");
   file.print(reading->nodeBatt);
   file.print(",");
   file.print(reading->error);
