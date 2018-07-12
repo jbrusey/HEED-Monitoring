@@ -210,7 +210,15 @@ sudo chmod 755 /etc/init.d/autossh
 sudo update-rc.d autossh defaults
 sudo update-rc.d autossh enable
 
-# That's it. You can now run Footfall with: cd /opt/HELP/Footfall/; ./Footfall
+echo "Installing Open Framework dependencies..."
+cd /tmp/
+wget https://github.com/openframeworks/openFrameworks/blob/master/scripts/linux/debian/install_dependencies.sh
+sudo ./install_dependencies.sh
+wget https://github.com/openframeworks/openFrameworks/blob/master/scripts/linux/debian/install_codecs.sh
+sudo ./install_codecs.sh 
+
+
+# That's it. You can now run Footfall with: cd /opt/HELP/Footfall/; sudo ./Footfall
 
 ############################################################
 # OPTIMIZATION (OPTIONAL)
