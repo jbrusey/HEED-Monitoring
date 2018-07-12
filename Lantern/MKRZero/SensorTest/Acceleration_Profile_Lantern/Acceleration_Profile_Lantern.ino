@@ -29,7 +29,7 @@ void setup(){
   delay(2000);
   adxl.powerOn();                     // Power on the ADXL345
 
-  adxl.setRangeSetting(8);           // Give the range settings
+  adxl.setRangeSetting(2);           // Give the range settings
                                       // Accepted values are 2g, 4g, 8g or 16g
                                       // Higher Values = Wider Measurement Range
                                       // Lower Values = Greater Sensitivity
@@ -47,6 +47,7 @@ void setup(){
   
   setupSD();
   file.open(fileName, O_APPEND | O_CREAT | O_WRITE );
+  
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, HIGH);
 }
@@ -79,22 +80,22 @@ void loop(){
   //outputting results to file in SD card.
   file.print(count);
   file.print(", ");
-  file.print(x+20);
+  file.print(x);
   file.print(", ");
-  file.print(y-60);
+  file.print(y);
   file.print(", ");
-  file.println(z-5);
+  file.println(z);
   
   file.sync();
   
   // Output Results to Serial 
   Serial.print(count);
   Serial.print(", ");
-  Serial.print(x+20);
+  Serial.print(x);
   Serial.print(", ");  
-  Serial.print(y-60);
+  Serial.print(y);
   Serial.print(", ");  
-  Serial.println(z-5);
+  Serial.println(z);
   count++;
   delay(100);
 
