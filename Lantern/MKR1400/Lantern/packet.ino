@@ -16,6 +16,7 @@ String constructPkt(Data* reading)
                       String(reading->interrupt, HEX) + sep +
                       String(reading->inactivity) + sep +
                       String(reading->activity) + sep +
+                      String(reading->movement) + sep +           
                       String(reading->nodeBatt) + sep +
                       String(reading->error) + sep +
                       String(reading->seq);
