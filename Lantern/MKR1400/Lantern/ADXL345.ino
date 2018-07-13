@@ -77,13 +77,19 @@ void setupADXL345() {
  * Get any interrupt on the ADXL345 buffer, and checks for activity or inactivity triggers
  * * @param pointer to a data struct
  */
+bool movement = false;
 void adxl345GetInterrupt(Data* reading){
   byte interrupt = adxl.getInterruptSource();
   reading->interrupt = interrupt;
   reading->activity = adxl.triggered(interrupt, ADXL345_ACTIVITY);
+  if (reading->activity==1) reading->movement = true;
   reading->inactivity = adxl.triggered(interrupt, ADXL345_INACTIVITY);
-}
+  if (reading->inactivity==1) reading->movement=false;
 
+  debug("Activity: " + String(reading->activity));
+  debug("Inactivity: " + String (reading->inactivity));
+  debug("Movement: " + String (reading->movement));
+}
 
   
 
