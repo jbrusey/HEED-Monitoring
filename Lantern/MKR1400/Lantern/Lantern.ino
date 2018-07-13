@@ -37,7 +37,9 @@ void loop() {
  if (batteryLow) 
     batteryError();
  else{
-    SerialUSB.println("\n-----------------");
+    #ifdef DEBUG
+      SerialUSB.println("\n-----------------");
+    #endif
     debug("Start Sense");
     doSenseCycle();
     debug("End Sense");
