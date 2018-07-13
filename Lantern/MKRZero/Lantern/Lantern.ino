@@ -26,9 +26,9 @@ void setup() {
   setupSD();
   setupAnalogSensors();
   setupADXL345();
-#ifndef DEBUG
-  setRTCAlarm(RTC_SAMPLE_TIME);
-#endif
+  #ifndef DEBUG
+    setRTCAlarm(RTC_SAMPLE_TIME);
+  #endif
 }
 
 

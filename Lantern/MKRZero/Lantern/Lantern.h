@@ -2,7 +2,7 @@
 #define STARTUP_DELAY 5000         //How long to delay before the node starts
 
 //DEBUG
-//#define DEBUG 1                //Comment out to remove debug messages
+#define DEBUG 1                //Comment out to remove debug messages
 #define LEDS 1                  //Comment out to remove led debug messages
 #define SERIAL_SPEED 9600       //Serial speed
 
@@ -28,7 +28,7 @@
 #define ADC_VREF 6.6                   //Max voltage that can be sensed from the voltage divider
 #define ADC_BITS 1023.0             //number of bits
 
-#define BATTERY_LOW_VOLTAGE 3.35
+#define BATTERY_LOW_VOLTAGE -1
 
 
 //SIP THRESHHOLD
