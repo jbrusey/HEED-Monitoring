@@ -12,6 +12,8 @@
  * 5, Setting up the RTC to trigger every minute
  */
 void setup() {
+  delay(STARTUP_DELAY); //avoids the node going to sleep straight away (avoids the node hanging during flashing)
+
   #ifdef DEBUG
     startSerial();
   #else
@@ -19,13 +21,13 @@ void setup() {
   #endif
   
   setupRTC();
-  setRTCAlarm(RTC_SAMPLE_TIME);
-  
   setupSD();
   setupAnalogSensors();
   setupADXL345();
-
-  delay(STARTUP_DELAY); //avoids the node going to sleep straight away (avoids the node hanging during flashing)
+  
+  #ifndef DEBUG
+  setRTCAlarm(RTC_SAMPLE_TIME);
+  #endif  
 }
 
 
