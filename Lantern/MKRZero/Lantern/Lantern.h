@@ -28,7 +28,11 @@
 #define ADC_VREF 6.6                   //Max voltage that can be sensed from the voltage divider
 #define ADC_BITS 1023.0             //number of bits
 
-#define BATTERY_LOW_VOLTAGE -1
+#ifdef DEBUG
+  #define BATTERY_LOW_VOLTAGE -1
+#else
+  #define BATTERY_LOW_VOLTAGE 3.35
+#endif
 
 
 //SIP THRESHHOLD
