@@ -9,7 +9,7 @@
 #define SERIAL_SPEED 9600                     //Serial speed
 
 //Macro for print time
-#ifdef PRINTF
+#ifdef DEBUG
 # define debug(msg) _PRINT_TIME(String(msg))
 #else
 # define debug(msg) _DO_NOTHING();
@@ -35,10 +35,14 @@
 
 #define INT_BATTERY_DIVIDER_MAX 4.2           //Max voltage that can be sensed from the internal voltage divider with 3.3v reference
 
-#define ADC_VREF 3.468                        //Max voltage that can be sensed from the voltage divider
+#define ADC_VREF 6.6                        //Max voltage that can be sensed from the voltage divider
 #define ADC_BITS 1023.0                       //number of bits
 
-#define BATTERY_LOW_VOLTAGE 3.35              //Low battery threshold (3.35 suggested, set to -1 to disable)
+#ifdef DEBUG
+  #define BATTERY_LOW_VOLTAGE -1
+#else
+  #define BATTERY_LOW_VOLTAGE 3.35
+#endif
 
 //SIP THRESHHOLD
 
@@ -49,8 +53,8 @@
 
 #define INT_SOURCE_NO_INTERRUPT 0x83          //DATA_READY, Watermark, and Overun are always active so interrupt source will always read 0x83 if no other interrupt has been triggered
 #define INACTIVITY_TIME 30
-#define INACTIVITY_THRESH 75                  // 62.5mg per increment   // Set activity   // Activity thresholds (0-255) (CHECK!!!!)
-#define ACTIVITY_THRESH 75                    // 62.5mg per increment   // Set activity   // Activity thresholds (0-255) (CHECK!!!!)
+#define INACTIVITY_THRESH 30                  // 62.5mg per increment   // Set activity   // Activity thresholds (0-255) (CHECK!!!!)
+#define ACTIVITY_THRESH 30                    // 62.5mg per increment   // Set activity   // Activity thresholds (0-255) (CHECK!!!!)
 
 #define INACTIVITY_INT_ENABLE 1
 #define ACTIVITY_INT_ENABLE 1 
