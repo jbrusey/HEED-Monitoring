@@ -1,53 +1,60 @@
 {
 	"Footfall": {
 		"AppConfig": {
-			"usehttp": false,
+			"usemqtt": true,
 			"usecsvlogging": true
 		},
 		"CameraConfig": {
-			"camerawidth":160,
-			"cameraheight":120,
+			"usevideorecording": true,
+			"videofilename": "output.mp4",
+			"camerawidth":320,
+			"cameraheight":240,
 			"fliphorizontally": false,
 			"flipvertically": false,
 			"trackshadows": true,
 			"threshold": 200,
-			"mogthreshold": 16,
-			"shadowpixelratio": 0.25,
+			"mogthreshold": 30,
+			"shadowpixelratio": 0.5,
 			"dilate": 5,
-			"erode": 3,
-			"history": 100,
-			"blur": 5,
+			"erode": 1,
+			"history": 200,
+			"blur": 0,
 			"usemask": false,
 			"showshadowimage": true,
 			"MaskArea":
 			[
 			 {"coordx":0,"coordy":0},
-			 {"coordx":160,"coordy":0},
-			 {"coordx":160,"coordy":120},
-			 {"coordx":0,"coordy":120}
+			 {"coordx":320,"coordy":0},
+			 {"coordx":240,"coordy":240},
+			 {"coordx":0,"coordy":240}
 			 ]
 		},
 		"TrackingConfig": {
-			"threshold":10,
-			"minarea":10,
-			"maxarea":90,
+			"threshold": 150,
+			"minarea":40,
+			"maxarea":170,
 			"flipvertically":false,
 			"startposx":0,
-			"startposy":60,
-			"offset":20,
-			"blobdyingtime": 0.50,
-			"persistance":1,
-			"maxdistance":100,
-			"minsizeone": 10,
-			"minsizetwo": 50,
-			"minsizethree": 100
+			"startposy":120,
+			"offset":40,
+			"blobdyingtime": 1,
+			"persistance": 5,
+			"maxdistance":200,
+			"minsizeone": 40,
+			"minsizetwo": 170,
+			"minsizethree": 400
 		},
-		"HttpConfig": {
-			"keepbackups" : false,
-			"postserver":"",
-			"postextension":"",
-			"secretkey":"",
-			"maxretries":1
+		"UIConfig": {
+			"showUI" : true,
+			"showhistory" : false
+		},
+		"MQTTConfig": {
+			"server" : "help-data.coventry.ac.uk",
+			"username":"HELP",
+			"password":"pervasive",
+			"id":"arduino",
+			"port":1883,
+			"qos":1
 		}
 	}
 }

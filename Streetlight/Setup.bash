@@ -25,8 +25,8 @@
 # VARIABLES
 ############################################################
 
-hostname="footfall"
-password="ENTER YOUR PASSWORD HERE"
+hostname="footfall2"
+password="pervasive"
 
 ############################################################
 # PARTITIONING & INITIAL SETUP
@@ -151,8 +151,8 @@ sudo apt-get -y clean
 #MountFlags=shared
 
 echo "Creating file structure"
-sudo mkdir /var/HELP
-cd /var/HELP
+sudo mkdir /opt/HELP
+cd /opt/HELP
 
 echo "Setting up Pi Face"
 wget https://raw.github.com/piface/PiFace-Real-Time-Clock/master/install-piface-real-time-clock.sh
@@ -210,19 +210,31 @@ sudo chmod 755 /etc/init.d/autossh
 sudo update-rc.d autossh defaults
 sudo update-rc.d autossh enable
 
+sudo chmod 755 /opt/HELP/*
+
 echo "Installing Open Framework dependencies..."
 cd /tmp/
-wget https://github.com/openframeworks/openFrameworks/blob/master/scripts/linux/debian/install_dependencies.sh
-sudo ./install_dependencies.sh
-wget https://github.com/openframeworks/openFrameworks/blob/master/scripts/linux/debian/install_codecs.sh
-sudo ./install_codecs.sh 
+
+#wget https://raw.githubusercontent.com/openframeworks/openFrameworks/master/scripts/linux/debian/install_dependencies.sh
+#chmod +x install_dependencies.sh
+#sudo ./install_dependencies.sh # Warning: this isn't automated - you have to press Y to confirm installation
+
+#wget https://raw.githubusercontent.com/openframeworks/openFrameworks/master/scripts/linux/debian/install_codecs.sh
+#chmod +x install_codecs.sh
+#sudo ./install_codecs.sh # Warning: this isn't automated - you have to press Y to confirm installation
 
 
 # That's it. You can now run Footfall with: cd /opt/HELP/Footfall/; sudo ./Footfall
 
+# cd /home/pi/openFrameworks/apps/Footfall/Footfall/bin/; sudo ./Footfall
+
 ############################################################
 # OPTIMIZATION (OPTIONAL)
 ############################################################
+
+echo "Enabling SSH access as Root..."
+echo "
+PermitRootLogin yes" >> /etc/ssh/sshd_config
 
 echo "Removing all references of 'console='' in /boot/cmdline.txt..."
 sudo sed -e s/console=serial0,115200//g -i /boot/cmdline.txt
