@@ -1,3 +1,4 @@
+#include <ArduinoJson.h>
 #include "SUM.h" //Header file with consts/config
 #include "struct.h" //Header file with data struct fetched in sense cycle
 #include "error.h" 
@@ -21,7 +22,9 @@ void setup() {
   setupRTC();
   setRTCAlarm(RTC_SAMPLE_TIME);
   
+  #ifdef STORE
   setupSD();
+  #endif
   setupAnalogSensors();
 }
 

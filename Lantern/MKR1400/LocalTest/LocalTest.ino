@@ -40,9 +40,9 @@ void loop() {
     debug("End Sense");
   }
   #ifdef PRINTF
-    nodeSleep(); //go back to sleep
+  delay(5000); // for debugging purposes only - keeps USB connection on
   #else
-    delay(5000); // for debugging purposes only - keeps USB connection on
+  nodeSleep(); //go back to sleep
   #endif
  }
 

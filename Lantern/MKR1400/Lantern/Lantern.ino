@@ -1,3 +1,4 @@
+#include <ArduinoJson.h>
 #include "Lantern.h"
 #include "Arduino.h"
 #include "struct.h"
@@ -21,7 +22,9 @@ void setup() {
   #endif
   
   setupRTC();
+  #ifdef STORE
   setupSD();
+  #endif
   setupAnalogSensors();
   setupADXL345();
   

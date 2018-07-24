@@ -35,6 +35,10 @@ void resetReadings(Data* readings){
  */
 void doSenseCycle()
 {
+  bool transmit_res = false;
+  bool csvWriteRes = false;
+  bool storeRes = false;
+
   getSolarBatteryVoltage(readings);
   adxl345GetInterrupt(readings);
   getLanternState(readings);
@@ -44,9 +48,6 @@ void doSenseCycle()
   
   if(hasEvent(readings) || isHeartbeat())
   {    
-    bool transmit_res = false;
-    bool csvWriteRes = false;
-    
     readings->seq = seq;
     getBatteryVoltage(readings); 
     
@@ -63,20 +64,23 @@ void doSenseCycle()
       disconnectGSM();
     }
 
+        
+    #ifdef STORE
     csvWriteRes = writeDataToFile(readings);
-    
-    if (transmit_res && csvWriteRes){
+    storeRes = transmit_res && csvWriteRes;
+    #else
+    storeRes = transmit_res;
+    #endif
+
+    if (storeRes){
       if (first){
         nodeFunctional();
         first = false;
         }
-    }
-      
-    if (transmit_res || csvWriteRes) { 
       updateState(readings);
-      resetErrors(); 
-    }
+      resetErrors();
+    }      
     resetReadings(readings);
-    seq++; //increment sequence number*/
+    seq++; //increment sequence number 
   }
 }
