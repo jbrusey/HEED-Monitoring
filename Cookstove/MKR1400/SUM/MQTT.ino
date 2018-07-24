@@ -1,6 +1,6 @@
 //Include MQTT library
 #include <MQTT.h>
-MQTTClient client;
+MQTTClient client(MQTT_JSON_BUFFER);
 
 //SETUP TOPIC STRING BASED ON NODE_ID 
 const String MQTT_TOPIC = String("SUM/") + NODE_ID + "/temperature";
@@ -48,7 +48,9 @@ void disconnectMQTT() {
  * @return True if the String was saved
  */
 bool transmit(String topic, String dataString) {
-  bool res = client.publish(topic, dataString);
+  char* cPayload;
+  cPayload = &dataString[0u];
+  bool res = client.publish(topic, cPayload);
   if (!res){
     reportError(ERR_MQTT_TRANSMISSION_FAILED);
     debug("ERROR: MQTT: Data not sent!");
