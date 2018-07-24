@@ -59,13 +59,9 @@ void resetReadings(Data* readings){
       }
       disconnectGSM();
     }
-
-    #ifdef STORE
-    csvWriteRes = writeDataToFile(readings);
-    #endif
-
     
     #ifdef STORE
+    csvWriteRes = writeDataToFile(readings);
     storeRes = transmit_res && csvWriteRes;
     #else
     storeRes = transmit_res;
