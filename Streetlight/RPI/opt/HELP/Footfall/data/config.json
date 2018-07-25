@@ -50,7 +50,7 @@
 			"showhistory" : false
 		},
 		"MQTTConfig": {
-			"server" : "help-data.coventry.ac.uk",
+			"server" : "heed-data.coventry.ac.uk",
 			"username":"HELP",
 			"password":"pervasive",
 			"id":"arduino",
