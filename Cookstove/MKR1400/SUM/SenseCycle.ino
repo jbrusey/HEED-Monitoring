@@ -30,6 +30,10 @@ void resetReadings(Data* readings){
  */
  void doSenseCycle()
 {
+  bool transmit_res = false;
+  bool csvWriteRes = false;
+  bool storeRes = false;
+    
   getTemperatureThermocouple(readings);
   getSi7021Data(readings);
   
@@ -38,8 +42,7 @@ void resetReadings(Data* readings){
   
   if (hasEvent(readings) || isHeartbeat()) 
   {
-    bool transmit_res = false;
-    bool csvWriteRes = false;
+
     
     readings->seq = seq;
     getBatteryVoltage(readings);
@@ -56,20 +59,22 @@ void resetReadings(Data* readings){
       }
       disconnectGSM();
     }
-
-    csvWriteRes = writeDataToFile(readings);
     
-    if (transmit_res && csvWriteRes){
+    #ifdef STORE
+    csvWriteRes = writeDataToFile(readings);
+    storeRes = transmit_res && csvWriteRes;
+    #else
+    storeRes = transmit_res;
+    #endif
+
+    if (storeRes){
       if (first){
         nodeFunctional();
         first = false;
         }
-    }
-    
-    if (transmit_res || csvWriteRes) { 
       updateState(readings);
-      resetErrors(); 
-    }
+      resetErrors();
+    }      
     resetReadings(readings);
     seq++; //increment sequence number
   }

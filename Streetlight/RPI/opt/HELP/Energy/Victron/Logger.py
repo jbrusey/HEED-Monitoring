@@ -14,11 +14,12 @@ import os
 import json
 import serial
 import logging
+import paho.mqtt.publish as publish
 import paho.mqtt.client as mqtt
 
 
-MQTT_SERVER = "159.65.25.153"
-
+MQTT_SERVER = "help-data.coventry.ac.uk"
+MQTT_AUTH = {'username': 'HELP', 'password': 'pervasive'}
 HOST_NAME = os.uname()[1]
 
 class vedirect:
@@ -47,14 +48,16 @@ class vedirect:
 
         self.data = [] #Array to store data in memory
         self.usb_pending_data = [] #Store data that couldn't be wrote to usb
+
+        self.first=True
         
         self.out_dir = out_dir #Set output directory
-        self.bak_dir = "/opt/STAR/Data" #Set output directory
+        self.bak_dir = "/opt/HELP/Data" #Set output directory
        
         self.log = logging.getLogger("VE Direct logger") #setup logging
         
         count = 15
-        self.dName=	None
+        self.dName = None
         while count > 0:
             pkt = self.read_data_single();
             if pkt != None:
@@ -140,33 +143,35 @@ class vedirect:
     def data_logger(self):
         timestamp = time.time()
         if ((timestamp - self.last_sense) > self.sample_period):
+            print "sample"
             try:
                 pkt = self.read_data_single();
                 if pkt != None:
-                    pkt["time"] = timestamp
-                    pkt["host"] = HOST_NAME
+                    pkt["time"]=timestamp
                     #Turn packet into a JSON string
                     json_str = json.dumps(pkt) + "\n"
+                    print json_str
                     if '\\' in json_str: #serial out of sync break fast
                         self._writecsv()
                         exit(1)
                     #store in memory
                     self.data.append(json_str)
-
+                    
                     #transmit the data
-                    mqtt.single("Street/"+HOST_NAME+"/Energy", json_str, hostname=MQTT_SERVER)
-
-                    self.transmit(json_str)
+                    publish.single("Street/"+HOST_NAME+"/"+pkt["PID"],
+                                   payload=json_str,
+                                   hostname=MQTT_SERVER,
+                                   auth = MQTT_AUTH)
                     self.last_sense = timestamp #And update the timestamp
             except:
                 pass
-        if ((timestamp - self.last_sense) > self.timeout_period):
-            self._writecsv()
-            exit(1)
 
+        if (self.first==False):
+            if ((timestamp - self.last_sense) > self.timeout_period):
+                self._writecsv()
+                exit(1)
+        self.first = False;
 
-    def transmit(self, pkt):
-        return False
     
     def setFName(self):
         now = datetime.datetime.now()
@@ -203,11 +208,11 @@ class vedirect:
             return True
         
         else:
-            #if usb is not mounted write to /opt/STAR/Data
+            #if usb is not mounted write to /opt/HELP/Data
             self.log.debug("USB not mounted")
             #write data
             self.setBName();
-            data_file = open(self.bname, 'a+') #write to /opt/STAR
+            data_file = open(self.bname, 'a+') #write to /opt/HELP
             bkup_file = open(self.bname+".bak", 'a+')
                         
             for json in self.data:
@@ -215,7 +220,7 @@ class vedirect:
                 bkup_file.write(json)
             data_file.close()
             bkup_file.close()
-            
+
             #Reset data store and last write time
             self.usb_pending_data.extend(self.data)
             self.data = [] #Data has been written so we can clear data

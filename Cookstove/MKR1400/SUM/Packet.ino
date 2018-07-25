@@ -3,18 +3,29 @@
  * @param pointer to a data struct
  * @return A string of all the sensor values as a csv
  */
- String constructPkt(Data* readings) {
-  String sep = ",";  //CSV seperator
-  String dataString = String(readings->unixtime) + sep +
-                      String(NODE_ID) + sep + 
-                      String(readings->tempThermocouple) + sep +
-                      String(readings->tempSi7021) + sep +
-                      String(readings->humidity) + sep +
-                      String(readings->nodeBatt) + sep +
-                      String(readings->error) + sep +
-                      String(readings->seq);
-  debug("Data string created: " + dataString);
+
+//Create JSON buffer and object
+const size_t bufferSize = JSON_OBJECT_SIZE(NUM_JSON_FIELDS);
+DynamicJsonBuffer jsonBuffer(bufferSize);
+JsonObject& payload = jsonBuffer.createObject();
+
   
+String constructPkt(Data* reading) {
+  debug("Construct packet");
+  String dataString = "";
+  
+  payload["unixtime"] = reading->unixtime;
+  payload["NODE_ID"] = NODE_ID;
+  payload["tempThermocouple"] =  reading->tempThermocouple;
+  payload["tempSi7021"] =  reading->tempSi7021;
+  payload["humidity"] =  reading->humidity;
+  payload["nodeBatt"] =  reading->nodeBatt;
+  payload["error"] =  reading->error;
+  payload["seq"] =  reading->seq;
+  
+  payload.printTo(dataString);
+
+  debug("Data string created: " + dataString);
   return dataString;
 }
 
