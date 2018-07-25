@@ -200,7 +200,7 @@ cd ~/git
 git clone https://github.com/rwilkins87/HELP-Monitoring-Interns.git
 cd ~/git/HELP-Monitoring-Interns/Streetlight/
 
-sudo  rsync -rv  RPI/opt/ /opt
+sudo  rsync -rv  RPI/opt/ /opt/
 sudo  rsync -rv  RPI/etc/ /etc/
 
 cd /opt/HELP
@@ -210,7 +210,10 @@ sudo chmod 755 /etc/init.d/autossh
 sudo update-rc.d autossh defaults
 sudo update-rc.d autossh enable
 
-sudo chmod 755 /opt/HELP/*
+sudo chmod 777 /opt/HELP/*
+cd Footfall
+sudo chmod +x Footfall
+
 
 echo "Installing Open Framework dependencies..."
 cd /tmp/
