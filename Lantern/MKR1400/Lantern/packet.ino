@@ -24,6 +24,7 @@ String constructPkt(Data* reading)
   payload["inactivity"] =  reading->inactivity;
   payload["activity"] =  reading->activity;
   payload["movement"] =  reading->movement;
+  payload["nodeBatt"] = readings->nodeBatt;
   payload["error"] =  reading->error;
   payload["seq"] =  reading->seq;
   
