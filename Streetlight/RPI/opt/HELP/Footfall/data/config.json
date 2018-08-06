@@ -5,10 +5,11 @@
 			"usecsvlogging": true
 		},
 		"CameraConfig": {
-			"usevideorecording": true,
+			"usevideorecording": false,
 			"videofilename": "output.mp4",
 			"camerawidth":320,
 			"cameraheight":240,
+			"fps": 9,
 			"fliphorizontally": false,
 			"flipvertically": false,
 			"trackshadows": true,
@@ -25,7 +26,7 @@
 			[
 			 {"coordx":0,"coordy":0},
 			 {"coordx":320,"coordy":0},
-			 {"coordx":240,"coordy":240},
+			 {"coordx":320,"coordy":240},
 			 {"coordx":0,"coordy":240}
 			 ]
 		},
@@ -49,7 +50,7 @@
 			"showhistory" : false
 		},
 		"MQTTConfig": {
-			"server" : "help-data.coventry.ac.uk",
+			"server" : "heed-data.coventry.ac.uk",
 			"username":"HELP",
 			"password":"pervasive",
 			"id":"arduino",
