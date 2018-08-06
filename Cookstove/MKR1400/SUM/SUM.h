@@ -5,7 +5,7 @@
 #define STARTUP_DELAY 10000                   //How long to delay before the node starts
 
 //DEBUG
-#define DEBUG 1                             //Comment out to remove debug messages
+//#define DEBUG 1                             //Comment out to remove debug messages
 //#define STORE 1                             //Comment out to not use sd card
 #define SERIAL_SPEED 9600                   //Serial speed
 
@@ -35,8 +35,8 @@
 #define HEART_LIMIT 1440
 
 #ifndef DEBUG
-#define BATTERY_LOW_VOLTAGE 3.35              //Low battery threshold (3.35 suggested, set to -1 to disable)
-#define SIP_TEMP_THERMOCOUPLE_THRESH 0.5      //Temperature threshold (0.5C suggested, set to -1 for sense-and-send)
+#define BATTERY_LOW_VOLTAGE -1              //Low battery threshold (3.35 suggested, set to -1 to disable)
+#define SIP_TEMP_THERMOCOUPLE_THRESH -1      //Temperature threshold (0.5C suggested, set to -1 for sense-and-send)
 #define SIP_TEMP_SI7021_THRESH 0.5           //Temperature threshold (0.5C suggested, set to -1 for sense-and-send)
 #define SIP_HUMIDITY_THRESH 2                 //Humidity threshold (2% suggested, set to -1 for sense-and-send)
 #else
@@ -48,7 +48,7 @@
 
 //MQTT
 #define MQTT_KEEP_ALIVE 36000                 //MQTT keep alive time (10hours)
-#define MQTT_CLEAN_SESSION false              //MQTT start a clean session on connection
+#define MQTT_CLEAN_SESSION true              //MQTT start a clean session on connection
 #define MQTT_TIMEOUT 1000                     //MQTT 1s timeout
 #define MQTT_CONNECT_RETRY_TIME 500           //How long to retry between MQTTT broker connection tries (0.5s)
 #define MQTT_JSON_BUFFER 200                  //Calculated at https://arduinojson.org/v5/assistant/

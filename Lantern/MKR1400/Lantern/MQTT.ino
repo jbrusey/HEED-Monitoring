@@ -10,6 +10,7 @@ const String MQTT_TOPIC = String("Lantern/") + NODE_ID + "/data";
  */
 bool connectMQTT() {
   bool mqtt_connected = false;
+
   if (!client.connected())
   {
     client.begin(MQTT_SERVER, net);  //Start a connection
@@ -17,7 +18,7 @@ bool connectMQTT() {
     client.setOptions(MQTT_KEEP_ALIVE, MQTT_CLEAN_SESSION, MQTT_TIMEOUT);
     debug("MQTT: Connecting to broker...");
     // TODO: Implement some timeout here - the connection process can sometimes freeze indefinetely
-    bool res = client.connect("arduino", MQTT_USER, MQTT_PASS);
+    bool res = client.connect("Lantern2", MQTT_USER, MQTT_PASS);
     if(res){
       mqtt_connected = true;
       debug("MQTT: Connected!");
@@ -37,7 +38,8 @@ bool connectMQTT() {
  * Disonnects the node from the MQTT broker
  */
 void disconnectMQTT() {
-  client.disconnect();
+  //client.disconnect();
+  //sleep(50)
   debug("MQTT: Disconnected"); 
 }
 

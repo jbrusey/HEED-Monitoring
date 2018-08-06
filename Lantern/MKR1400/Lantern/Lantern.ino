@@ -16,9 +16,9 @@ void setup() {
   delay(STARTUP_DELAY); //avoids the node going to sleep straight away (avoids the node hanging during flashing)
 
   #ifdef DEBUG
-    startSerial();
+  startSerial();
   #else
-    USBDevice.detach();
+  USBDevice.detach();
   #endif
   
   setupRTC();
@@ -43,7 +43,7 @@ void loop() {
     batteryError();
  else{
     #ifdef DEBUG
-      SerialUSB.println("\n-----------------");
+    SerialUSB.println("\n-----------------");
     #endif
     debug("Start Sense");
     doSenseCycle();
@@ -51,9 +51,9 @@ void loop() {
   }
    
   #ifdef DEBUG
-    delay(5000); // keeps USB connection on instead
+  delay(5000); // keeps USB connection on instead
   #else
-    nodeSleep(); //go back to sleep
+  nodeSleep(); //go back to sleep
   #endif
 }
 

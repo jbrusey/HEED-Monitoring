@@ -87,6 +87,7 @@ void adxl345GetInterrupt(Data* reading){
   reading->inactivity = adxl.triggered(interrupt, ADXL345_INACTIVITY);
   if (reading->inactivity==1) reading->movement=false;
 
+  debug("interrupt: " + String(reading->interrupt));
   debug("Activity: " + String(reading->activity));
   debug("Inactivity: " + String (reading->inactivity));
   debug("Movement: " + String (reading->movement));
