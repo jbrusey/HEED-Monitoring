@@ -15,13 +15,12 @@ void setup() {
   #ifdef DEBUG
     startSerial();
   #else
-    delay(STARTUP_DELAY); //avoids the node going to sleep straight away (avoids the node hanging during flashing)
+    //delay(STARTUP_DELAY); //avoids the node going to sleep straight away (avoids the node hanging during flashing)
     USBDevice.detach();
+    setupRTC();
+    setRTCAlarm(RTC_SAMPLE_TIME);
   #endif
 
-  setupRTC();
-  setRTCAlarm(RTC_SAMPLE_TIME);
-  
   #ifdef STORE
   setupSD();
   #endif
@@ -47,7 +46,8 @@ void loop() {
   #ifdef DEBUG
     delay(5000); // keeps USB connection on instead
   #else
-    nodeSleep(); //go back to sleep
+    delay(5000);
+    //nodeSleep(); //go back to sleep
   #endif
 }
 

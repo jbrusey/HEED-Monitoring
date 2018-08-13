@@ -21,11 +21,13 @@ void setupAnalogSensors() {
 
   //Set MAX3150 power pin to output and make sure it is off
   pinMode(MAX31850_POWER_PIN, OUTPUT);
-  digitalWrite(MAX31850_POWER_PIN, LOW); //turn LED off
+  digitalWrite(MAX31850_POWER_PIN, HIGH); //turn LED off
+  delay(DIGITAL_ON_WAIT);//Slight delay to allow the switch to happen
 
   //Set Si7021 power pin to output and make sure they are off
   pinMode(Si7021_POWER_PIN, OUTPUT);
-  digitalWrite(Si7021_POWER_PIN, LOW);
+  digitalWrite(Si7021_POWER_PIN, HIGH);
+  delay(DIGITAL_ON_WAIT);//Slight delay to allow the switch to happen
 
   //Si7021.begin();
   setupSi7021(); // low level version of Si7021.begin() function

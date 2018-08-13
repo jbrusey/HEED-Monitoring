@@ -23,10 +23,10 @@
 #define RTC_SAMPLE_TIME 25                    //SET RTC alarm off every xth second in a minute
 
 //Sensors
-#define MAX31850_POWER_PIN 7                  //Arduino Pin the MAX31850 3V3 is connected to
+#define MAX31850_POWER_PIN A2                  //Arduino Pin the MAX31850 3V3 is connected to
 #define MAX31850_ADDR 0                       //Address of MAX31850 on 1-wire bus 
-#define ONE_WIRE_BUS 2                        //Arduino Pin the MAX31850 data line is connected to
-#define Si7021_POWER_PIN A3                   //Arduino Pin the Si7021 power is connected to
+#define ONE_WIRE_BUS 0                        //Arduino Pin the MAX31850 data line is connected to
+#define Si7021_POWER_PIN A1                   //Arduino Pin the Si7021 power is connected to
 
 #define ADC_BITS 1023.0                       //Max value extect from the ADC
 #define INT_BATTERY_DIVIDER_MAX 4.2           //Max voltage that can be sensed from the internal voltage divider with 3.3v reference
@@ -53,7 +53,7 @@
 #define MQTT_CONNECT_RETRY_TIME 500           //How long to retry between MQTTT broker connection tries (0.5s)
 #define MQTT_JSON_BUFFER 200                  //Calculated at https://arduinojson.org/v5/assistant/
 #define NUM_JSON_FIELDS 8
-#define DIGITAL_ON_WAIT 10                    //Wait 10ms to ensure digital pin has switched high
+#define DIGITAL_ON_WAIT 100                    //Wait 10ms to ensure digital pin has switched high
 
 // Below is how Credentials.h should look like:
 
