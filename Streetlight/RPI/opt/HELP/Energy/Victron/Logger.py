@@ -148,6 +148,7 @@ class vedirect:
                 pkt = self.read_data_single();
                 if pkt != None:
                     pkt["time"]=timestamp
+                    pkt["NODE_ID"]=HOST_NAME
                     #Turn packet into a JSON string
                     json_str = json.dumps(pkt) + "\n"
                     print json_str
