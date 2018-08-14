@@ -206,13 +206,12 @@ sudo  rsync -rv  RPI/etc/ /etc/
 cd /opt/HELP
 sudo python setup.py develop
 
-sudo chmod 755 /etc/init.d/autossh 
-sudo update-rc.d autossh defaults
-sudo update-rc.d autossh enable
-
 sudo chmod 777 /opt/HELP/*
 cd Footfall
 sudo chmod +x Footfall
+
+echo "Creating link to Footfall..."
+sudo ln -s /opt/HELP/Footfall/Footfall /usr/bin/Footfall
 
 
 echo "Installing Open Framework dependencies..."
