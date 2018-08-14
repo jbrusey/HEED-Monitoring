@@ -151,8 +151,8 @@ sudo apt-get -y clean
 #MountFlags=shared
 
 echo "Creating file structure"
-sudo mkdir /opt/HELP
-cd /opt/HELP
+sudo mkdir /opt/HEED
+cd /opt/HEED
 
 echo "Setting up Pi Face"
 wget https://raw.github.com/piface/PiFace-Real-Time-Clock/master/install-piface-real-time-clock.sh
@@ -203,15 +203,15 @@ cd ~/git/HELP-Monitoring-Interns/Streetlight/
 sudo  rsync -rv  RPI/opt/ /opt/
 sudo  rsync -rv  RPI/etc/ /etc/
 
-cd /opt/HELP
+cd /opt/HEED
 sudo python setup.py develop
 
-sudo chmod 777 /opt/HELP/*
+sudo chmod 777 /opt/HEED/*
 cd Footfall
 sudo chmod +x Footfall
 
 echo "Creating link to Footfall..."
-sudo ln -s /opt/HELP/Footfall/Footfall /usr/bin/Footfall
+sudo ln -s /opt/HEED/Footfall/Footfall /usr/bin/Footfall
 
 
 echo "Installing Open Framework dependencies..."
@@ -226,7 +226,7 @@ cd /tmp/
 #sudo ./install_codecs.sh # Warning: this isn't automated - you have to press Y to confirm installation
 
 
-# That's it. You can now run Footfall with: cd /opt/HELP/Footfall/; sudo ./Footfall
+# That's it. You can now run Footfall with: cd /opt/HEED/Footfall/; sudo ./Footfall
 
 # cd /home/pi/openFrameworks/apps/Footfall/Footfall/bin/; sudo ./Footfall
 

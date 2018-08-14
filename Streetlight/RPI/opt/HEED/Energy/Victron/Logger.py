@@ -18,7 +18,7 @@ import paho.mqtt.publish as publish
 import paho.mqtt.client as mqtt
 
 
-MQTT_SERVER = "help-data.coventry.ac.uk"
+MQTT_SERVER = "heed-data.coventry.ac.uk"
 MQTT_AUTH = {'username': 'HELP', 'password': 'pervasive'}
 HOST_NAME = os.uname()[1]
 
@@ -42,7 +42,7 @@ class vedirect:
         self.sample_period = sample_period
         self.write_rate = write_rate #How many seconds of data to store before writing to file
         self.timeout_period = 300 #if no data exit and have supervisor and restart
-        
+
         self.last_sense = 0 #last sensing time
         self.last_write = 0 #last time data was written
 
@@ -50,12 +50,12 @@ class vedirect:
         self.usb_pending_data = [] #Store data that couldn't be wrote to usb
 
         self.first=True
-        
+
         self.out_dir = out_dir #Set output directory
-        self.bak_dir = "/opt/HELP/Data" #Set output directory
-       
+        self.bak_dir = "/opt/HEED/Data" #Set output directory
+
         self.log = logging.getLogger("VE Direct logger") #setup logging
-        
+
         count = 15
         self.dName = None
         while count > 0:
@@ -82,7 +82,7 @@ class vedirect:
             packet = self.input(byte)
             if (packet != None):
                 return packet
-            
+
     def input(self, byte):
         if byte == self.hexmarker and self.state != self.IN_CHECKSUM:
             self.state = self.HEX
@@ -130,7 +130,7 @@ class vedirect:
                 self.state = self.WAIT_HEADER
             else:
                raise AssertionError()
-           
+
     #Start the sensing process by setting the run flag to true
     def start(self):
         self.running = True
@@ -139,7 +139,7 @@ class vedirect:
     def stop(self):
         self.running = False
 
-    #Read incoming data and log to memory                                                                                                                                
+    #Read incoming data and log to memory
     def data_logger(self):
         timestamp = time.time()
         if ((timestamp - self.last_sense) > self.sample_period):
@@ -157,7 +157,7 @@ class vedirect:
                         exit(1)
                     #store in memory
                     self.data.append(json_str)
-                    
+
                     #transmit the data
                     publish.single("Street/"+HOST_NAME+"/"+pkt["PID"],
                                    payload=json_str,
@@ -173,7 +173,7 @@ class vedirect:
                 exit(1)
         self.first = False;
 
-    
+
     def setFName(self):
         now = datetime.datetime.now()
         doy = now.strftime("%Y-%m-%d")
@@ -185,9 +185,9 @@ class vedirect:
         doy = now.strftime("%Y-%m-%d")
         self.bname = self.bak_dir + "/" + doy + "_" + HOST_NAME + "_" + self.dName + "_VEDirect.log" #Set output file name base on host name, and the type of device
 
-        
+
     def _writecsv(self):
-        
+
         #Check USB is mounted
         if (os.path.ismount(self.out_dir)):
             #write data
@@ -202,20 +202,20 @@ class vedirect:
                 bkup_file.write(json)
             data_file.close()
             bkup_file.close()
-            
+
             #Reset data store and last write time
             self.usb_pending_data = []
             self.data = []
             return True
-        
+
         else:
-            #if usb is not mounted write to /opt/HELP/Data
+            #if usb is not mounted write to /opt/HEED/Data
             self.log.debug("USB not mounted")
             #write data
             self.setBName();
-            data_file = open(self.bname, 'a+') #write to /opt/HELP
+            data_file = open(self.bname, 'a+') #write to /opt/HEED
             bkup_file = open(self.bname+".bak", 'a+')
-                        
+
             for json in self.data:
                 data_file.write(json)
                 bkup_file.write(json)
@@ -227,7 +227,7 @@ class vedirect:
             self.data = [] #Data has been written so we can clear data
             return False #We may want to remount?
 
-        
+
     def writecsv(self):
         timestamp = time.time()
         if ((timestamp - self.last_write) > self.write_rate): #If it is time to write
@@ -246,7 +246,7 @@ class vedirect:
 
 
 if __name__ == "__main__":
-    
+
     parser = argparse.ArgumentParser(description="Get data from VE.Direct devices")
     parser.add_argument("-o", "--out-dir", metavar="DIR",
                             default=".",
@@ -262,7 +262,7 @@ if __name__ == "__main__":
     parser.add_argument("-f", "--log-file", default="VELogger.log", metavar="LogFile",
                             help="Set log file name")
     args = parser.parse_args()
-    
+
     LVLMAP = {"debug": logging.DEBUG,
                   "info": logging.INFO,
                   "warning": logging.WARNING,
@@ -276,7 +276,7 @@ if __name__ == "__main__":
 
     logging.info("Starting VicrtronLogger with log-level %s" % (args.log_level))
 
-    
+
     args = parser.parse_args()
 
     VE = vedirect(
@@ -286,6 +286,3 @@ if __name__ == "__main__":
         write_rate=3600,
         sample_period=float(args.sample_period))
     VE.run()
-        
-
-
