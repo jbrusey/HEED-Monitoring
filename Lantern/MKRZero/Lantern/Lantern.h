@@ -14,7 +14,7 @@
 #endif
 
 
-#define STATE_POWER_PIN 7                  //Arduino Pin the MAX31850 3V3 is connected to
+#define STATE_POWER_PIN A4                  //Arduino Pin the MAX31850 3V3 is connected to
 #define STATE_MV_CONVERSION 1.023
 #define DIGITAL_ON_WAIT 10          //Wait 10ms to ensure digital pin has switched high
 
@@ -47,7 +47,7 @@
 #define ACTIVITY_THRESH 20    // 62.5mg per increment   // Set activity   // Activity thresholds (0-255) (CHECK!!!!)
 
 #define INACTIVITY_INT_ENABLE 1
-#define ACTIVITY_INT_ENABLE 1 
+#define ACTIVITY_INT_ENABLE 1
 #define FREEFALL_INT_ENABLE 0
 #define DOUBLETAP_INT_ENABLE 0
 #define TAP_INT_ENABLE 0
@@ -61,7 +61,3 @@
 #define ACTIVITY_Z_AXIS_ENABLE 1
 
 #define LINK_BIT_ENABLE true
-
-
-
-
