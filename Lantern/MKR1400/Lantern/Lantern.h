@@ -1,12 +1,12 @@
-#include "Credentials.h"                      //Header file with MQTT server and SIM credentials. Look below for sample.                  
+#include "Credentials.h"                      //Header file with MQTT server and SIM credentials. Look below for sample.
 
 //GENERAL
 #define NODE_ID "1"                           //Set ID of the arduino (make sure this is unique)
 #define STARTUP_DELAY 5000                    //How long to delay before the node starts
 
 //DEBUG
-//#define DEBUG 1                               //Comment out to remove debug messages
-#define STORE 1                               //Comment out to not use sd card
+#define DEBUG 1                               //Comment out to remove debug messages
+//#define STORE 1                               //Comment out to not use sd card
 
 #define SERIAL_SPEED 9600                     //Serial speed
 
@@ -24,7 +24,7 @@
 #define RTC_SAMPLE_TIME 25                    //SET RTC alarm off every xth second in a minute
 
 //Analog sensor settings
-#define STATE_POWER_PIN 7                     //Arduino Pin the MAX31850 3V3 is connected to
+#define STATE_POWER_PIN A4                    //Arduino Pin the MAX31850 3V3 is connected to
 #define STATE_MV_CONVERSION 1.023
 #define DIGITAL_ON_WAIT 10                    //Wait 10ms to ensure digital pin has switched high
 
@@ -43,7 +43,7 @@
 #define ACTIVITY_THRESH 30                    // 62.5mg per increment   // Set activity   // Activity thresholds (0-255) (CHECK!!!!)
 
 #define INACTIVITY_INT_ENABLE 1
-#define ACTIVITY_INT_ENABLE 1 
+#define ACTIVITY_INT_ENABLE 1
 #define FREEFALL_INT_ENABLE 0
 #define DOUBLETAP_INT_ENABLE 0
 #define TAP_INT_ENABLE 0
@@ -92,7 +92,5 @@
 
 //CREDENTIALS - MQTT
 //#define MQTT_SERVER ""                        // MQTT broker address
-//#define MQTT_USER ""                          
-//#define MQTT_PASS ""        
-
-
+//#define MQTT_USER ""
+//#define MQTT_PASS ""
