@@ -16,7 +16,7 @@
 #define RTC_SAMPLE_TIME 25                    // SET RTC alarm off every xth second in a minute
 
 
-//SIP THRESHHOLD
+//SIP THRESHOLDS
 #define HEART_LIMIT 1440
 
 #ifdef DEBUG
@@ -45,10 +45,11 @@
 #define NUM_JSON_FIELDS 12
 
 
-//Analog sensor settings
+//Sensors
+#define DIGITAL_ON_WAIT 10                    // Wait 10ms to ensure digital pin has switched high
+
 #define STATE_POWER_PIN A4                    // Arduino Pin the MAX31850 3V3 is connected to
 #define STATE_MV_CONVERSION 1.023
-#define DIGITAL_ON_WAIT 10                    // Wait 10ms to ensure digital pin has switched high
 
 #define ADC_MIN 0                             // Min value extect from the ADC
 #define ADC_MAX 1023                          // Max value extect from the ADC

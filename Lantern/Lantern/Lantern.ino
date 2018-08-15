@@ -1,6 +1,6 @@
 #include <ArduinoJson.h>
-#include "Lantern.h"
-#include "struct.h"
+#include "Lantern.h" // Header file with consts/config
+#include "struct.h" // Header file with data struct fetched in sense cycle
 #include "error.h"
 
 /**
@@ -30,7 +30,6 @@ void setup() {
   setupAnalogSensors();
   setupADXL345();
 }
-
 
 /**
  * MAIN LOOP: Calls for the sensing procedure to run before 

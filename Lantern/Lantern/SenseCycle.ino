@@ -23,8 +23,8 @@ void resetReadings(Data* readings){
   readings->inactivity=0;
   readings->activity=0;
   readings->nodeBatt=0;
-  readings->seq=0;
   readings->error=0;
+  readings->seq=0;
 }
 
 /**

@@ -14,6 +14,7 @@ RTCZero rtc;
   byte seconds, minutes, hours, days, months, years;
   static const char month_names[] = "JanFebMarAprMayJunJulAugSepOctNovDec";
 
+  //Start the RTC
   rtc.begin();
   
   // Let's let the compiler set the current date and time for us.
