@@ -1,0 +1,36 @@
+MKRGSM ?.?.? - ????.??.??
+
+MKRGSM 1.2.0 - 2018.07.23
+
+* Added MODEM.noDebug() API to disable debug output
+* GSM::isAccessAlive() now checks if network is registered
+* Added timeout to ping operations
+* Added GPRS::status() API to retrieve the current GPRS status
+* Fixed GSMClient::write(uint8_t c)
+
+MKRGSM 1.1.2 - 2018.02.20
+
+* Improved stability of low power mode
+* Improved stability and performance when using GSMClient and GSMUDP
+
+MKRGSM 1.1.1 - 2018.01.24
+
+* Fixed GSMServer.available() behaviour when client.stop() is called on an accepted socket
+
+MKRGSM 1.1.0 - 2018.01.02
+
+* Added new GSMLocation API
+* Fixed GSMClient write failing for lengths of 512 or over
+* Removed use of double negatives and corrected some bit wise ANDs with logical ANDs in example sketches
+
+MKRGSM 1.0.2 - 2017.12.11
+
+* Added new GPRSPing, GsmSSLWebClient, GPRSUdpNtpClient and SerialGSMPassthrough example sketches
+
+MKRGSM 1.0.1 - 2017.12.04
+
+* Examples updated with support for the Arduino Create secret tab
+
+MKRGSM 1.0.0 - 2017.11.29
+
+* Initial release
