@@ -79,7 +79,7 @@
 #define MQTT_CLEAN_SESSION true              //MQTT start a clean session on connection
 #define MQTT_TIMEOUT 1000                     //MQTT 1s timeout
 #define MQTT_CONNECT_RETRY_TIME 500           //How long to retry between MQTTT broker connection tries (0.5s)
-#define MQTT_JSON_BUFFER 200                  //Calculated at https://arduinojson.org/v5/assistant/
+#define MQTT_JSON_BUFFER 300                  //Calculated at https://arduinojson.org/v5/assistant/
 #define NUM_JSON_FIELDS 12
 
 // Below is how Credentials.h should look like:
