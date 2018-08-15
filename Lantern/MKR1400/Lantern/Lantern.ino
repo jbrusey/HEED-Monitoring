@@ -1,6 +1,5 @@
 #include <ArduinoJson.h>
 #include "Lantern.h"
-#include "Arduino.h"
 #include "struct.h"
 #include "error.h"
 
@@ -13,24 +12,22 @@
  * 5, Setting up the RTC to trigger every minute
  */
 void setup() {
-  delay(STARTUP_DELAY); //avoids the node going to sleep straight away (avoids the node hanging during flashing)
 
   #ifdef DEBUG
-  startSerial();
+    startSerial();
   #else
-  USBDevice.detach();
+    delay(STARTUP_DELAY); //avoids the node going to sleep straight away (avoids the node hanging during flashing)
+    USBDevice.detach();
+    setupRTC();
+    setRTCAlarm(RTC_SAMPLE_TIME);
   #endif
   
-  setupRTC();
   #ifdef STORE
-  setupSD();
+    setupSD();
   #endif
+  
   setupAnalogSensors();
   setupADXL345();
-  
-  #ifndef DEBUG
-  setRTCAlarm(RTC_SAMPLE_TIME);
-  #endif  
 }
 
 
@@ -43,7 +40,7 @@ void loop() {
     batteryError();
  else{
     #ifdef DEBUG
-    SerialUSB.println("\n-----------------");
+      SerialUSB.println("\n-----------------");
     #endif
     debug("Start Sense");
     doSenseCycle();
@@ -51,9 +48,9 @@ void loop() {
   }
    
   #ifdef DEBUG
-  delay(5000); // keeps USB connection on instead
+    delay(5000); // keeps USB connection on instead
   #else
-  nodeSleep(); //go back to sleep
+    nodeSleep(); //go back to sleep
   #endif
 }
 
