@@ -4,14 +4,15 @@
  * 3. Turns of the LED
  */
 void setupAnalogSensors() {
-  //analogReference(AR_DEFAULT); //3.3V
+  analogReference(AR_DEFAULT); //3.3V
+
+  pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, HIGH); //turn LED on until first successfull write
 
   //Set State power pin to output and make sure it is off
-  //pinMode(STATE_POWER_PIN, OUTPUT);
-  //digitalWrite(STATE_POWER_PIN, LOW); //turn LED off
+  pinMode(STATE_POWER_PIN, OUTPUT);
+  digitalWrite(STATE_POWER_PIN, LOW); //turn state circuit off
   
-  pinMode(LED_BUILTIN, OUTPUT);
-  digitalWrite(LED_BUILTIN, HIGH);
   debug("Digital pins set");
 }
 
@@ -41,10 +42,8 @@ void unpowerStateOpAmps() {
  */
 void getBatteryVoltage(Data* readings)
 {
-  readings->nodeBatt = 3.1;
-  
+  readings->nodeBatt = (analogRead(ADC_BATTERY) / ADC_BITS ) * INT_BATTERY_DIVIDER_MAX;
   if (readings->nodeBatt < BATTERY_LOW_VOLTAGE){
-    reportError(ERR_LOW_BATTERY);
     batteryLow=true;
   }
 }
@@ -52,24 +51,27 @@ void getBatteryVoltage(Data* readings)
 /**
  * Gets the battery voltage from the Lantern monitoris
  * voltage divider
- * * @param pointer to a data struct
+ * @param pointer to a data struct
  */
 void getSolarBatteryVoltage(Data* readings)
 {
-  readings->solarBatt = 3.7;
+  readings->solarBatt = (analogRead(A1) / ADC_BITS ) * ADC_VREF;
+  debug("Solar Battery: " + String(readings->solarBatt));
 }
 
 
 /**
  * Dummy value for the lantern state 
- * * @param pointer to a data struct
+ * @param pointer to a data struct
  */
-float getLanternState(Data* readings)
+void getLanternState(Data* readings)
 {
   analogReference(AR_INTERNAL1V0); //We need to change for this sensor modality
   powerStateOpAmps();
-  readings->usage = 400;
-  readings->charging = 500;
+  readings->usage = analogRead(A2) / STATE_MV_CONVERSION;
+  debug("Usage: " + String(readings->usage));
+  readings->charging = analogRead(A3) / STATE_MV_CONVERSION;
+  debug("Charging: " + String(readings->charging));
   unpowerStateOpAmps();
   analogReference(AR_DEFAULT);
 }

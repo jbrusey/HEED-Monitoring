@@ -23,7 +23,7 @@ String constructJSON(Data* reading)
   payload["inactivity"] =  reading->inactivity;
   payload["activity"] =  reading->activity;
   payload["movement"] =  reading->movement;
-  payload["nodeBatt"] = readings->nodeBatt;
+  payload["nodeBatt"] = reading->nodeBatt;
   payload["error"] =  reading->error;
   payload["seq"] =  reading->seq;
   
