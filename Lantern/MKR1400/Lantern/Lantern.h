@@ -5,8 +5,9 @@
 #define STARTUP_DELAY 5000                    //How long to delay before the node starts
 
 //DEBUG
-//#define DEBUG 1                               //Comment out to remove debug messages
-//#define STORE 1                               //Comment out to not use sd card
+#define DEBUG 1                               //Comment out to remove debug messages
+//#define STORE 1                               //Comment out to not use SD card
+#define TRANSMIT 1                            //Comment out to not use SIM card
 
 #define SERIAL_SPEED 9600                     //Serial speed
 
@@ -16,9 +17,6 @@
 #else
 # define debug(msg) _DO_NOTHING();
 #endif
-
-//GSM
-#define GSM_CONNECT_RETRY_TIME 500            // How long to retry between gsm connection tries (0.5s)
 
 //SAMPLE PERIOD
 #define RTC_SAMPLE_TIME 25                    //SET RTC alarm off every xth second in a minute
@@ -63,23 +61,26 @@
 #define HEART_LIMIT 1440
 
 #ifdef DEBUG
-#define BATTERY_LOW_VOLTAGE -1
-#define SIP_SOLAR_BATTERY_THRESH -1           // Enable sense and send
-#define SIP_STATE_THRESH -1                   // Enable sense and send
-#define INT_SOURCE_NO_INTERRUPT 0x00          //DATA_READY, Watermark, and Overun are always active so interrupt source will always read 0x83 if no other interrupt has been triggered
+  #define BATTERY_LOW_VOLTAGE -1
+  #define SIP_SOLAR_BATTERY_THRESH -1           // Enable sense and send
+  #define SIP_STATE_THRESH -1                   // Enable sense and send
+  #define INT_SOURCE_NO_INTERRUPT 0x00          // DATA_READY, Watermark, and Overun are always active so interrupt source will always read 0x83 if no other interrupt has been triggered
 #else
-#define BATTERY_LOW_VOLTAGE 3.35
-#define SIP_SOLAR_BATTERY_THRESH -1           // Threshold to define when the solar lantern battery is eventful (TO-DO)
-#define SIP_STATE_THRESH -1                     // Threshold to define when the solar state has changed (TO-DO)
-#define INT_SOURCE_NO_INTERRUPT 0x83          //DATA_READY, Watermark, and Overun are always active so interrupt source will always read 0x83 if no other interrupt has been triggered
+  #define BATTERY_LOW_VOLTAGE 3.35
+  #define SIP_SOLAR_BATTERY_THRESH -1           // Threshold to define when the solar lantern battery is eventful (TO-DO)
+  #define SIP_STATE_THRESH -1                   // Threshold to define when the solar state has changed (TO-DO)
+  #define INT_SOURCE_NO_INTERRUPT 0x83          // DATA_READY, Watermark, and Overun are always active so interrupt source will always read 0x83 if no other interrupt has been triggered
 #endif
 
+//GSM
+#define GSM_CONNECT_RETRY_TIME 500            // How long to retry between gsm connection tries (0.5s)
+
 //MQTT
-#define MQTT_KEEP_ALIVE 36000                 //MQTT keep alive time (10hours)
-#define MQTT_CLEAN_SESSION true              //MQTT start a clean session on connection
-#define MQTT_TIMEOUT 1000                     //MQTT 1s timeout
-#define MQTT_CONNECT_RETRY_TIME 500           //How long to retry between MQTTT broker connection tries (0.5s)
-#define MQTT_JSON_BUFFER 300                  //Calculated at https://arduinojson.org/v5/assistant/
+#define MQTT_KEEP_ALIVE 36000                 // MQTT keep alive time (10hours)
+#define MQTT_CLEAN_SESSION true               // MQTT start a clean session on connection
+#define MQTT_TIMEOUT 1000                     // MQTT 1s timeout
+#define MQTT_CONNECT_RETRY_TIME 500           // How long to retry between MQTTT broker connection tries (0.5s)
+#define MQTT_JSON_BUFFER 300                  // Calculated at https://arduinojson.org/v5/assistant/
 #define NUM_JSON_FIELDS 12
 
 // Below is how Credentials.h should look like:

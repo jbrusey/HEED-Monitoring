@@ -12,6 +12,7 @@ void setupAnalogSensors() {
   //Set State power pin to output and make sure it is off
   pinMode(STATE_POWER_PIN, OUTPUT);
   digitalWrite(STATE_POWER_PIN, LOW); //turn state circuit off
+  
   debug("Digital pins set");
 }
 
@@ -56,7 +57,6 @@ void getSolarBatteryVoltage(Data* readings)
 {
   readings->solarBatt = (analogRead(A1) / ADC_BITS ) * ADC_VREF;
   debug("Solar Battery:" + String(readings->solarBatt));
-
 }
 
 

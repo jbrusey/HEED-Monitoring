@@ -1,7 +1,7 @@
 //GLOBALS
-int seq = 0;
-Data* readings = new Data();
+uint32_t seq = 0;
 bool first = true;
+Data* readings = new Data();
 
 void resetErrors(){
     /* the error code has been transmitted and so can now be reset.     
@@ -13,7 +13,6 @@ void resetErrors(){
    else
     last_errno = 1;
 }
-
 
 void resetReadings(Data* readings){
   readings->unixtime=0;
@@ -56,8 +55,9 @@ void doSenseCycle()
       if (connectMQTT())
       {
         getGSMTime(readings);
-        String pkt = constructPkt(readings);
-        transmit_res = transmit(MQTT_TOPIC, pkt);
+        String JSON = constructJSON(readings);
+        debug("JSON created : " + JSON);
+        transmit_res = transmit(MQTT_TOPIC, JSON);
         
         disconnectMQTT();
       }

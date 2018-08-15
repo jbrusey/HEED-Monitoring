@@ -27,10 +27,14 @@ void resetReadings(Data* readings){
   readings->error=0;
 }
 
+/**
+ * The function takes readings from the battery sensors, and checks the ADXL345 for
+ * an interrupt. The data is then checked if it is eventful, and if so is stored 
+ * to an SD card.
+ */
 void doSenseCycle()
-{
+{ 
   getSolarBatteryVoltage(readings);
-  getBatteryVoltage(readings);
   adxl345GetInterrupt(readings);
   getLanternState(readings);
   
@@ -39,8 +43,10 @@ void doSenseCycle()
   
   if(hasEvent(readings) || isHeartbeat())
   {
-    getTime(readings);
     readings->seq = seq; 
+    getBatteryVoltage(readings);
+    
+    getTime(readings);
     
     if (writeDataToFile(readings)) 
     { 
@@ -52,6 +58,6 @@ void doSenseCycle()
       resetErrors(); 
     }
     resetReadings(readings);
-    seq++;
+    seq++; //increment sequence number 
   }
 }
