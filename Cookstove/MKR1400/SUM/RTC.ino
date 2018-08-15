@@ -3,7 +3,7 @@
 RTCZero rtc;
 
 /**
- * Configure the RTC for use the method:
+ * Configure the RTC for use. This function:
  * 1. Starts the RTC
  * 2. Sets the date and time based on compile time
  */
@@ -70,3 +70,6 @@ void nodeSleep(){
   __WFI(); // Executes WFI (Wait For Interrupt) to place the device into the sleep mode specified by \ref system_set_sleepmode until woken by an interrupt
 }
 
+void getTime(Data* readings){
+  readings->unixtime = rtc.getEpoch();
+}

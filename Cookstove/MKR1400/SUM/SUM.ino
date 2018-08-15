@@ -1,6 +1,6 @@
 #include <ArduinoJson.h>
-#include "SUM.h" //Header file with consts/config
-#include "struct.h" //Header file with data struct fetched in sense cycle
+#include "SUM.h" // Header file with consts/config
+#include "struct.h" // Header file with data struct fetched in sense cycle
 #include "error.h" 
 
 /**
@@ -18,10 +18,11 @@ void setup() {
   #else
     delay(STARTUP_DELAY); //avoids the node going to sleep straight away (avoids the node hanging during flashing)
     USBDevice.detach();
-    setupRTC();
-    setRTCAlarm(RTC_SAMPLE_TIME);
   #endif
 
+  setupRTC();
+  setRTCAlarm(RTC_SAMPLE_TIME);
+  
   #ifdef STORE
     setupSD();
   #endif
@@ -40,9 +41,8 @@ void loop() {
     #ifdef DEBUG
       SerialUSB.println("\n-----------------");
     #endif
-    debug("Start Sense");
+    
     doSenseCycle();
-    debug("End Sense");
   }
    
   #ifdef DEBUG

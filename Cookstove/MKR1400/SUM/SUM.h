@@ -1,59 +1,68 @@
-#include "Credentials.h"                      //Header file with MQTT server and SIM credentials. Look below for sample.                  
+#include "Credentials.h"                      // Header file with MQTT server and SIM credentials. Look below for sample.                  
 
 //GENERAL
-#define NODE_ID "1"                           //Set ID of the arduino (make sure this is unique)
-#define STARTUP_DELAY 10000                   //How long to delay before the node starts
+#define NODE_ID "1"                           // Set ID of the arduino (make sure this is unique)
 
-//DEBUG
-//#define DEBUG 1                             //Comment out to remove debug messages
-//#define STORE 1                             //Comment out to not use sd card
-#define SERIAL_SPEED 9600                   //Serial speed
+#define DEBUG 1                               // Comment out to remove debug messages
+#define SD_CS_PIN 4                           // "4" for MKR1400, "SS1" for MKRZero
 
-//Macro for print time
-#ifdef DEBUG
-# define debug(msg) _PRINT_TIME(String(msg))
-#else
-# define debug(msg) _DO_NOTHING();
-#endif
+#define STORE 1                               // Comment out to not use SD card
+#define TRANSMIT 1                            // Comment out to not use SIM card
 
-//GSM
-#define GSM_CONNECT_RETRY_TIME 500            // How long to retry between gsm connection tries (0.5s)
+#define SERIAL_SPEED 9600                     // Serial speed
+#define STARTUP_DELAY 5000                    // How long to delay before the node starts
 
-//Sample period
-#define RTC_SAMPLE_TIME 25                    //SET RTC alarm off every xth second in a minute
+//SAMPLE PERIOD
+#define RTC_SAMPLE_TIME 25                    // SET RTC alarm off every xth second in a minute
 
-//Sensors
-#define MAX31850_POWER_PIN A2                  //Arduino Pin the MAX31850 3V3 is connected to
-#define MAX31850_ADDR 0                       //Address of MAX31850 on 1-wire bus 
-#define ONE_WIRE_BUS 0                        //Arduino Pin the MAX31850 data line is connected to
-#define Si7021_POWER_PIN A1                   //Arduino Pin the Si7021 power is connected to
-
-#define ADC_BITS 1023.0                       //Max value extect from the ADC
-#define INT_BATTERY_DIVIDER_MAX 4.2           //Max voltage that can be sensed from the internal voltage divider with 3.3v reference
 
 //SIP THRESHOLDS
 #define HEART_LIMIT 1440
 
-#ifndef DEBUG
-#define BATTERY_LOW_VOLTAGE -1              //Low battery threshold (3.35 suggested, set to -1 to disable)
-#define SIP_TEMP_THERMOCOUPLE_THRESH -1      //Temperature threshold (0.5C suggested, set to -1 for sense-and-send)
-#define SIP_TEMP_SI7021_THRESH 0.5           //Temperature threshold (0.5C suggested, set to -1 for sense-and-send)
-#define SIP_HUMIDITY_THRESH 2                 //Humidity threshold (2% suggested, set to -1 for sense-and-send)
+#ifdef DEBUG
+  #define BATTERY_LOW_VOLTAGE -1              // Low battery threshold (3.35 suggested, set to -1 to disable)
+  #define SIP_TEMP_THERMOCOUPLE_THRESH -1     // Temperature threshold (0.5C suggested, set to -1 for sense-and-send)
+  #define SIP_TEMP_SI7021_THRESH -1           // Temperature threshold (0.5C suggested, set to -1 for sense-and-send)
+  #define SIP_HUMIDITY_THRESH -1              // Humidity threshold (2% suggested, set to -1 for sense-and-send)  
 #else
-#define BATTERY_LOW_VOLTAGE -1
-#define SIP_TEMP_THERMOCOUPLE_THRESH -1
-#define SIP_TEMP_SI7021_THRESH -1
-#define SIP_HUMIDITY_THRESH -1
+  #define BATTERY_LOW_VOLTAGE -1              // Low battery threshold (3.35 suggested, set to -1 to disable)
+  #define SIP_TEMP_THERMOCOUPLE_THRESH -1     // Temperature threshold (0.5C suggested, set to -1 for sense-and-send)
+  #define SIP_TEMP_SI7021_THRESH 0.5          // Temperature threshold (0.5C suggested, set to -1 for sense-and-send)
+  #define SIP_HUMIDITY_THRESH 2               // Humidity threshold (2% suggested, set to -1 for sense-and-send)  
 #endif
 
+
+//GSM
+#define GSM_CONNECT_RETRY_TIME 500            // How long to retry between gsm connection tries (0.5s)
+
+
 //MQTT
-#define MQTT_KEEP_ALIVE 36000                 //MQTT keep alive time (10hours)
-#define MQTT_CLEAN_SESSION true              //MQTT start a clean session on connection
-#define MQTT_TIMEOUT 1000                     //MQTT 1s timeout
-#define MQTT_CONNECT_RETRY_TIME 500           //How long to retry between MQTTT broker connection tries (0.5s)
-#define MQTT_JSON_BUFFER 200                  //Calculated at https://arduinojson.org/v5/assistant/
+#define MQTT_KEEP_ALIVE 36000                 // MQTT keep alive time (10hours)
+#define MQTT_CLEAN_SESSION true               // MQTT start a clean session on connection
+#define MQTT_TIMEOUT 1000                     // MQTT 1s timeout
+#define MQTT_CONNECT_RETRY_TIME 500           // How long to retry between MQTTT broker connection tries (0.5s)
+#define MQTT_JSON_BUFFER 200                  // Calculated at https://arduinojson.org/v5/assistant/
 #define NUM_JSON_FIELDS 8
-#define DIGITAL_ON_WAIT 100                    //Wait 10ms to ensure digital pin has switched high
+
+
+//Sensors
+#define DIGITAL_ON_WAIT 100                   // Wait 10ms to ensure digital pin has switched high
+
+#define MAX31850_POWER_PIN A2                 // Arduino Pin the MAX31850 3V3 is connected to
+#define MAX31850_ADDR 0                       // Address of MAX31850 on 1-wire bus 
+#define ONE_WIRE_BUS 0                        // Arduino Pin the MAX31850 data line is connected to
+#define Si7021_POWER_PIN A1                   // Arduino Pin the Si7021 power is connected to
+
+#define ADC_BITS 1023.0                       // Max value extect from the ADC
+#define INT_BATTERY_DIVIDER_MAX 4.2           // Max voltage that can be sensed from the internal voltage divider with 3.3v reference
+
+
+//Macro for print time
+#ifdef DEBUG
+  #define debug(msg) _PRINT_TIME(String(msg))
+#else
+  #define debug(msg) _DO_NOTHING();
+#endif
 
 // Below is how Credentials.h should look like:
 

@@ -8,10 +8,10 @@
 const size_t bufferSize = JSON_OBJECT_SIZE(NUM_JSON_FIELDS);
 DynamicJsonBuffer jsonBuffer(bufferSize);
 JsonObject& payload = jsonBuffer.createObject();
-
   
-String constructPkt(Data* reading) {
-  debug("Construct packet");
+String constructJSON(Data* reading)
+{
+  debug("JSON constructing...");
   String dataString = "";
   
   payload["unixtime"] = reading->unixtime;
@@ -24,8 +24,6 @@ String constructPkt(Data* reading) {
   payload["seq"] =  reading->seq;
   
   payload.printTo(dataString);
-
-  debug("Data string created: " + dataString);
   return dataString;
 }
 

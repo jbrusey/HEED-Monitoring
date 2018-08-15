@@ -1,7 +1,7 @@
 //GLOBALS
-int seq = 0;
-Data* readings = new Data();
+uint32_t seq = 0;
 bool first = true;
+Data* readings = new Data();
 
 void resetErrors(){
     /* the error code has been transmitted and so can now be reset.     
@@ -30,9 +30,11 @@ void resetReadings(Data* readings){
  */
  void doSenseCycle()
 {
-  bool transmit_res = false;
-  bool csvWriteRes = false;
-  bool storeRes = false;
+  debug("Start Sense " + String(seq));
+  
+  bool result_transmit = false;
+  bool result_store = false;
+  bool result_final = false;
     
   getTemperatureThermocouple(readings);
   getSi7021Data(readings);
@@ -42,41 +44,51 @@ void resetReadings(Data* readings){
   
   if (hasEvent(readings) || isHeartbeat()) 
   {
-
-    
     readings->seq = seq;
     getBatteryVoltage(readings);
 
-    if (connectGSM())
-    {
-      if (connectMQTT())
+    #ifdef TRANSMIT
+      if (connectGSM())
       {
-        getGSMTime(readings);
-        String pkt = constructPkt(readings);
-        transmit_res = transmit(MQTT_TOPIC, pkt);
-        
-        disconnectMQTT();
+        if (connectMQTT())
+        {
+          getGSMTime(readings);
+          String JSON = constructJSON(readings);
+          debug("JSON created : " + JSON);
+          result_transmit = transmit(MQTT_TOPIC, JSON);
+          
+          disconnectMQTT();
+        }
+        disconnectGSM();
       }
-      disconnectGSM();
-    }
+    #else
+      result_transmit = true;
+      getTime(readings);
+    #endif  
     
     #ifdef STORE
-    csvWriteRes = writeDataToFile(readings);
-    storeRes = transmit_res && csvWriteRes;
+      result_store = writeDataToFile(readings);
     #else
-    storeRes = transmit_res;
+      result_store = true;
     #endif
 
-    if (storeRes){
+    result_final = result_transmit && result_store;
+
+    if (result_final)
+    {
+      // If this was the first successfull cycle, turn off the LED
       if (first){
         nodeFunctional();
         first = false;
         }
+        
       updateState(readings);
       resetErrors();
     }      
     resetReadings(readings);
     seq++; //increment sequence number
   }
+
+  debug("End Sense");
 }
 
