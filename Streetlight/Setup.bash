@@ -197,8 +197,8 @@ exit 0" >> /etc/rc.local
 
 echo "Cloning HELP Repo..."
 cd ~/git
-git clone https://github.com/rwilkins87/HELP-Monitoring-Interns.git
-cd ~/git/HELP-Monitoring-Interns/Streetlight/
+git clone https://github.com/prabuckt/HEED-Monitoring.git
+cd ~/git/HEED-Monitoring/Streetlight/
 
 sudo  rsync -rv  RPI/opt/ /opt/
 sudo  rsync -rv  RPI/etc/ /etc/
