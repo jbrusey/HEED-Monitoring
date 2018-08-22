@@ -6,7 +6,7 @@ struct Data {
   byte interrupt;
   bool inactivity;
   bool activity;
-  bool movement;
+  int movement;
   float nodeBatt;
   uint32_t error;
   uint32_t seq;
