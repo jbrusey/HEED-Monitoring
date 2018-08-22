@@ -5,11 +5,11 @@
 			"usecsvlogging": true
 		},
 		"CameraConfig": {
-			"usevideorecording": false,
+			"usevideorecording": true,
 			"videofilename": "demo.mp4",
 			"camerawidth":320,
 			"cameraheight":240,
-			"fps":9,
+			"fps":8,
 			"fliphorizontally": false,
 			"flipvertically": false,
 			"trackshadows": true,
@@ -18,7 +18,7 @@
 			"shadowpixelratio": 0.5,
 			"dilate": 5,
 			"erode": 1,
-			"history": 200,
+			"history": 30,
 			"blur": 0,
 			"usemask": false,
 			"showshadowimage": true,
