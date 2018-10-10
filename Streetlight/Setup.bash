@@ -25,15 +25,15 @@
 # VARIABLES
 ############################################################
 
-hostname="footfall2"
-password="pervasive"
+hostname="streetlight1"
+password="ENTER PASSWORD HERE"
 
 ############################################################
 # PARTITIONING & INITIAL SETUP
 ############################################################
 
 #echo "Applying new password..."
-sudo echo "root:$password" | chpasswd
+sudo echo "root:$password | chpasswd
 sudo echo "pi:$password" | chpasswd
 
 echo "Disabling swap..."
@@ -155,8 +155,8 @@ sudo mkdir /opt/HEED
 cd /opt/HEED
 
 echo "Setting up Pi Face"
-wget https://raw.github.com/piface/PiFace-Real-Time-Clock/master/install-piface-real-time-clock.sh
-chmod +x install-piface-real-time-clock.sh
+sudo wget https://raw.github.com/piface/PiFace-Real-Time-Clock/master/install-piface-real-time-clock.sh
+sudo chmod +x install-piface-real-time-clock.sh
 sudo ./install-piface-real-time-clock.sh
 
 cd /etc/rc2.d
@@ -164,6 +164,8 @@ sudo ln -s ../init.d/pifacertc S01pifacertc
 cd ../rc5.d
 sudo ln -s ../init.d/pifacertc S01pifacertc
 
+
+#enable i2c in config
 #sudo reboot
 sudo hwclock --systohc
 
@@ -195,7 +197,7 @@ gpio -g write 17 1
 exit 0" >> /etc/rc.local
 # Add "usr/bin/tvservice -o" if you wish to disable monitor output
 
-echo "Cloning HELP Repo..."
+echo "Cloning HEED Repo..."
 cd ~/git
 git clone https://github.com/prabuckt/HEED-Monitoring.git
 cd ~/git/HEED-Monitoring/Streetlight/
@@ -293,13 +295,13 @@ sudo systemctl stop wifi-country.service
 sudo systemctl disable wifi-country.service
 sudo rm -f /etc/systemd/system/wifi-country.service
 
-sudo systemctl stop hciuart.service
-sudo systemctl disable hciuart.service
-sudo rm -f /etc/systemd/system/hciuart.service
+#sudo systemctl stop hciuart.service
+#sudo systemctl disable hciuart.service
+#sudo rm -f /etc/systemd/system/hciuart.service
 
-#sudo systemctl stop bluetooth.service
-#sudo systemctl disable bluetooth.service
-#sudo rm -f /etc/systemd/system/bluetooth.service
+sudo systemctl stop bluetooth.service
+sudo systemctl disable bluetooth.service
+sudo rm -f /etc/systemd/system/bluetooth.service
 
 sudo systemctl stop avahi-daemon.service
 sudo systemctl disable avahi-daemon.service
