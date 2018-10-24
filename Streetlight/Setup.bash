@@ -27,20 +27,24 @@
 
 hostname="streetlight1"
 password="ENTER PASSWORD HERE"
+OSPartitionSize=8 # GB
+tmpPartitionSize=6 # GB
 
 ############################################################
 # PARTITIONING & INITIAL SETUP
 ############################################################
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root" 
+   exit 1
+fi
 
-#echo "Applying new password..."
-sudo echo "root:$password | chpasswd
+echo "Applying new password..."
+sudo echo "root:$password" | chpasswd
 sudo echo "pi:$password" | chpasswd
 
 echo "Disabling swap..."
 sudo swapoff -a
-cd /var
-sudo dd if=/dev/zero of=swap bs=1M count=100
-cd
+sudo dd if=/dev/zero of=/var/swap bs=1M count=100
 
 echo "Starting build script..."
 partitionCount=$(fdisk -l /dev/mmcblk0 | grep '/dev/mmcblk0p' | wc --lines)
@@ -49,18 +53,40 @@ if [[ $partitionCount -lt 3 ]]; then
 	echo "Disk is NOT partitioned"
 	
 	startSector=$(sudo fdisk -l /dev/mmcblk0 | grep '/dev/mmcblk0p2' | cut -d' ' -f 7)
-	OSPartitionSize=8
 	
     # We are creating 3 partitions - the root one with OS on it, tmp for temporary files and var for all the other stuff
     # The idea is that root partition should be read only, while tmp and var have read and write permissions
 	# WARNING: SIZES SPECIFIED FOR 32GB SD CARD - IF USING DIFFERENT SD SIZE, PLEASE AMEND BELOW SIZES ACCORDINGLY
 	echo "Repartitioning the drive..."
-	(echo d; echo 2; \
-	echo n; echo p; echo ; echo $startSector; echo +$[$OSPartitionSize]g; \
-    echo n; echo e; echo ; echo $[$startSector+1024+(2*1024*1024*$OSPartitionSize)]; echo ; \
-    echo n; echo l; echo ; echo +6g; \
-	echo n; echo l; echo ; echo ; \
-	echo w;) | sudo fdisk /dev/mmcblk0
+    (
+        # Delete OS partition
+        echo d;
+        echo 2;
+        # Create OS partition
+    	echo n;
+        echo p;
+        echo ;
+        echo $startSector;
+        echo +$[$OSPartitionSize]g;
+        # Create extended partition
+        echo n;
+        echo e;
+        echo ;
+        echo $[$startSector+1024+(2*1024*1024*$OSPartitionSize)];
+        echo ;
+        # Create tmp logic partition
+        echo n;
+        echo l;
+        echo ;
+        echo +$[$tmpPartitionSize]g;
+        # Create var logic partition
+    	echo n;
+        echo l;
+        echo ;
+        echo ;
+        # Apply changes
+    	echo w;
+    ) | sudo fdisk /dev/mmcblk0
 	sudo partprobe /dev/mmcblk0
 	sudo resize2fs /dev/mmcblk0p2
 
