@@ -110,14 +110,26 @@ git clone git://git.drogon.net/wiringPi
 cd ./wiringPi
 ./build
 
-exit 0
+echo "Installing Open Framework dependencies..."
+cd /tmp
+
+wget https://raw.githubusercontent.com/openframeworks/openFrameworks/master/scripts/linux/debian/install_dependencies.sh
+chmod +x install_dependencies.sh
+sudo ./install_dependencies.sh | yes # Warning: this isn't automated - you have to press Y to confirm installation
+
+wget https://raw.githubusercontent.com/openframeworks/openFrameworks/master/scripts/linux/debian/install_codecs.sh
+chmod +x install_codecs.sh
+sudo ./install_codecs.sh | yes # Warning: this isn't automated - you have to press Y to confirm installation
+
+# That's it. You can now run Footfall with: cd /opt/HEED/Footfall/; sudo ./Footfall
+
+# cd /home/pi/openFrameworks/apps/Footfall/Footfall/bin/; sudo ./Footfall
 
 echo "Making changes to /etc/rc.local..."
 sudo sed -e "s/exit\s0//g" -i /etc/rc.local
-echo "gpio -g mode 17 out 
-gpio -g write 17 1
-
-exit 0" >> /etc/rc.local
+echo "gpio -g mode 17 out \
+gpio -g write 17 1 \
+exit 0" >> sudo /etc/rc.local
 # Add "usr/bin/tvservice -o" if you wish to disable monitor output
 
 echo "Cloning HEED Repo..."
@@ -137,23 +149,6 @@ sudo chmod +x Footfall
 
 echo "Creating link to Footfall..."
 sudo ln -s /opt/HEED/Footfall/Footfall /usr/bin/Footfall
-
-
-echo "Installing Open Framework dependencies..."
-cd /tmp/
-
-#wget https://raw.githubusercontent.com/openframeworks/openFrameworks/master/scripts/linux/debian/install_dependencies.sh
-#chmod +x install_dependencies.sh
-#sudo ./install_dependencies.sh # Warning: this isn't automated - you have to press Y to confirm installation
-
-#wget https://raw.githubusercontent.com/openframeworks/openFrameworks/master/scripts/linux/debian/install_codecs.sh
-#chmod +x install_codecs.sh
-#sudo ./install_codecs.sh # Warning: this isn't automated - you have to press Y to confirm installation
-
-
-# That's it. You can now run Footfall with: cd /opt/HEED/Footfall/; sudo ./Footfall
-
-# cd /home/pi/openFrameworks/apps/Footfall/Footfall/bin/; sudo ./Footfall
 
 ############################################################
 # OPTIMIZATION (OPTIONAL)
