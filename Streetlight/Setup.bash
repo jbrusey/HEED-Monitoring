@@ -26,7 +26,7 @@
 ############################################################
 
 hostname="streetlight1"
-password="ENTER PASSWORD HERE"
+password="ENTER password HERE"
 
 ############################################################
 # PARTITIONING & INITIAL SETUP
@@ -121,24 +121,13 @@ wget https://raw.githubusercontent.com/openframeworks/openFrameworks/master/scri
 chmod +x install_codecs.sh
 sudo ./install_codecs.sh | yes # Warning: this isn't automated - you have to press Y to confirm installation
 
-# That's it. You can now run Footfall with: cd /opt/HEED/Footfall/; sudo ./Footfall
-
-# cd /home/pi/openFrameworks/apps/Footfall/Footfall/bin/; sudo ./Footfall
-
-echo "Making changes to /etc/rc.local..."
-sudo sed -e "s/exit\s0//g" -i /etc/rc.local
-echo "gpio -g mode 17 out \
-gpio -g write 17 1 \
-exit 0" >> sudo /etc/rc.local
-# Add "usr/bin/tvservice -o" if you wish to disable monitor output
-
 echo "Cloning HEED Repo..."
-cd ~/git
-git clone https://github.com/prabuckt/HEED-Monitoring.git
-cd ~/git/HEED-Monitoring/Streetlight/
+cd /tmp
+git clone https://github.com/jbrusey/HEED-Monitoring.git
+cd HEED-Monitoring/Streetlight/
 
-sudo  rsync -rv  RPI/opt/ /opt/
-sudo  rsync -rv  RPI/etc/ /etc/
+sudo rsync -rv RPI/opt/ /opt/
+sudo rsync -rv RPI/etc/ /etc/
 
 cd /opt/HEED
 sudo python setup.py develop
@@ -150,6 +139,17 @@ sudo chmod +x Footfall
 echo "Creating link to Footfall..."
 sudo ln -s /opt/HEED/Footfall/Footfall /usr/bin/Footfall
 
+# That's it. You can now run Footfall with: cd /opt/HEED/Footfall/; sudo ./Footfall
+# cd /home/pi/openFrameworks/apps/Footfall/Footfall/bin/; sudo ./Footfall
+
+echo "Making changes to /etc/rc.local..."
+sudo sed -e "s/exit\s0//g" -i /etc/rc.local
+echo "gpio -g mode 17 out \
+gpio -g write 17 1 \
+exit 0" >> sudo /etc/rc.local
+# Add "usr/bin/tvservice -o" if you wish to disable monitor output
+
+exit 0
 ############################################################
 # OPTIMIZATION (OPTIONAL)
 ############################################################
