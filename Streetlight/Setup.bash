@@ -27,8 +27,6 @@
 
 hostname="streetlight1"
 password="ENTER PASSWORD HERE"
-OSPartitionSize=8 # GB
-tmpPartitionSize=6 # GB
 
 ############################################################
 # PARTITIONING & INITIAL SETUP
@@ -47,95 +45,6 @@ sudo swapoff -a
 sudo dd if=/dev/zero of=/var/swap bs=1M count=100
 
 echo "Starting build script..."
-partitionCount=$(fdisk -l /dev/mmcblk0 | grep '/dev/mmcblk0p' | wc --lines)
-
-if [[ $partitionCount -lt 3 ]]; then
-	echo "Disk is NOT partitioned"
-	
-	startSector=$(sudo fdisk -l /dev/mmcblk0 | grep '/dev/mmcblk0p2' | cut -d' ' -f 7)
-	
-    # We are creating 3 partitions - the root one with OS on it, tmp for temporary files and var for all the other stuff
-    # The idea is that root partition should be read only, while tmp and var have read and write permissions
-	# WARNING: SIZES SPECIFIED FOR 32GB SD CARD - IF USING DIFFERENT SD SIZE, PLEASE AMEND BELOW SIZES ACCORDINGLY
-	echo "Repartitioning the drive..."
-    (
-        # Delete OS partition
-        echo d;
-        echo 2;
-        # Create OS partition
-    	echo n;
-        echo p;
-        echo ;
-        echo $startSector;
-        echo +$[$OSPartitionSize]g;
-        # Create extended partition
-        echo n;
-        echo e;
-        echo ;
-        echo $[$startSector+1024+(2*1024*1024*$OSPartitionSize)];
-        echo ;
-        # Create tmp logic partition
-        echo n;
-        echo l;
-        echo ;
-        echo +$[$tmpPartitionSize]g;
-        # Create var logic partition
-    	echo n;
-        echo l;
-        echo ;
-        echo ;
-        # Apply changes
-    	echo w;
-    ) | sudo fdisk /dev/mmcblk0
-	sudo partprobe /dev/mmcblk0
-	sudo resize2fs /dev/mmcblk0p2
-
-    echo "Formatting new partitions.."
-	sudo mkfs.ext4 -F /dev/mmcblk0p5
-	sudo mkfs.ext4 -F /dev/mmcblk0p6
-
-    echo "Configuring and mounting new partitions to root directories..."
-	#
-	sudo mkdir /mnt/tmp
-	sudo mkdir /mnt/var
-	#
-	sudo mount /dev/mmcblk0p5 /mnt/tmp
-	sudo mount /dev/mmcblk0p6 /mnt/var
-
-	#
-	sudo cp /tmp/* /mnt/tmp -rp
-	sudo cp /var/* /mnt/var -rp
-	#
-    sudo mv /tmp /tmp.old
-	sudo mv /var /var.old
-	#
-	sudo mkdir /tmp
-	sudo mkdir /var
-	#
-	sudo umount /dev/mmcblk0p5
-	sudo umount /dev/mmcblk0p6
-	#
-	sudo mount /dev/mmcblk0p5 /tmp
-	sudo mount /dev/mmcblk0p6 /var
-	#
-	echo "Waiting for partitions to mount..."
-	sleep 10
-	sudo rm -rf /tmp.old
-	sudo rm -rf /var.old
-
-    echo "Amending fstab..."
-    echo "proc            /proc           proc    defaults						0       0
-/dev/mmcblk0p1  /boot           vfat    defaults          				0       2
-/dev/mmcblk0p2  /               ext4    rw,defaults,noatime,nodiratime  0       1
-/dev/mmcblk0p5	/tmp			ext4	rw,defaults,noatime,nodiratime	0		2
-/dev/mmcblk0p6	/var			ext4	rw,defaults,noatime,nodiratime	0		2
-# a swapfile is not a swap partition, no line here
-#   use  dphys-swapfile swap[on|off]  for that" > /etc/fstab
-
-
-else
-	echo "Disk is already partitioned. Skipping..."
-fi
 
 echo "Applying new hostname..."
 echo  "$hostname" > /etc/hostname
