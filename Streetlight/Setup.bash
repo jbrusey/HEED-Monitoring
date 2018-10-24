@@ -69,9 +69,6 @@ sudo apt-get -y upgrade
 echo "Installing necessary packages..."
 sudo apt-get -y install supervisor git usbmount python-setuptools python-pip i2c-tools python-smbus autossh ppp autossh
 
-sudo pip install pyserial
-sudo pip install paho-mqtt
-
 echo "Cleaning..."
 sudo apt-get -y autoremove
 sudo apt-get -y clean
