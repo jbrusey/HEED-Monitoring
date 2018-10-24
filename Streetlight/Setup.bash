@@ -62,6 +62,9 @@ sudo raspi-config nonint do_ssh 0
 echo "Making sure Pi camera is enabled..."
 sudo raspi-config nonint do_camera 1
 
+echo "Making sure I2C camera is enabled..."
+sudo raspi-config nonint do_i2c 0
+
 echo "Performing update"
 sudo apt-get update
 sudo apt-get -y upgrade
@@ -73,13 +76,14 @@ echo "Cleaning..."
 sudo apt-get -y autoremove
 sudo apt-get -y clean
 
-echo "Creating file structure"
-sudo mkdir /opt/HEED
-cd /opt/HEED
+# echo "Creating file structure"
+# sudo mkdir /opt/HEED
+# cd /opt/HEED
 
 echo "Setting up Pi Face"
-sudo wget https://raw.github.com/piface/PiFace-Real-Time-Clock/master/install-piface-real-time-clock.sh
-sudo chmod +x install-piface-real-time-clock.sh
+cd /tmp
+wget https://raw.github.com/piface/PiFace-Real-Time-Clock/master/install-piface-real-time-clock.sh
+chmod +x install-piface-real-time-clock.sh
 sudo ./install-piface-real-time-clock.sh
 
 cd /etc/rc2.d
@@ -87,9 +91,8 @@ sudo ln -s ../init.d/pifacertc S01pifacertc
 cd ../rc5.d
 sudo ln -s ../init.d/pifacertc S01pifacertc
 
-
-#enable i2c in config
-#sudo reboot
+cd /etc/init.d/
+sudo ./pifacertc start
 sudo hwclock --systohc
 
 echo "Making changes to /lib/systemd/system/hciuart.service..."
