@@ -95,10 +95,6 @@ cd /etc/init.d/
 sudo ./pifacertc start
 sudo hwclock --systohc
 
-echo "Making changes to /lib/systemd/system/hciuart.service..."
-sudo sed -i -e 's|After=dev-serial1.device|After=dev-ttyS0.device|g' /lib/systemd/system/hciuart.service
-sudo sed -i -e 's|ExecStart=/usr/bin/btuart|ExecStart=/usr/bin/hciattach /dev/ttyS0 bcm43xx 460800 noflow -|g' /lib/systemd/system/hciuart.service
-
 echo "Making changes to /etc/network/interfaces..."
 echo "
 auto fona
