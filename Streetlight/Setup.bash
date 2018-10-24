@@ -62,15 +62,12 @@ sudo raspi-config nonint do_ssh 0
 echo "Making sure Pi camera is enabled..."
 sudo raspi-config nonint do_camera 1
 
-echo "Performing fixes to Read Only filesystem..."
-sudo sed -i -e 's_/run/dhcpcd.pid_/var/run/dhcpcd.pid_g' /etc/systemd/system/dhcpcd5.service
-
 echo "Performing update"
 sudo apt-get update
 sudo apt-get -y upgrade
 
 echo "Installing necessary packages..."
-sudo apt-get -y install supervisor emacs git subversion usbmount python-setuptools python-pip i2c-tools python-smbus autossh ppp screen elinks autossh
+sudo apt-get -y install supervisor git usbmount python-setuptools python-pip i2c-tools python-smbus autossh ppp autossh
 
 sudo pip install pyserial
 sudo pip install paho-mqtt
