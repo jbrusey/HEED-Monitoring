@@ -96,20 +96,21 @@ sudo ./pifacertc start
 sudo hwclock --systohc
 
 echo "Making changes to /etc/network/interfaces..."
-echo "
-auto fona
-iface fona inet ppp
-	provider fona" >> /etc/network/interfaces
+echo " \
+auto fona \
+iface fona inet ppp \
+	provider fona" >> sudo /etc/network/interfaces
 
 #https://learn.adafruit.com/fona-tethering-to-raspberry-pi-or-beaglebone-black/setup
 
 #install wiringpi
-mkdir ~/git
-cd ~/git
+echo "Installing WiringPi"
+cd /tmp
 git clone git://git.drogon.net/wiringPi
 cd ./wiringPi
-git pull origin
 ./build
+
+exit 0
 
 echo "Making changes to /etc/rc.local..."
 sudo sed -e "s/exit\s0//g" -i /etc/rc.local
