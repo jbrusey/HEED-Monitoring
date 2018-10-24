@@ -73,12 +73,6 @@ echo "Cleaning..."
 sudo apt-get -y autoremove
 sudo apt-get -y clean
 
-#Enable usb auto mounting
-#Edit /lib/systemd/system/systemd-udevd.service and change the line
-#MountFlags=slave
-#to
-#MountFlags=shared
-
 echo "Creating file structure"
 sudo mkdir /opt/HEED
 cd /opt/HEED
