@@ -72,14 +72,6 @@ sudo apt-get -y upgrade
 echo "Installing necessary packages..."
 sudo apt-get -y install supervisor git usbmount python-setuptools python-pip i2c-tools python-smbus python-virtualenv autossh ppp autossh
 
-echo "Cleaning..."
-sudo apt-get -y autoremove
-sudo apt-get -y clean
-
-# echo "Creating file structure"
-# sudo mkdir /opt/HEED
-# cd /opt/HEED
-
 echo "Setting up Pi Face"
 cd /tmp
 wget https://raw.github.com/piface/PiFace-Real-Time-Clock/master/install-piface-real-time-clock.sh
@@ -115,11 +107,11 @@ cd /tmp
 
 wget https://raw.githubusercontent.com/openframeworks/openFrameworks/master/scripts/linux/debian/install_dependencies.sh
 chmod +x install_dependencies.sh
-sudo ./install_dependencies.sh | yes # Warning: this isn't automated - you have to press Y to confirm installation
+yes | sudo ./install_dependencies.sh # Warning: this isn't automated - you have to press Y to confirm installation
 
 wget https://raw.githubusercontent.com/openframeworks/openFrameworks/master/scripts/linux/debian/install_codecs.sh
 chmod +x install_codecs.sh
-sudo ./install_codecs.sh | yes # Warning: this isn't automated - you have to press Y to confirm installation
+yes | sudo ./install_codecs.sh # Warning: this isn't automated - you have to press Y to confirm installation
 
 echo "Cloning HEED Repo..."
 cd /tmp
@@ -129,10 +121,8 @@ cd HEED-Monitoring/Streetlight/
 sudo rsync -rv RPI/opt/ /opt/
 sudo rsync -rv RPI/etc/ /etc/
 
-exit 0
-
 cd /opt/HEED
-virtualenv venv
+sudo virtualenv venv
 source venv/bin/activate
 sudo python setup.py develop
 
@@ -142,6 +132,11 @@ sudo chmod +x Footfall
 echo "Creating link to Footfall..."
 sudo ln -s /opt/HEED/Footfall/Footfall /usr/bin/Footfall
 
+echo "Cleaning..."
+sudo apt-get -y autoremove
+sudo apt-get -y clean
+
+rm -rf /tmp/*
 # That's it. You can now run Footfall with: cd /opt/HEED/Footfall/; sudo ./Footfall
 # cd /home/pi/openFrameworks/apps/Footfall/Footfall/bin/; sudo ./Footfall
 
@@ -158,8 +153,7 @@ exit 0
 ############################################################
 
 echo "Enabling SSH access as Root..."
-echo "
-PermitRootLogin yes" >> /etc/ssh/sshd_config
+echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
 
 echo "Removing all references of 'console='' in /boot/cmdline.txt..."
 sudo sed -e s/console=serial0,115200//g -i /boot/cmdline.txt
