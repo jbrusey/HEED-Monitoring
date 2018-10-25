@@ -70,7 +70,7 @@ sudo apt-get update
 sudo apt-get -y upgrade
 
 echo "Installing necessary packages..."
-sudo apt-get -y install supervisor git usbmount python-setuptools python-pip i2c-tools python-smbus autossh ppp autossh
+sudo apt-get -y install supervisor git usbmount python-setuptools python-pip i2c-tools python-smbus python-virtualenv autossh ppp autossh
 
 echo "Cleaning..."
 sudo apt-get -y autoremove
@@ -129,10 +129,13 @@ cd HEED-Monitoring/Streetlight/
 sudo rsync -rv RPI/opt/ /opt/
 sudo rsync -rv RPI/etc/ /etc/
 
+exit 0
+
 cd /opt/HEED
+virtualenv venv
+source venv/bin/activate
 sudo python setup.py develop
 
-sudo chmod 777 /opt/HEED/*
 cd Footfall
 sudo chmod +x Footfall
 

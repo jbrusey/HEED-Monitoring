@@ -22,4 +22,8 @@ setup(name='HEED',
       description='HEED logger',
       author='Ross Wilkins',
       author_email='ross.wilkins@coventry.ac.uk',
-      packages=['Energy'])
+      packages=['Energy'],
+      install_requires=[
+        'pyserial',
+        'paho-mqtt',
+      ],)
