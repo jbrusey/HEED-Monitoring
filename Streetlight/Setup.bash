@@ -60,9 +60,9 @@ echo "Making sure SSH is enabled..."
 sudo raspi-config nonint do_ssh 0
 
 echo "Making sure Pi camera is enabled..."
-sudo raspi-config nonint do_camera 1
+sudo raspi-config nonint do_camera 0
 
-echo "Making sure I2C camera is enabled..."
+echo "Making sure I2C is enabled..."
 sudo raspi-config nonint do_i2c 0
 
 echo "Performing update"
@@ -83,15 +83,15 @@ sudo ln -s ../init.d/pifacertc S01pifacertc
 cd ../rc5.d
 sudo ln -s ../init.d/pifacertc S01pifacertc
 
-cd /etc/init.d/
-sudo ./pifacertc start
+sudo /etc/init.d/pifacertc start
 sudo hwclock --systohc
 
 echo "Making changes to /etc/network/interfaces..."
-echo " \
-auto fona \
-iface fona inet ppp \
-	provider fona" >> sudo /etc/network/interfaces
+sudo tee -a /etc/netowrk/interfaces << EOF
+auto fona
+iface fona inet ppp
+	provider fona
+EOF
 
 #https://learn.adafruit.com/fona-tethering-to-raspberry-pi-or-beaglebone-black/setup
 
@@ -142,9 +142,11 @@ rm -rf /tmp/*
 
 echo "Making changes to /etc/rc.local..."
 sudo sed -e "s/exit\s0//g" -i /etc/rc.local
-echo "gpio -g mode 17 out \
-gpio -g write 17 1 \
-exit 0" >> sudo /etc/rc.local
+sudo tee -a /etc/rc.local << EOF
+gpio -g mode 17 out
+gpio -g write 17 1
+exit 0
+EOF
 # Add "usr/bin/tvservice -o" if you wish to disable monitor output
 
 exit 0
