@@ -150,25 +150,9 @@ exit 0
 EOF
 # Add "usr/bin/tvservice -o" if you wish to disable monitor output
 
-exit 0
 ############################################################
 # OPTIMIZATION (OPTIONAL)
 ############################################################
-
-echo "Enabling SSH access as Root..."
-echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
-
-echo "Removing all references of 'console='' in /boot/cmdline.txt..."
-sudo sed -e s/console=serial0,115200//g -i /boot/cmdline.txt
-sudo sed -e s/console=tty1//g -i /boot/cmdline.txt
-
-echo "Disabling rainbow splash at startup..."
-echo "disable_splash=1" >> /boot/config.txt
-echo "boot_delay=0" >> /boot/config.txt
-echo "avoid_safe_mode=1" >> /boot/config.txt
-
-echo "Disabling raspberries logo"
-sed -i 's/$/ loglevel=0 logo.nologo /' /boot/cmdline.txt
 
 echo "Removing wait for network on boot (speeds up boot to 5sec, can be changed in raspi-config)..."
 sudo rm -f /etc/systemd/system/dhcpcd.service.d/wait.conf
@@ -179,9 +163,6 @@ sudo systemctl stop display-manager.service
 sudo systemctl disable display-manager.service
 sudo rm -f /etc/systemd/system/display-manager.service
 
-#sudo systemctl stop autologin@.service
-#sudo systemctl disable autologin@.service
-#sudo rm -f /etc/systemd/system/autologin@.service
 
 sudo systemctl stop autovt@.service
 sudo systemctl disable autovt@.service
@@ -201,10 +182,6 @@ sudo systemctl stop apt-daily-upgrade.timer
 sudo systemctl disable apt-daily-upgrade.timer
 sudo systemctl mask apt-daily-upgrade.service
 
-sudo systemctl stop rpi-display-backlight.service
-sudo systemctl disable rpi-display-backlight.service
-sudo rm -f /etc/systemd/system/rpi-display-backlight.service
-
 sudo systemctl stop remote-fs.target
 sudo systemctl disable remote-fs.target
 sudo rm -f "/etc/systemd/system/disable remote-fs.target"
@@ -212,10 +189,6 @@ sudo rm -f "/etc/systemd/system/disable remote-fs.target"
 sudo systemctl stop wifi-country.service
 sudo systemctl disable wifi-country.service
 sudo rm -f /etc/systemd/system/wifi-country.service
-
-#sudo systemctl stop hciuart.service
-#sudo systemctl disable hciuart.service
-#sudo rm -f /etc/systemd/system/hciuart.service
 
 sudo systemctl stop bluetooth.service
 sudo systemctl disable bluetooth.service
@@ -233,10 +206,6 @@ sudo systemctl stop console-setup.service
 sudo systemctl disable console-setup.service
 sudo rm -f /etc/systemd/system/console-setup.service
 
-sudo systemctl stop keyboard-setup.service
-sudo systemctl disable keyboard-setup.service
-sudo rm -f /etc/systemd/system/keyboard-setup.service
-
 sudo systemctl stop triggerhappy.service
 sudo systemctl disable triggerhappy.service
 sudo rm -f /etc/systemd/system/triggerhappy.service
@@ -251,27 +220,19 @@ sudo rm -f /etc/systemd/system/dphys-swapfile
 
 sudo systemctl daemon-reload
 
-sudo insserv -r plymouth
-sudo insserv -r plymouth-log
-sudo insserv -r nfs-common
-sudo insserv -r avahi-daemon
-#sudo insserv -r bluetooth
-sudo insserv -r console-setup.sh
-sudo insserv -r keyboard-setup.sh
-sudo insserv -r triggerhappy
-sudo insserv -r raspi-config
-sudo insserv -r dphys-swapfile
+##############
 
-sudo rm -f /etc/init.d/plymouth
-sudo rm -f /etc/init.d/plymouth-log
-sudo rm -f /etc/init.d/nfs-common
-sudo rm -f /etc/init.d/avahi-daemon
-#sudo rm -f /etc/init.d/bluetooth
-sudo rm -f /etc/init.d/console-setup.sh
-sudo rm -f /etc/init.d/keyboard-setup.sh
-sudo rm -f /etc/init.d/triggerhappy
-sudo rm -f /etc/init.d/raspi-config
-sudo rm -f /etc/init.d/dphys-swapfile
+#Add to /boot/config.txt
+
+sudo tee -a /boot/config << EOF
+
+# turn wifi and bluetooth off
+dtoverlay=pi3-disable-wifi
+dtoverlay=pi3-disable-bt
+
+# enable uart
+enable_uart=1
+EOF
 
 ############################################################
 # DONE
@@ -281,78 +242,12 @@ echo "Everything has been setup"
 
 for i in `seq 1 10`;
 do
-		echo -ne "Rebooting in $((11-$i))... (press CTRL+C if you wish to abort, or R to reboot now) "\\r
-		read -t 1 -n 1 -s key
-		case $key in
-			'r') break;;
-		esac
+        echo -ne "Rebooting in $((11-$i))... (press CTRL+C if you wish to abort, or R to reboot now) "\\r
+        read -t 1 -n 1 -s key
+        case $key in
+            'r') break;;
+        esac
 done
 echo
 echo "Rebooting..."
 sudo reboot
-
-##############
-
-
-#Generate ssh key and add to pi user on cogentee
-ssh-keygen -t rsa
-#check you can ssh to cogentee
-
-#echo "Disabling TV series (Run only when all setup is sorted)..."
-#sed -e s/exit 0//g -i /etc/rc.local
-#echo "/usr/bin/tvservice -o
-#exit 0" >> /etc/rc.local # Change -o to -p to re-enablew
-
-#Disable ACT LED & WiFi & BT & Audio (only when all setup is sorted)
-
-#Add to /boot/config.txt
-
-# disable audio (loads snd_bcm2835)
-#dtparam=audio=off
-#gpu_mem=16
-
-# Disable the ACT LED.
-#dtparam=act_led_trigger=none
-#dtparam=act_led_activelow=off
-
-# Disable the PWR LED.
-#dtparam=pwr_led_trigger=none
-#dtparam=pwr_led_activelow=off
-
-# turn and wifi bluetooth off
-#dtoverlay=pi3-disable-wifi
-#dtoverlay=pi3-disable-bt
-
-
-#Reboot
-#check:
-#1. ppp0 comes up
-#ifconfig ppp0
-#2. IAM code is running
-#ps -ef | grep IAM
-#3. Serial forwarder has started
-#ps -ef | grep sf
-#3. flat looger is running
-#ps -ef | grep Flat
-
-#poweroff
-#plug into laptop
-
-#fdisk /dev/disk2
-#dd if=/dev/disk2 bs=512 count=7494037 of=f.img
-
-#Edit already created
-
-#Set hostname
-#Expand partion
-#disable SPI
-#sudo emacs /etc/default/auto-ssh
-
-#reboot
-#ssh-keygen -t rsa
-#sudo apt-get update
-#sudo apt-get -y upgrade
-#sudo apt -y autoremove
-#sudo rpi-update
-#sudo reboot
-
