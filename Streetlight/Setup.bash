@@ -104,6 +104,8 @@ git clone git://git.drogon.net/wiringPi
 cd ./wiringPi
 ./build
 
+if [[ "$@" != "nofootfall" ]]
+then
 echo "Installing Open Framework dependencies..."
 cd /tmp
 
@@ -114,6 +116,7 @@ yes | sudo ./install_dependencies.sh # Warning: this isn't automated - you have 
 wget https://raw.githubusercontent.com/openframeworks/openFrameworks/master/scripts/linux/debian/install_codecs.sh
 chmod +x install_codecs.sh
 yes | sudo ./install_codecs.sh # Warning: this isn't automated - you have to press Y to confirm installation
+fi
 
 echo "Cloning HEED Repo..."
 cd /tmp
@@ -151,7 +154,7 @@ EOF
 # Add "usr/bin/tvservice -o" if you wish to disable monitor output
 
 ############################################################
-# OPTIMIZATION (OPTIONAL)
+# OPTIMIZATION
 ############################################################
 
 echo "Removing wait for network on boot (speeds up boot to 5sec, can be changed in raspi-config)..."
@@ -239,6 +242,7 @@ EOF
 ############################################################
 
 echo "Everything has been setup"
+exit 0
 
 for i in `seq 1 10`;
 do
