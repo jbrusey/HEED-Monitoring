@@ -7,12 +7,12 @@ connect "/usr/sbin/chat -v -f /etc/chatscripts/gprs -T giffgaff.com"
 
 # MUST CHANGE: Uncomment the appropriate serial device for your platform below.
 # For Raspberry Pi use /dev/ttyAMA0 by uncommenting the line below:
-/dev/ttyAMA0
+/dev/serial0
 # For BeagleBone Black use /dev/ttyO4 by uncommenting the line below:
 #/dev/ttyO4
 
 # Speed of the serial line.
-9600
+115200
 
 # Assumes that your IP address is allocated dynamically by the ISP.
 noipdefault

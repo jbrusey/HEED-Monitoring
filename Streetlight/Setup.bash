@@ -162,19 +162,6 @@ sudo rm -f /etc/systemd/system/dhcpcd.service.d/wait.conf
 
 echo "Disabling additional services..."
 
-sudo systemctl stop display-manager.service
-sudo systemctl disable display-manager.service
-sudo rm -f /etc/systemd/system/display-manager.service
-
-
-sudo systemctl stop autovt@.service
-sudo systemctl disable autovt@.service
-sudo rm -f /etc/systemd/system/autovt@.service
-
-sudo systemctl stop rpi-display-backlight.service
-sudo systemctl disable rpi-display-backlight.service
-sudo rm -f /etc/systemd/system/rpi-display-backlight.service
-
 # Remove auto update services
 
 sudo systemctl stop apt-daily.timer
@@ -187,47 +174,21 @@ sudo systemctl mask apt-daily-upgrade.service
 
 sudo systemctl stop remote-fs.target
 sudo systemctl disable remote-fs.target
-sudo rm -f "/etc/systemd/system/disable remote-fs.target"
 
 sudo systemctl stop wifi-country.service
 sudo systemctl disable wifi-country.service
-sudo rm -f /etc/systemd/system/wifi-country.service
 
 sudo systemctl stop bluetooth.service
 sudo systemctl disable bluetooth.service
-sudo rm -f /etc/systemd/system/bluetooth.service
-
-sudo systemctl stop avahi-daemon.service
-sudo systemctl disable avahi-daemon.service
-sudo rm -f /etc/systemd/system/avahi-daemon.service
-
-sudo systemctl stop nfs-client.target
-sudo systemctl disable nfs-client.target
-sudo rm -f /etc/systemd/system/nfs-client.target
 
 sudo systemctl stop console-setup.service
 sudo systemctl disable console-setup.service
-sudo rm -f /etc/systemd/system/console-setup.service
-
-sudo systemctl stop triggerhappy.service
-sudo systemctl disable triggerhappy.service
-sudo rm -f /etc/systemd/system/triggerhappy.service
-
-sudo systemctl stop triggerhappy.socket
-sudo systemctl disable triggerhappy.socket
-sudo rm -f /etc/systemd/system/triggerhappy.socket
-
-sudo systemctl disable dphys-swapfile
-sudo systemctl disable dphys-swapfile
-sudo rm -f /etc/systemd/system/dphys-swapfile
-
-sudo systemctl daemon-reload
 
 ##############
 
 #Add to /boot/config.txt
 
-sudo tee -a /boot/config << EOF
+sudo tee -a /boot/config.txt << EOF
 
 # turn wifi and bluetooth off
 dtoverlay=pi3-disable-wifi
