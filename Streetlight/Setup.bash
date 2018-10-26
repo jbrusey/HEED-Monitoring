@@ -70,7 +70,7 @@ sudo apt-get update
 sudo apt-get -y upgrade
 
 echo "Installing necessary packages..."
-sudo apt-get -y install supervisor git usbmount python-setuptools python-pip i2c-tools python-smbus python-virtualenv autossh ppp autossh
+sudo apt-get -y install supervisor git usbmount python-setuptools python-pip i2c-tools python-smbus autossh ppp autossh vim
 
 echo "Setting up Pi Face"
 cd /tmp
@@ -122,8 +122,7 @@ sudo rsync -rv RPI/opt/ /opt/
 sudo rsync -rv RPI/etc/ /etc/
 
 cd /opt/HEED
-sudo virtualenv venv
-source venv/bin/activate
+sudo mkdir Data
 sudo python setup.py develop
 
 cd Footfall
