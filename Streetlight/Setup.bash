@@ -67,12 +67,15 @@ sudo raspi-config nonint do_camera 0
 echo "Making sure I2C is enabled..."
 sudo raspi-config nonint do_i2c 0
 
+echo "Disable serial login console"
+sudo raspi-config nonint do_serial 1
+
 echo "Performing update"
 sudo apt-get update
 sudo apt-get -y upgrade
 
 echo "Installing necessary packages..."
-sudo apt-get -y install supervisor git usbmount python-setuptools python-pip i2c-tools python-smbus autossh ppp autossh vim
+sudo apt-get -y install supervisor git usbmount python-setuptools python-pip i2c-tools python-smbus autossh ppp autossh vim picocom
 
 echo "Setting up Pi Face"
 cd /tmp
