@@ -47,14 +47,16 @@ sudo dd if=/dev/zero of=/var/swap bs=1M count=100
 echo "Starting build script..."
 
 echo "Applying new hostname..."
-echo  "$hostname" > sudo /etc/hostname
-echo "127.0.0.1       localhost \
-::1             localhost ip6-localhost ip6-loopback \
-fe00::0         ip6-localnet \
-ff00::0         ip6-mcastprefix \
-ff02::1         ip6-allnodes \
-ff02::2         ip6-allrouters \
-127.0.1.1       $hostname" > sudo /etc/hosts
+echo  "$hostname" | sudo tee /etc/hostname
+sudo tee /etc/hosts << EOF
+127.0.0.1       localhost
+::1             localhost ip6-localhost ip6-loopback
+fe00::0         ip6-localnet
+ff00::0         ip6-mcastprefix
+ff02::1         ip6-allnodes
+ff02::2         ip6-allrouters
+127.0.1.1       $hostname
+EOF
 
 echo "Making sure SSH is enabled..."
 sudo raspi-config nonint do_ssh 0

@@ -60,7 +60,7 @@ class vedirect:
         self.dName = None
         while count > 0:
             pkt = self.read_data_single();
-            if pkt != None:
+            if pkt != None and 'PID' in pkt:
                 self.dName = pkt['PID']
                 break
             else:
