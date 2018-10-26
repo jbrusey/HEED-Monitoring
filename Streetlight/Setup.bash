@@ -92,7 +92,7 @@ sudo /etc/init.d/pifacertc start
 sudo hwclock --systohc
 
 echo "Making changes to /etc/network/interfaces..."
-sudo tee -a /etc/netowrk/interfaces << EOF
+sudo tee -a /etc/network/interfaces << EOF
 auto fona
 iface fona inet ppp
 	provider fona
