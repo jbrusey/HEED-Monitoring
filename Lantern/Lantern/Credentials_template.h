@@ -5,6 +5,6 @@
 #define SECRET_GPRS_PASSWORD ""               // replace with GPRS password
 
 //CREDENTIALS - MQTT
-#define MQTT_SERVER "broker.hivemq.com"                        // MQTT broker address
+#define MQTT_SERVER "heed-data.coventry.ac.uk"                        // MQTT broker address
 #define MQTT_USER ""
 #define MQTT_PASS ""

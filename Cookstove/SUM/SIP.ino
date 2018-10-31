@@ -15,7 +15,8 @@ bool hasEvent(Data* readings)
 {
   if (fabs(readings->tempThermocouple - prev_temp_thermocouple) >= SIP_TEMP_THERMOCOUPLE_THRESH)
   {
-    debug("Threshold reached! (" + String(readings->tempThermocouple - prev_temp_thermocouple) + "c from thermocouple)"); 
+    debug("Threshold reached! (" + String(readings->tempThermocouple - prev_temp_thermocouple) + "c from thermocouple)");
+    debug("Thermocouple temp: " + String(readings->tempThermocouple)); 
     return true;
   }
   else if (fabs(readings->tempSi7021 - prev_temp_Si7021) >= SIP_TEMP_SI7021_THRESH)
