@@ -128,6 +128,7 @@ cd HEED-Monitoring/Streetlight/
 
 sudo rsync -rv RPI/opt/ /opt/
 sudo rsync -rv RPI/etc/ /etc/
+sudo cp RPI/etc/autossh /etc/init.d/autossh
 
 cd /opt/HEED
 sudo mkdir Data
@@ -206,7 +207,6 @@ EOF
 ############################################################
 
 echo "Everything has been setup"
-exit 0
 
 for i in `seq 1 10`;
 do
