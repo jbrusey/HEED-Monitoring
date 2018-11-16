@@ -128,7 +128,7 @@ cd HEED-Monitoring/Streetlight/
 
 sudo rsync -rv RPI/opt/ /opt/
 sudo rsync -rv RPI/etc/ /etc/
-sudo cp RPI/etc/autossh /etc/init.d/autossh
+sudo cp RPI/autossh /etc/init.d/autossh
 
 cd /opt/HEED
 sudo mkdir Data
