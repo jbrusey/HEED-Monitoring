@@ -157,10 +157,10 @@ exit 0
 EOF
 
 echo "Prepare dispmaxn_vnc"
-cd /
-sudo apt-get install g++-4.8 libvncserver-dev libconfig++-dev
+cd /home/pi
+sudo apt-get -y install g++-4.8 libvncserver-dev libconfig++-dev
 echo "Downloading vnc server repo..."
-sudo git clone https://github.com/patrikolausson/dispmanx_vnc.git
+git clone https://github.com/patrikolausson/dispmanx_vnc.git
 cd dispmanx_vnc
 make
 
