@@ -26,7 +26,7 @@
 ############################################################
 
 hostname="streetlight1"
-password="ENTER password HERE"
+password="pervasive"
 
 ############################################################
 # PARTITIONING & INITIAL SETUP
@@ -155,6 +155,19 @@ gpio -g mode 17 out
 gpio -g write 17 1
 exit 0
 EOF
+
+echo "Prepare dispmaxn_vnc"
+cd /
+sudo apt-get install g++-4.8 libvncserver-dev libconfig++-dev
+echo "Downloading vnc server repo..."
+sudo git clone https://github.com/patrikolausson/dispmanx_vnc.git
+cd dispmanx_vnc
+make
+
+sudo mkdir /opt/vnc
+sudo cp dispmanx_vnc /etc/vnc/dispmanx_vnc
+sudo ln -s /opt/vnc/dispmanx_vnc /usr/bin/dispmanx_vnc
+
 # Add "usr/bin/tvservice -o" if you wish to disable monitor output
 
 ############################################################
