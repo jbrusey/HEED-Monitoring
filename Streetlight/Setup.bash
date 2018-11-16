@@ -165,8 +165,8 @@ cd dispmanx_vnc
 make
 
 sudo mkdir /opt/vnc
-sudo cp dispmanx_vnc /etc/vnc/dispmanx_vnc
-sudo ln -s /opt/vnc/dispmanx_vnc /usr/bin/dispmanx_vnc
+sudo cp dispmanx_vncserver /etc/vnc/dispmanx_vncserver
+sudo ln -s /opt/vnc/dispmanx_vncserver /usr/bin/dispmanx_vncserver
 
 # Add "usr/bin/tvservice -o" if you wish to disable monitor output
 
