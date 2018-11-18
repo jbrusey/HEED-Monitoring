@@ -75,7 +75,7 @@ sudo apt-get update
 sudo apt-get -y upgrade
 
 echo "Installing necessary packages..."
-sudo apt-get -y install supervisor git usbmount python-setuptools python-pip i2c-tools python-smbus autossh ppp autossh vim picocom
+sudo apt-get -y install supervisor git usbmount python-setuptools python-pip i2c-tools python-smbus autossh ppp vim picocom
 
 echo "Setting up Pi Face"
 cd /tmp
@@ -88,8 +88,8 @@ sudo ln -s ../init.d/pifacertc S01pifacertc
 cd ../rc5.d
 sudo ln -s ../init.d/pifacertc S01pifacertc
 
-sudo /etc/init.d/pifacertc start
-sudo hwclock --systohc
+# sudo /etc/init.d/pifacertc start
+# sudo hwclock --systohc
 
 echo "Making changes to /etc/network/interfaces..."
 sudo tee -a /etc/network/interfaces << EOF
@@ -128,7 +128,7 @@ cd HEED-Monitoring/Streetlight/
 
 sudo rsync -rv RPI/opt/ /opt/
 sudo rsync -rv RPI/etc/ /etc/
-sudo cp RPI/autossh /etc/init.d/autossh
+sudo cp RPI/auto-ssh /etc/init.d/auto-ssh
 
 cd /opt/HEED
 sudo mkdir Data
@@ -139,14 +139,6 @@ sudo chmod +x Footfall
 
 echo "Creating link to Footfall..."
 sudo ln -s /opt/HEED/Footfall/Footfall /usr/bin/Footfall
-
-echo "Cleaning..."
-sudo apt-get -y autoremove
-sudo apt-get -y clean
-
-rm -rf /tmp/*
-# That's it. You can now run Footfall with: cd /opt/HEED/Footfall/; sudo ./Footfall
-# cd /home/pi/openFrameworks/apps/Footfall/Footfall/bin/; sudo ./Footfall
 
 echo "Making changes to /etc/rc.local..."
 sudo sed -e "s/exit\s0//g" -i /etc/rc.local
@@ -167,6 +159,14 @@ make
 sudo mkdir /opt/vnc
 sudo cp dispmanx_vncserver /opt/vnc/dispmanx_vncserver
 sudo ln -s /opt/vnc/dispmanx_vncserver /usr/bin/dispmanx_vncserver
+
+echo "Cleaning..."
+sudo apt-get -y autoremove
+sudo apt-get -y clean
+
+rm -rf /tmp/*
+# That's it. You can now run Footfall with: cd /opt/HEED/Footfall/; sudo ./Footfall
+# cd /home/pi/openFrameworks/apps/Footfall/Footfall/bin/; sudo ./Footfall
 
 # Add "usr/bin/tvservice -o" if you wish to disable monitor output
 
