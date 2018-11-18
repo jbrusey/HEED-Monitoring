@@ -5,10 +5,14 @@
 
 ## After reboot
 - change hostname (`/etc/hostname`)
-- set the repote port for autossh in `/etc/default/auto-ssh` (`REMOTE_PORT=xxxx`) and write it on cogentee wiki
+- set the remote port for autossh in `/etc/default/auto-ssh` (`REMOTE_PORT=xxxx`) and write it on cogentee wiki
 - generate ssh key (`ssh-keygen`) and put  the content of `/home/pi/.ssh/id_rsa.pub`  on cogentee wiki
+- execute `sudo hwclock --systohc`
 
 ## Cloning cards
 After you do the [clean image installation](#Clean-raspbian-image), take out the SD card (without doing the 'After reboot' steps), make it an image, flash another one with this image and apply the [after reboot](#After-reboot) steps on it
 
 **Cogentee wiki:** http://cogentee.coventry.ac.uk/mediawiki/index.php/Cogentee_AutoSSH_Ports
+
+## VNC
+`dispmanx_vnc` is running on port 5900
