@@ -26,7 +26,6 @@
 ############################################################
 
 hostname="streetlight1"
-password="pervasive"
 
 ############################################################
 # PARTITIONING & INITIAL SETUP
@@ -37,6 +36,9 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 echo "Applying new password..."
+echo "Insert the new passowrd: "
+read password
+
 sudo echo "root:$password" | chpasswd
 sudo echo "pi:$password" | chpasswd
 
