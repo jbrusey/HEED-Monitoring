@@ -26,7 +26,7 @@
 ############################################################
 
 hostname="streetlight1"
-password="pervasive"
+password="PLEASE DO NOT PUT THE PASSWORD IN THIS SCRIPT"
 
 ############################################################
 # PARTITIONING & INITIAL SETUP
