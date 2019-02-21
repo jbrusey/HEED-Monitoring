@@ -1,5 +1,5 @@
-
-CC=gcc
+CXX=g++
+CXXFLAGS=-I ../SUM
 test: UnitTestSIP UnitTestSenseCycle UnitTestHB
 	./UnitTestSIP
 	./UnitTestSenseCycle

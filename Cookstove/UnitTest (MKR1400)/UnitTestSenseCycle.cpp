@@ -7,8 +7,8 @@
 #include <stdbool.h>
 #include <math.h>
 
-#include "../SUM/struct.h"
-#include "../SUM/error.h"
+#include "struct.h"
+#include "error.h"
 
 //define missing types
 typedef unsigned char byte;
@@ -26,30 +26,31 @@ void getBatteryVoltage(Data* readings);
 void getGSMTime(Data* readings);
 void nodeFunctional();
 
-void connectGSM();
-void disconnectGSM();
-void connectMQTT();
-void disconnectMQTT();
 void _DO_NOTHING();
-bool transmit(String topic, String dataString);
 
 //Bring in minunit and the code to be tested
 #include "minunit.h"
-#include "../SUM/SUM.h"
-#include "../SUM/SIP.ino"
-#include "../SUM/SenseCycle.ino"
+#include "SUM.h"
+#include "SIP.ino"
+#include "SenseCycle.ino"
+#include "HeartBeat.ino"
 
 int tests_run=0;
 bool pktConstructed = false;
 bool pktWrote = false;
 bool pktTx = false;
 
-
-void connectGSM(){}
+/* dummy versions */
+bool connectGSM(){
+  return true;
+}
 void disconnectGSM(){}
-void connectMQTT(){}
+bool connectMQTT(){
+  return true;
+}
 void disconnectMQTT(){}
 void nodeFunctional(){}
+String constructJSON(struct Data * readings) { return String(); }
 
 void _DO_NOTHING(){}
 

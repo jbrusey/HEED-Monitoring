@@ -8,8 +8,8 @@ typedef unsigned char byte;
 #include <stdbool.h>
 #include <math.h>
 #include "minunit.h"
-#include "../Lantern/Lantern.h"
-#include "../Lantern/HeartBeat.ino"
+//#include "Lantern.h"
+#include "HeartBeat.ino"
 
 
 int tests_run=0;
