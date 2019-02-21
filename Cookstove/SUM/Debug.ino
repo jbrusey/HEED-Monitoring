@@ -14,7 +14,7 @@ void _PRINT_TIME(String msg) {
   unsigned long localtime;
   char formattedtime[9];
   localtime = millis();
-  sprintf(formattedtime, "%09d", localtime);
+  sprintf(formattedtime, "%09lu", localtime);
   SerialUSB.println(String(formattedtime) + ": " + msg);
 }
 
