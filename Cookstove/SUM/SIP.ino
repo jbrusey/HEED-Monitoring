@@ -1,4 +1,5 @@
 //GLOBALS
+//TODO: remove these global vars and replace with appropriate array 
 float prev_temp_thermocouple = -1;
 float prev_temp_Si7021 = -1;
 float prev_humidity = -1;
@@ -13,6 +14,7 @@ float prev_humidity = -1;
  */
 bool hasEvent(Data* readings)
 {
+  //TODO: use array of values and trigger on any element being over limit
   if (fabs(readings->tempThermocouple - prev_temp_thermocouple) >= SIP_TEMP_THERMOCOUPLE_THRESH)
   {
     debug("Threshold reached! (" + String(readings->tempThermocouple - prev_temp_thermocouple) + "c from thermocouple)");
@@ -38,6 +40,7 @@ bool hasEvent(Data* readings)
 //Update previous temperature state
 void updateState(Data* readings)
 {
+  //TODO: array please
   prev_temp_thermocouple = readings->tempThermocouple;
   prev_temp_Si7021 = readings->tempSi7021;
   prev_humidity = readings->humidity;

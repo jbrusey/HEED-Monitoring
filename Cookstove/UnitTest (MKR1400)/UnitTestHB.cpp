@@ -1,31 +1,28 @@
-// -*- c -*-
+// -*- c++ -*-
 #pragma GCC diagnostic ignored "-Wwrite-strings"
 
 typedef unsigned char byte;
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <math.h>
+#include <iostream>
+#include <cmath>
 #include "minunit.h"
-//#include "Lantern.h"
 #include "HeartBeat.ino"
 
 
 int tests_run=0;
 
-static char* test_heartbeat_false(void) {
+const char* test_heartbeat_false(void) {
   heartCount=1;
   mu_assert("test_heartbeat_false: should be false", !isHeartbeat());
   return 0;
 }
 
-static char* test_heartbeat_true(void) {
+const char* test_heartbeat_true(void) {
   heartCount=1440;
   mu_assert("test_heartbeat_true: should be true", isHeartbeat());
   return 0;
 }
-static char* all_tests(void) {
+const char* all_tests(void) {
   mu_run_test(test_heartbeat_false);
   mu_run_test(test_heartbeat_true);
   return 0;
@@ -34,7 +31,7 @@ static char* all_tests(void) {
 
 int main()
 {
-  char *result = all_tests();
+  const char *result = all_tests();
   printf("START TESTS\n");
   if (result != 0) {
     printf("%s\n", result);

@@ -1,8 +1,10 @@
+#pragma once
 #include "Credentials.h"                      // Header file with MQTT server and SIM credentials. Look below for sample.                  
 
 //GENERAL
 #define NODE_ID "1"                           // Set ID of the arduino (make sure this is unique)
 
+//TODO: move this to the Makefile
 #define DEBUG 1                               // Comment out to remove debug messages
 #define SD_CS_PIN 4                           // "4" for MKR1400, "SS1" for MKRZero
 
@@ -19,14 +21,15 @@
 //SIP THRESHOLDS
 #define HEART_LIMIT 1440
 
+//TODO: changing behaviour when you go into DEBUG mode is NOT a good idea! Please fix
 #ifdef DEBUG
   #define BATTERY_LOW_VOLTAGE -1              // Low battery threshold (3.35 suggested, set to -1 to disable)
   #define SIP_TEMP_THERMOCOUPLE_THRESH -1     // Temperature threshold (0.5C suggested, set to -1 for sense-and-send)
   #define SIP_TEMP_SI7021_THRESH -1           // Temperature threshold (0.5C suggested, set to -1 for sense-and-send)
   #define SIP_HUMIDITY_THRESH -1              // Humidity threshold (2% suggested, set to -1 for sense-and-send)  
 #else
-  #define BATTERY_LOW_VOLTAGE -1              // Low battery threshold (3.35 suggested, set to -1 to disable)
-  #define SIP_TEMP_THERMOCOUPLE_THRESH -1     // Temperature threshold (0.5C suggested, set to -1 for sense-and-send)
+  #define BATTERY_LOW_VOLTAGE 3.35            // Low battery threshold (3.35 suggested, set to -1 to disable)
+  #define SIP_TEMP_THERMOCOUPLE_THRESH 0.5    // Temperature threshold (0.5C suggested, set to -1 for sense-and-send)
   #define SIP_TEMP_SI7021_THRESH 0.5          // Temperature threshold (0.5C suggested, set to -1 for sense-and-send)
   #define SIP_HUMIDITY_THRESH 2               // Humidity threshold (2% suggested, set to -1 for sense-and-send)  
 #endif

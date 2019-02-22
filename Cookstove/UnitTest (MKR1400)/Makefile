@@ -1,5 +1,5 @@
 CXX=g++
-CXXFLAGS=-I ../SUM
+CXXFLAGS=-I ../SUM -Wall
 test: UnitTestSIP UnitTestSenseCycle UnitTestHB
 	./UnitTestSIP
 	./UnitTestSenseCycle

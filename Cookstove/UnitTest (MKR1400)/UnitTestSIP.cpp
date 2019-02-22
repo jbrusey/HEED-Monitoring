@@ -1,26 +1,27 @@
-// -*- c -*-
+// -*- c++ -*-
 #pragma GCC diagnostic ignored "-Wwrite-strings"
 
 typedef unsigned char byte;
-typedef unsigned char String;
 
 //function prototype
 void _DO_NOTHING();
 void _DO_NOTHING(){}
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <math.h>
+#include <iostream>
+#include <string>
+#include <cmath>
+
+#include "String.h"
+
 #include "minunit.h"
-#include "../SUM/struct.h"
-#include "../SUM/SUM.h"
-#include "../SUM/SIP.ino"
+#include "struct.h"
+#include "SUM.h"
+#include "SIP.ino"
 
 int tests_run=0;
 Data* readings = new Data();
 
-static char* test_update_state(void) {
+const char* test_update_state(void) {
   readings->tempThermocouple = 25.1;
   readings->tempSi7021 = 23.5;
   readings->humidity = 60;
@@ -31,7 +32,7 @@ static char* test_update_state(void) {
   return 0;
 }
 
-static char* test_has_no_event(void) {
+const char* test_has_no_event(void) {
 
   readings->tempThermocouple = 25;
   prev_temp_thermocouple = 25.3;
@@ -42,11 +43,11 @@ static char* test_has_no_event(void) {
   readings->humidity = 50;
   prev_humidity = 50;
 
-  mu_assert("test_has_no_event: should be false", !hasEvent(readings));
+  mu_assert("expecting there not to be an event but there was one", !hasEvent(readings));
   return 0;
 }
 
-static char* test_has_event_from_thermocouple(void) {
+const char* test_has_event_from_thermocouple(void) {
 
   readings->tempThermocouple = 25;
   prev_temp_thermocouple = 25.6;
@@ -61,7 +62,7 @@ static char* test_has_event_from_thermocouple(void) {
   return 0;
 }
 
-static char* test_has_event_from_Si7021_temp(void) {
+const char* test_has_event_from_Si7021_temp(void) {
 
   readings->tempThermocouple = 25;
   prev_temp_thermocouple = 25.3;
@@ -76,7 +77,7 @@ static char* test_has_event_from_Si7021_temp(void) {
   return 0;
 }
 
-static char* test_has_event_from_humidity(void) {
+const char* test_has_event_from_humidity(void) {
 
   readings->tempThermocouple = 25;
   prev_temp_thermocouple = 25.3;
@@ -91,7 +92,7 @@ static char* test_has_event_from_humidity(void) {
   return 0;
 }
 
-static char* test_has_event_from_all(void) {
+const char* test_has_event_from_all(void) {
 
   readings->tempThermocouple = 25;
   prev_temp_thermocouple = 25.6;
@@ -112,7 +113,7 @@ void reset_test_state(void){
   prev_humidity = -1;
 }
 
-static char* all_tests(void) {
+const char* all_tests(void) {
   reset_test_state();
   mu_run_test(test_update_state);
   reset_test_state();
@@ -131,7 +132,7 @@ static char* all_tests(void) {
 
 int main()
 {
-  char *result = all_tests();
+  const char *result = all_tests();
   printf("START TESTS\n");
   if (result != 0) {
     printf("%s\n", result);

@@ -1,24 +1,22 @@
-// -*- c -*-
-#pragma GCC diagnostic ignored "-Wwrite-strings"
+// -*- c++ -*-
+//#pragma GCC diagnostic ignored "-Wwrite-strings"
 
 //bring in required standard libraries
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <math.h>
+#include <iostream>
+#include <cmath>
+#include <string>
 
 #include "struct.h"
 #include "error.h"
 
 //define missing types
 typedef unsigned char byte;
-typedef unsigned char String;
+#include "String.h"
 
 //Dummy topic, doesn't matter what it is set to
-const String MQTT_TOPIC = 1;
+const String MQTT_TOPIC = "1";
 
 //function prototypes
-String constructPkt(Data* readings);
 bool writeDataToFile(Data* readings);
 void getTemperatureThermocouple(Data* readings);
 void getSi7021Data(Data* readings);
@@ -36,7 +34,6 @@ void _DO_NOTHING();
 #include "HeartBeat.ino"
 
 int tests_run=0;
-bool pktConstructed = false;
 bool pktWrote = false;
 bool pktTx = false;
 
@@ -50,25 +47,24 @@ bool connectMQTT(){
 }
 void disconnectMQTT(){}
 void nodeFunctional(){}
-String constructJSON(struct Data * readings) { return String(); }
+
+bool constructJSON_called = false;
+String constructJSON(Data *) {
+  constructJSON_called = true;
+  return String(' ');
+}
 
 void _DO_NOTHING(){}
 
-bool transmit(String topic, String dataString)
+bool transmit(String, String)
 {
   //dummy function, just check it is called
   pktTx = true;
   return pktTx;
 }
 
-String constructPkt(Data* readings)
-{
-  //dummy function, just check it is called
-  pktConstructed = true;
-  return (char)pktConstructed;
-}
 
-bool writeDataToFile(Data* readings)
+bool writeDataToFile(Data*)
 {
   //dummy function, just check it is called
   pktWrote = true;
@@ -116,68 +112,57 @@ void setSensorValues(float tt, float ts, float h, float nb){
   }
 
 void reset_test_state(void){
-  pktConstructed = false;
   pktWrote = false;
   prev_temp_thermocouple = -1;
   prev_temp_Si7021 = -1;
   prev_humidity = -1;
 }
 
-static char* test_sense(void) {
+void reset_called(void) {
+  constructJSON_called = false;
+  pktWrote = false;
+  pktTx = false;
+}
+
+const char* test_sense(void) {
 
   setSensorValues(28, 26, 50, 3.3);
   doSenseCycle();
-  mu_assert("Cycle 1: Transmit seq should be 1", seq==1);
-  mu_assert("Cycle 1: Pkt constructed", pktConstructed);
-  mu_assert("Cycle 1: Pkt wrote", pktWrote);
-  mu_assert("Cycle 1: Pkt TX", pktTx);
+  mu_assert("Cycle 1: Transmit seq should be 1", seq == 1);
+  mu_assert("Cycle 1: Pkt not constructed", constructJSON_called);
+  mu_assert("Cycle 1: Pkt not written", pktWrote);
+  mu_assert("Cycle 1: Pkt not TX", pktTx);
 
-
-  //reset unit test params
-  pktConstructed = false;
-  pktWrote = false;
-  pktTx = false;
-
+  reset_called();
 
   doSenseCycle();
   mu_assert("Cycle 2: Transmit seq should be 1", seq==1);
-  mu_assert("Cycle 2: Pkt not constructed", !pktConstructed);
+  mu_assert("Cycle 2: Pkt constructed", !constructJSON_called);
   mu_assert("Cycle 2: Pkt not wrote", !pktWrote);
   mu_assert("Cycle 2: Pkt not TX", !pktTx);
 
-  //reset unit test params
-  pktConstructed = false;
-  pktWrote = false;
-  pktTx = false;
-
+  reset_called();
+  
   setSensorValues(27, 24, 34, 3.3);
   doSenseCycle();
   mu_assert("Cycle 3: Transmit seq should be 2", seq==2);
-  mu_assert("Cycle 3: Pkt constructed", pktConstructed);
+  mu_assert("Cycle 3: Pkt not constructed", constructJSON_called);
   mu_assert("Cycle 3: Pkt wrote", pktWrote);
   mu_assert("Cycle 3: Pkt TX", pktTx);
 
-  //reset unit test params
-  pktConstructed = false;
-  pktWrote = false;
-  pktTx = false;
-
+  reset_called();
+  
   doSenseCycle();
   mu_assert("Cycle 4: Transmit seq should be 2", seq==2);
-  mu_assert("Cycle 4: Pkt not constructed", !pktConstructed);
+  mu_assert("Cycle 4: Pkt not constructed", !constructJSON_called);
   mu_assert("Cycle 4: Pkt not wrote", !pktWrote);
   mu_assert("Cycle 4: Pkt not TX", !pktTx);
 
-
-  //reset unit test params
-  pktConstructed = false;
-  pktWrote = false;
-  pktTx = false;
-
+  reset_called();
   setSensorValues(40, 56, 34, 3.3);
   doSenseCycle();
-  mu_assert("Cycle 5: Transmit seq should be 3", seq==3);
-  mu_assert("Cycle 5: Pkt constructed", pktConstructed);
+  mu_assert("Cycle 5: Transmit seq should be 3", seq == 3);
+  mu_assert("Cycle 5: Pkt constructed", constructJSON_called);
   mu_assert("Cycle 5: Pkt wrote", pktWrote);
   mu_assert("Cycle 5: Pkt TX", pktTx);
 
@@ -189,7 +174,7 @@ static char* test_sense(void) {
 
 
 
-static char* all_tests(void) {
+const char* all_tests(void) {
   reset_test_state();
   mu_run_test(test_sense);
 
@@ -199,7 +184,7 @@ static char* all_tests(void) {
 
 int main()
 {
-  char *result = all_tests();
+  const char *result = all_tests();
   printf("START TESTS\n");
   if (result != 0) {
     printf("%s\n", result);
