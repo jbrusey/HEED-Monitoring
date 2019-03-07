@@ -21,18 +21,10 @@
 //SIP THRESHOLDS
 #define HEART_LIMIT 1440
 
-//TODO: changing behaviour when you go into DEBUG mode is NOT a good idea! Please fix
-#ifdef DEBUG
-  #define BATTERY_LOW_VOLTAGE -1              // Low battery threshold (3.35 suggested, set to -1 to disable)
-  #define SIP_TEMP_THERMOCOUPLE_THRESH 2      // Temperature threshold (0.5C suggested, set to -1 for sense-and-send)
-  #define SIP_TEMP_SI7021_THRESH 2            // Temperature threshold (0.5C suggested, set to -1 for sense-and-send)
-  #define SIP_HUMIDITY_THRESH 5               // Humidity threshold (2% suggested, set to -1 for sense-and-send)
-#else
-  #define BATTERY_LOW_VOLTAGE 3.35            // Low battery threshold (3.35 suggested, set to -1 to disable)
-  #define SIP_TEMP_THERMOCOUPLE_THRESH 5      // Temperature threshold (0.5C suggested, set to -1 for sense-and-send)
-  #define SIP_TEMP_SI7021_THRESH 5            // Temperature threshold (0.5C suggested, set to -1 for sense-and-send)
-  #define SIP_HUMIDITY_THRESH 10              // Humidity threshold (2% suggested, set to -1 for sense-and-send)
-#endif
+#define BATTERY_LOW_VOLTAGE 3.35              // Low battery threshold (3.35 suggested, set to -1 to disable)
+#define SIP_TEMP_THERMOCOUPLE_THRESH 5        // Temperature threshold (0.5C suggested, set to -1 for sense-and-send)
+#define SIP_TEMP_SI7021_THRESH 5              // Temperature threshold (0.5C suggested, set to -1 for sense-and-send)
+#define SIP_HUMIDITY_THRESH 10                // Humidity threshold (2% suggested, set to -1 for sense-and-send)
 
 
 //GSM
