@@ -18,7 +18,7 @@ const char GPRS_PASSWORD[] = SECRET_GPRS_PASSWORD;
  */
 bool connectGSM() {
   bool GSMConnected = false;
-  debug("GSM: Connecting to cellular network...");
+  dbg("GSM: Connecting to cellular network...");
   
   // After starting the modem with GSM.begin()
   // attach the shield to the GPRS network with the APN, login and password
@@ -26,7 +26,7 @@ bool connectGSM() {
       (gprs.attachGPRS(GPRS_APN, GPRS_LOGIN, GPRS_PASSWORD) == GPRS_READY)) 
     {
       gsmAccess.lowPowerMode();
-      debug("GSM: Ready");
+      dbg("GSM: Ready");
       GSMConnected = true;
     } 
   else {
@@ -43,6 +43,6 @@ void disconnectGSM() {
   //TODO: Implement some check if GPRS is still online, otherwise the program will freeze here
   gprs.detachGPRS();
   gsmAccess.shutdown();
-  debug("GSM: Disconnected");
+  dbg("GSM: Disconnected");
 }
 

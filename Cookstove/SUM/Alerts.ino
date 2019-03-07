@@ -16,7 +16,7 @@ void nodeFunctional(){
 }
 
 void batteryError(){
-  debug("battery dead");
+  dbg("battery dead");
   uint8_t x = 0;
   while (x < 3){
     digitalWrite(LED_BUILTIN, HIGH);
@@ -32,7 +32,7 @@ void batteryError(){
 */
 void reportError(uint8_t errno) {
   uint32_t errno_cubed;
-  debug("Error message: " + String(errno));
+  dbg("Error message: " + String(errno));
   errno_cubed = errno;
   errno_cubed = errno_cubed * errno_cubed * errno_cubed;
   if (last_errno % errno_cubed != 0) last_errno *= errno;

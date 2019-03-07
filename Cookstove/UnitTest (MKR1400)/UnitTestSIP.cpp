@@ -49,14 +49,15 @@ const char* test_has_no_event(void) {
 
 const char* test_has_event_from_thermocouple(void) {
 
-  readings->tempThermocouple = 25;
-  prev_temp_thermocouple = 25.6;
-
+  readings->tempThermocouple = 30.1;
   readings->tempSi7021 = 24;
-  prev_temp_Si7021 = 24.1;
-
   readings->humidity = 50;
-  prev_humidity = 50;
+
+  updateState(readings);
+    
+  readings->tempThermocouple = 25;
+  readings->tempSi7021 = 24;
+  readings->humidity = 50;
 
   mu_assert("test_has_event_from_thermocouple: should be true", hasEvent(readings));
   return 0;
@@ -64,14 +65,15 @@ const char* test_has_event_from_thermocouple(void) {
 
 const char* test_has_event_from_Si7021_temp(void) {
 
-  readings->tempThermocouple = 25;
-  prev_temp_thermocouple = 25.3;
-
-  readings->tempSi7021 = 24;
-  prev_temp_Si7021 = 24.7;
-
+  readings->tempThermocouple = 25.3;
+  readings->tempSi7021 = 24.7;
   readings->humidity = 50;
-  prev_humidity = 50;
+
+  updateState(readings);
+
+  readings->tempThermocouple = 25;
+  readings->tempSi7021 = 30;
+  readings->humidity = 50;
 
   mu_assert("test_has_event_from_Si7021_temp: should be true", hasEvent(readings));
   return 0;
@@ -79,14 +81,16 @@ const char* test_has_event_from_Si7021_temp(void) {
 
 const char* test_has_event_from_humidity(void) {
 
+  readings->tempThermocouple = 25.3;
+  readings->tempSi7021 = 24.7;
+  readings->humidity = 60.1;
+
+  updateState(readings);
+
   readings->tempThermocouple = 25;
-  prev_temp_thermocouple = 25.3;
-
-  readings->tempSi7021 = 24;
-  prev_temp_Si7021 = 24.1;
-
+  readings->tempSi7021 = 30;
   readings->humidity = 50;
-  prev_humidity = 52.1;
+
 
   mu_assert("test_has_event_from_humidity: should be true", hasEvent(readings));
   return 0;
@@ -94,14 +98,15 @@ const char* test_has_event_from_humidity(void) {
 
 const char* test_has_event_from_all(void) {
 
+  readings->tempThermocouple = 30.3;
+  readings->tempSi7021 = 14.7;
+  readings->humidity = 60.1;
+
+  updateState(readings);
+
   readings->tempThermocouple = 25;
-  prev_temp_thermocouple = 25.6;
-
-  readings->tempSi7021 = 24;
-  prev_temp_Si7021 = 24.7;
-
+  readings->tempSi7021 = 30;
   readings->humidity = 50;
-  prev_humidity = 52.1;
 
   mu_assert("test_has_event_from_all: should be true", hasEvent(readings));
   return 0;

@@ -11,7 +11,7 @@ JsonObject& payload = jsonBuffer.createObject();
   
 String constructJSON(Data* reading)
 {
-  debug("JSON constructing...");
+  dbg("JSON constructing...");
   String dataString = "";
   
   payload["unixtime"] = reading->unixtime;

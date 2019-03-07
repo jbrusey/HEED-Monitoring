@@ -45,6 +45,7 @@ void setup() {
     USBDevice.detach();
   #endif
 
+    // TODO move to using lowpower library
   setupRTC();
   setRTCAlarm(RTC_SAMPLE_TIME);
   

@@ -7,6 +7,7 @@ RTCZero rtc;
  * 1. Starts the RTC
  * 2. Sets the date and time based on compile time
  */
+// TODO: this seems decidedly fishy! why set at all?
 void setupRTC() {
   //Taken from https://www.hackster.io/jkoger/simple-watch-using-rtc-59e635
   char s_month[5];
@@ -34,7 +35,7 @@ void setupRTC() {
   rtc.setTime(hours, minutes, seconds);
   rtc.setDate(days, months, years);
 
-  debug("RTC On");
+  dbg("RTC On");
 }
 
 /**
@@ -46,6 +47,7 @@ void RTC_ISR() {}
  * Setup the RTC alarm to trigger an interrupt every minute
  * @param seconds The second of a minute to trigger an interrupt
  */
+// TODO replace with library call from LowPower
 void setRTCAlarm(int seconds) {
   // Set RTC alarm to trigger an interrupt on every --:--:xx
   rtc.setAlarmSeconds(seconds);
@@ -55,14 +57,15 @@ void setRTCAlarm(int seconds) {
 
   // Attach ISR
   rtc.attachInterrupt(RTC_ISR);
-  debug("RTC Alarm Set");
+  dbg("RTC Alarm Set");
 }
 
 /**
  * Puts the node into its sleep mode
  */
+// TODO remove as this duplicates LowPower.sleep()
 void nodeSleep(){
-  debug("Sleep");
+  dbg("Sleep");
   
   // Equivalent of rtc.standbyMode(); from RTCZero.h library
   SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;

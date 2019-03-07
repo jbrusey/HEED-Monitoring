@@ -17,22 +17,22 @@ bool hasEvent(Data* readings)
   //TODO: use array of values and trigger on any element being over limit
   if (fabs(readings->tempThermocouple - prev_temp_thermocouple) >= SIP_TEMP_THERMOCOUPLE_THRESH)
   {
-    debug("Threshold reached! (" + String(readings->tempThermocouple - prev_temp_thermocouple) + "c from thermocouple)");
-    debug("Thermocouple temp: " + String(readings->tempThermocouple)); 
+    dbg("Threshold reached! (" + String(readings->tempThermocouple - prev_temp_thermocouple) + "c from thermocouple)");
+    dbg("Thermocouple temp: " + String(readings->tempThermocouple)); 
     return true;
   }
   else if (fabs(readings->tempSi7021 - prev_temp_Si7021) >= SIP_TEMP_SI7021_THRESH)
   {
-    debug("Threshold reached! (" + String(readings->tempSi7021 - prev_temp_Si7021) + "c from Si7021 temp)"); 
+    dbg("Threshold reached! (" + String(readings->tempSi7021 - prev_temp_Si7021) + "c from Si7021 temp)"); 
     return true;
   }
   else if (fabs(readings->humidity - prev_humidity) >= SIP_HUMIDITY_THRESH)
   {
-    debug("Threshold reached! (" + String(readings->humidity - prev_humidity) + "% from humidity)"); 
+    dbg("Threshold reached! (" + String(readings->humidity - prev_humidity) + "% from humidity)"); 
     return true;
   }
 
-  debug("Threshold not reached. Skipping...");
+  dbg("Threshold not reached. Skipping...");
   return false;
 }
 

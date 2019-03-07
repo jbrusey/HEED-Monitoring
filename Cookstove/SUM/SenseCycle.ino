@@ -32,7 +32,7 @@ void resetReadings(Data* readings){
  */
  void doSenseCycle()
 {
-  debug("Start Sense " + String(seq));
+  dbg("Start Sense " + String(seq));
   
   bool result_transmit = false;
   bool result_store = false;
@@ -55,7 +55,7 @@ void resetReadings(Data* readings){
         {
           getGSMTime(readings);
           String JSON = constructJSON(readings);
-          debug("JSON created : " + JSON);
+          dbg("JSON created : " + JSON);
           result_transmit = transmit(MQTT_TOPIC, JSON);
           
           disconnectMQTT();
@@ -82,6 +82,6 @@ void resetReadings(Data* readings){
     seq++; //increment sequence number
   }
 
-  debug("End Sense");
+  dbg("End Sense");
 }
 

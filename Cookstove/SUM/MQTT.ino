@@ -16,16 +16,16 @@ bool connectMQTT() {
       //Set options: Keep alive for 10 hours, clean session, 1 second timeout
       client.setOptions(MQTT_KEEP_ALIVE, MQTT_CLEAN_SESSION, MQTT_TIMEOUT);
       client.begin(MQTT_SERVER, net);  //Start a connection
-      debug("MQTT: Connecting to broker...");
+      dbg("MQTT: Connecting to broker...");
       bool res = client.connect("SUM1", MQTT_USER, MQTT_PASS);
       if(res){
         mqtt_connected = true;
-        debug("MQTT: Connected!");
+        dbg("MQTT: Connected!");
       }
       else
 	{
 	  reportError(ERR_MQTT_CONNECTION_FAILED);
-	  debug("MQTT: Can't connect!");
+	  dbg("MQTT: Can't connect!");
 	}  
     }
   else mqtt_connected = true;
@@ -34,11 +34,11 @@ bool connectMQTT() {
   
   
 /**
- * Disonnects the node from the MQTT broker
+ * Disconnects the node from the MQTT broker
  */
 void disconnectMQTT() {
   client.disconnect();
-  debug("MQTT: Disconnected"); 
+  dbg("MQTT: Disconnected"); 
 }
   
 /**
@@ -53,9 +53,9 @@ bool transmit(String topic, String dataString) {
   bool res = client.publish(topic, cPayload);
   if (!res){
     reportError(ERR_MQTT_TRANSMISSION_FAILED);
-    debug("ERROR: MQTT: Data not sent!");
+    dbg("ERROR: MQTT: Data not sent!");
   }
-  else debug("MQTT: Data sent!");
+  else dbg("MQTT: Data sent!");
   return res;
 }
 
