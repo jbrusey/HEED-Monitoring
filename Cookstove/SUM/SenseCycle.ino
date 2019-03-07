@@ -49,7 +49,6 @@ void resetReadings(Data* readings){
     readings->seq = seq;
     getBatteryVoltage(readings);
 
-    #ifdef TRANSMIT
       if (connectGSM())
       {
         if (connectMQTT())
@@ -63,16 +62,8 @@ void resetReadings(Data* readings){
         }
         disconnectGSM();
       }
-    #else
-      result_transmit = true;
-      getTime(readings);
-    #endif  
     
-    #ifdef STORE
       result_store = writeDataToFile(readings);
-    #else
-      result_store = true;
-    #endif
 
     result_final = result_transmit && result_store;
 

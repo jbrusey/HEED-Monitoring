@@ -48,9 +48,7 @@ void setup() {
   setupRTC();
   setRTCAlarm(RTC_SAMPLE_TIME);
   
-  #ifdef STORE
-    setupSD();
-  #endif
+  setupSD();
   
   setupAnalogSensors();
 }

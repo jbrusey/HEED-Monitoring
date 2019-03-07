@@ -4,12 +4,7 @@
 //GENERAL
 #define NODE_ID "1"                           // Set ID of the arduino (make sure this is unique)
 
-//TODO: move this to the Makefile
-#define DEBUG 1                               // Comment out to remove debug messages
 #define SD_CS_PIN 4                           // "4" for MKR1400, "SS1" for MKRZero
-
-#define STORE 1                               // Comment out to not use SD card
-#define TRANSMIT 1                            // Comment out to not use SIM card
 
 #define SERIAL_SPEED 9600                     // Serial speed
 #define STARTUP_DELAY 5000                    // How long to delay before the node starts
