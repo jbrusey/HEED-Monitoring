@@ -35,9 +35,8 @@ void setupAnalogSensors() {
   //Si7021.begin();
   setupSi7021(); // low level version of Si7021.begin() function
 
-  //Turn the built in LED off 
+  //Turn the built in LED on
   pinMode(LED_BUILTIN, OUTPUT);
-  //TODO fix - comment says it turns it off but here it turns it on!
   digitalWrite(LED_BUILTIN, HIGH);
   
   dbg("Digital pins Set");
@@ -141,12 +140,9 @@ void getSi7021Data(Data* readings) {
  */
 void getBatteryVoltage(Data* readings)
 {
-  // TODO it is not clear if this code works for MKR1400 - please test
-  // TODO if ok - avoid converting to floating point as this is not needed.
+  // TODO avoid converting to floating point as this is not needed.
   readings->nodeBatt = ( analogRead(ADC_BATTERY) / ADC_BITS ) * INT_BATTERY_DIVIDER_MAX;
   if (readings->nodeBatt < BATTERY_LOW_VOLTAGE){
     batteryLow=true;
   }
 }
-
-
