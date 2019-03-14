@@ -1,4 +1,3 @@
-
 //Include MQTT library
 #include <MQTT.h>
 MQTTClient client(MQTT_JSON_BUFFER);
@@ -58,4 +57,3 @@ bool transmit(String topic, String dataString) {
   else dbg("MQTT: Data sent!");
   return res;
 }
-

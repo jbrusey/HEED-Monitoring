@@ -1,4 +1,3 @@
-
 //Include GSM library
 #include <MKRGSM.h>
   
@@ -45,4 +44,3 @@ void disconnectGSM() {
   gsmAccess.shutdown();
   dbg("GSM: Disconnected");
 }
-
