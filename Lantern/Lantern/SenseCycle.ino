@@ -17,8 +17,6 @@ void resetErrors(){
 void resetReadings(Data* readings){
   readings->unixtime=0;
   readings->solarBatt=0;
-  readings->usage=0;
-  readings->charging=0;
   readings->interrupt=0;
   readings->inactivity=0;
   readings->activity=0;
@@ -42,7 +40,6 @@ void doSenseCycle()
 
   getSolarBatteryVoltage(readings);
   adxl345GetInterrupt(readings);
-  getLanternState(readings);
   
   if (last_errno != 1) readings->error = last_errno;  
   last_transmitted_errno = last_errno;
@@ -68,14 +65,10 @@ void doSenseCycle()
       }
     #else
       result_transmit = true;
-      getTime(readings);
+      readings->unixtime = 0;
     #endif  
         
-    #ifdef STORE
-      result_store = writeDataToFile(readings);
-    #else
-      result_store = true;
-    #endif
+    result_store = writeDataToFile(readings);
 
     result_final = result_transmit && result_store;
 

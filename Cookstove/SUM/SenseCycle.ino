@@ -48,22 +48,22 @@ void resetReadings(Data* readings){
   {
     readings->seq = seq;
     getBatteryVoltage(readings);
-
-      if (connectGSM())
-      {
-        if (connectMQTT())
-        {
-          getGSMTime(readings);
-          String JSON = constructJSON(readings);
-          dbg("JSON created : " + JSON);
-          result_transmit = transmit(MQTT_TOPIC, JSON);
-          
-          disconnectMQTT();
-        }
-        disconnectGSM();
-      }
     
-      result_store = writeDataToFile(readings);
+    if (connectGSM())
+    {
+      if (connectMQTT())
+      {
+        getGSMTime(readings);
+        String JSON = constructJSON(readings);
+        dbg("JSON created : " + JSON);
+        result_transmit = transmit(MQTT_TOPIC, JSON);
+          
+        disconnectMQTT();
+      }
+      disconnectGSM();
+    }
+        
+    result_store = writeDataToFile(readings);
 
     result_final = result_transmit && result_store;
 
@@ -84,4 +84,3 @@ void resetReadings(Data* readings){
 
   dbg("End Sense");
 }
-

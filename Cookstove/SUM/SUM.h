@@ -11,7 +11,7 @@
 
 //SAMPLE PERIOD
 #define RTC_SAMPLE_TIME 25                    // SET RTC alarm off every xth second in a minute
-
+#define CS_SLEEP_TIME 60000                    //Set the device to sleep mode for a min
 
 //SIP THRESHOLDS
 #define HEART_LIMIT 1440

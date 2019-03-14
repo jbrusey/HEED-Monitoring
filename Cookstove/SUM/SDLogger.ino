@@ -48,29 +48,21 @@ void setupSD() {
  */
 bool writeDataToFile(Data* reading)
 {
-  // TODO variable seems unnecessary - remove and put return false /
-  // true instead
-  bool csv_write_res = false;
   dbg("SD: Write start");
   if (!file.open(fileName, O_APPEND | O_CREAT | O_WRITE )) {
     dbg("SD card failed, or not present");
     reportError(ERR_CSV_OPEN);
-    return csv_write_res;
+    return false;
   }
     
-  delay(10);
-  // TODO check that these delays are needed
   _write(reading);
-  delay(10);
   
   // Force data to SD and update the directory entry to avoid data loss.
   if (!file.close() || file.getWriteError()) {
     dbg("SD: Write error");
     reportError(ERR_CSV_WRITE);
-    return csv_write_res;
+    return false;
   }
-  csv_write_res = true;
   dbg("SD: Write end");
-  return csv_write_res;
+  return true;
 }
-

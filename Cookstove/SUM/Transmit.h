@@ -9,5 +9,3 @@ void getGSMTime(Data* readings);
 void disconnectGSM(void);
 
 String constructJSON(Data* reading);
-
-

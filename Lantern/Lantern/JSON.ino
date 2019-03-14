@@ -17,8 +17,6 @@ String constructJSON(Data* reading)
   payload["unixtime"] = reading->unixtime;
   payload["NODE_ID"] = NODE_ID;
   payload["solarBatt"] =  reading->solarBatt;
-  payload["usage"] =  reading->usage;
-  payload["charging"] =  reading->charging;
   payload["interrupt"] =  String(reading->interrupt, HEX);
   payload["inactivity"] =  reading->inactivity;
   payload["activity"] =  reading->activity;

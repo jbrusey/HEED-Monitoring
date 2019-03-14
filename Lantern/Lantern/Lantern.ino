@@ -12,6 +12,44 @@
  * 5, Setting up the RTC to trigger every minute
  */
 void setup() {
+  //KB: Added pull up resistors
+  pinMode(0, INPUT_PULLUP);
+  pinMode(1, INPUT_PULLUP);
+  pinMode(2, INPUT_PULLUP);
+  pinMode(3, INPUT_PULLUP);
+  pinMode(4, INPUT_PULLUP);
+  pinMode(5, INPUT_PULLUP);
+  pinMode(6, INPUT_PULLUP);
+  pinMode(7, INPUT_PULLUP);
+  pinMode(8, INPUT_PULLUP);
+  pinMode(9, INPUT_PULLUP);
+  pinMode(10, INPUT_PULLUP);
+  pinMode(11, INPUT_PULLUP);
+  pinMode(12, INPUT_PULLUP);
+  pinMode(13, INPUT_PULLUP);
+  pinMode(14, INPUT_PULLUP);
+  pinMode(A0, INPUT_PULLUP);
+  pinMode(A1, INPUT_PULLUP);
+  pinMode(A2, INPUT_PULLUP);
+  pinMode(A3, INPUT_PULLUP);
+  pinMode(A4, INPUT_PULLUP);
+  pinMode(A5, INPUT_PULLUP);
+  pinMode(A6, INPUT_PULLUP);
+  pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, LOW);
+  
+  pinMode(11, INPUT);                                           // PA08
+  pinMode(12, INPUT);                                           // PA09
+  pinMode(26, OUTPUT);digitalWrite(26,0);                       //PA12
+  pinMode(27, INPUT);                                           //PA13
+  pinMode(28, OUTPUT);digitalWrite(28,0);                       //PA14
+  pinMode(29, INPUT); digitalWrite(29,0);                       //PA15
+  pinMode(21, OUTPUT);digitalWrite(7,0);                        //PA07
+  pinMode(2, OUTPUT);digitalWrite(10,0);                        //PA10
+  pinMode(3, OUTPUT);digitalWrite(11,0);                        //PA11
+  pinMode(35, OUTPUT);digitalWrite(28,0);                       //PA28
+  pinMode(24, INPUT);                                           //PA18
+  pinMode(30, INPUT);                                           //PB08
 
   #ifdef DEBUG
     startSerial();
@@ -20,12 +58,7 @@ void setup() {
     USBDevice.detach();
   #endif
 
-  setupRTC();
-  setRTCAlarm(RTC_SAMPLE_TIME);
-  
-  #ifdef STORE
-    setupSD();
-  #endif
+  setupSD();
   
   setupAnalogSensors();
   setupADXL345();
@@ -37,7 +70,12 @@ void setup() {
  */
 void loop() {
  if (batteryLow) 
-    batteryError();
+    //KB added condition to not print batteryError if in debug mode and connected to computer
+    #ifdef DEBUG 
+      SerialUSB.println("Low battery");
+    #else
+      batteryError();
+    #endif
  else{
     #ifdef DEBUG
       SerialUSB.println("\n-----------------");
@@ -52,8 +90,3 @@ void loop() {
     nodeSleep(); //go back to sleep
   #endif
 }
-
-
-
-
-

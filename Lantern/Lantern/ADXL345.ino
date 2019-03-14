@@ -68,8 +68,7 @@ void setupADXL345() {
   adxl.powerOn();
   debug("ADXL345 on");
   configureADXL345();
-  
-  byte interrupts = adxl.getInterruptSource(); //Clear interrupts by reading INT_SOURCE register
+
   debug("ADXL345 configured");
 }
 
@@ -79,11 +78,14 @@ void setupADXL345() {
  */
 int movement = 0;
 void adxl345GetInterrupt(Data* reading){
-  byte interrupt = adxl.getInterruptSource();
-  reading->interrupt = interrupt;
-  reading->activity = adxl.triggered(interrupt, ADXL345_ACTIVITY);
+
+  byte interrupts = adxl.getInterruptSource(); //Clear interrupts by reading INT_SOURCE register
+
+  reading->interrupt = interrupts;
+  // TODO Activity and Inactivity interrupts should be coded as if and else if. 
+  reading->activity = adxl.triggered(interrupts, ADXL345_ACTIVITY);
   if (reading->activity==1) reading->movement = 1;
-  reading->inactivity = adxl.triggered(interrupt, ADXL345_INACTIVITY);
+  reading->inactivity = adxl.triggered(interrupts, ADXL345_INACTIVITY);
   if (reading->inactivity==1) reading->movement = 0;
 
   debug("Interrupt: " + String(reading->interrupt));
@@ -91,7 +93,3 @@ void adxl345GetInterrupt(Data* reading){
   debug("Inactivity: " + String (reading->inactivity));
   debug("Movement: " + String (reading->movement));
 }
-
-  
-
-

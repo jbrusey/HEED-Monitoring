@@ -3,10 +3,9 @@
 //GENERAL
 #define NODE_ID "1"                           // Set ID of the arduino (make sure this is unique)
 
-#define DEBUG 1                               // Comment out to remove debug messages
 #define SD_CS_PIN 4                           // "4" for MKR1400, "SS1" for MKRZero
 
-#define STORE 1                               // Comment out to not use SD card
+// TODO: Remove transmit
 #define TRANSMIT 1                            // Comment out to not use SIM card
 
 #define SERIAL_SPEED 9600                     // Serial speed
@@ -14,23 +13,16 @@
 
 //SAMPLE PERIOD
 #define RTC_SAMPLE_TIME 25                    // SET RTC alarm off every xth second in a minute
-
+//KB: Time specified in lowPower.sleep()
+#define LANTERN_SLEEP_TIME 60000              //Set lantern to sleep for 1 min = 60000ms
 
 //SIP THRESHOLDS
 #define HEART_LIMIT 1440
 
-#ifdef DEBUG
-  #define BATTERY_LOW_VOLTAGE -1
-  #define SIP_SOLAR_BATTERY_THRESH -1         // Threshold to define when the solar lantern battery is eventful (TO-DO)
-  #define SIP_STATE_THRESH -1                 // Threshold to define when the solar state has changed (TO-DO)
-  #define INT_SOURCE_NO_INTERRUPT 0x00        // DATA_READY, Watermark, and Overun are always active so interrupt source will always read 0x83 if no other interrupt has been triggered
-#else
-  #define BATTERY_LOW_VOLTAGE -1
-  #define SIP_SOLAR_BATTERY_THRESH -1         // Threshold to define when the solar lantern battery is eventful (TO-DO)
-  #define SIP_STATE_THRESH -1                 // Threshold to define when the solar state has changed (TO-DO)
-  #define INT_SOURCE_NO_INTERRUPT 0x83        // DATA_READY, Watermark, and Overun are always active so interrupt source will always read 0x83 if no other interrupt has been triggered
-#endif
-
+#define BATTERY_LOW_VOLTAGE 3.35
+#define SIP_SOLAR_BATTERY_THRESH 0.2         // Threshold to define when the solar lantern battery is eventful (TO-DO)
+#define SIP_STATE_THRESH 1000                 // Threshold to define when the solar state has changed (TO-DO)
+#define INT_SOURCE_NO_INTERRUPT 0x83        // DATA_READY, Watermark, and Overun are always active so interrupt source will always read 0x83 if no other interrupt has been triggered
 
 //GSM
 #define GSM_CONNECT_RETRY_TIME 500            // How long to retry between gsm connection tries (0.5s)
@@ -48,9 +40,6 @@
 //Sensors
 #define DIGITAL_ON_WAIT 10                    // Wait 10ms to ensure digital pin has switched high
 
-#define STATE_POWER_PIN A4                    // Arduino Pin the MAX31850 3V3 is connected to
-#define STATE_MV_CONVERSION 1.023
-
 #define ADC_MIN 0                             // Min value extect from the ADC
 #define ADC_MAX 1023                          // Max value extect from the ADC
 
@@ -61,6 +50,7 @@
 
 
 //ADXL345 settings
+// TODO set threshold values based on data collected and learning - Decision trees or LDA
 #define INACTIVITY_TIME 30
 #define INACTIVITY_THRESH 30                  // 62.5mg per increment   // Set activity   // Activity thresholds (0-255) (CHECK!!!!)
 #define ACTIVITY_THRESH 30                    // 62.5mg per increment   // Set activity   // Activity thresholds (0-255) (CHECK!!!!)
