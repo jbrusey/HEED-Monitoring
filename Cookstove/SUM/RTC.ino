@@ -10,8 +10,11 @@ void nodeSleep(){
   LowPower.sleep(CS_SLEEP_TIME);
 }
 
+void setupNodeSleep() {
+  LowPower.attachInterruptWakeup(RTC_ALARM_WAKEUP, dummy_ISR, CHANGE);
+}
+
 // TODO identify how this gets invoked
 /* Function called on waking up by LowPower
  */
-void dummy() {}
-
+void dummy_ISR() {}

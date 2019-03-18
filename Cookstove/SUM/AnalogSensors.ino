@@ -25,6 +25,9 @@ void setupAnalogSensors() {
   // TODO: should this just be ordinary .begin() call?
   delay(DIGITAL_ON_WAIT);//Slight delay to allow the switch to happen
 
+  //KB: Power off after setting up to make setup of device consistent with other sense cycles
+  digitalWrite(MAX31850_POWER_PIN, LOW);
+
   //Set Si7021 power pin to output and make sure they are off
   pinMode(Si7021_POWER_PIN, OUTPUT);
   digitalWrite(Si7021_POWER_PIN, HIGH);
@@ -34,6 +37,9 @@ void setupAnalogSensors() {
   // TODO - why are we not using the library code here?
   //Si7021.begin();
   setupSi7021(); // low level version of Si7021.begin() function
+
+  //KB: Power off after setting up to make setup of device consistent with other sense cycles
+  digitalWrite(Si7021_POWER_PIN, LOW);
 
   //Turn the built in LED on
   pinMode(LED_BUILTIN, OUTPUT);

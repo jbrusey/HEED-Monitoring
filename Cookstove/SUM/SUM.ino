@@ -3,7 +3,7 @@
 #include <ArduinoJson.h>
 #include "SUM.h" // Header file with consts/config
 #include "struct.h" // Header file with data struct fetched in sense cycle
-#include "error.h" 
+#include "error.h"
 
 /**
  * Setups the program by
@@ -17,10 +17,8 @@ void setup() {
   pinMode(0, INPUT_PULLUP);
   pinMode(1, INPUT_PULLUP);
   pinMode(2, INPUT_PULLUP);
-  pinMode(3, INPUT_PULLUP);
-  pinMode(4, INPUT_PULLUP);
-  pinMode(5, INPUT_PULLUP);
-  pinMode(6, INPUT_PULLUP);
+  pinMode(3, INPUT_PULLUP);     //Pin 4 is used by the SD card
+  pinMode(5, INPUT_PULLUP);     //Pin 6 is the built-in LED
   pinMode(7, INPUT_PULLUP);
   pinMode(8, INPUT_PULLUP);
   pinMode(9, INPUT_PULLUP);
@@ -29,29 +27,19 @@ void setup() {
   pinMode(12, INPUT_PULLUP);
   pinMode(13, INPUT_PULLUP);
   pinMode(14, INPUT_PULLUP);
-  pinMode(A0, INPUT_PULLUP);
-  pinMode(A1, INPUT_PULLUP);
-  pinMode(A2, INPUT_PULLUP);
+  pinMode(A0, INPUT_PULLUP);      //A1 and A2 are used for the two sensors
   pinMode(A3, INPUT_PULLUP);
   pinMode(A4, INPUT_PULLUP);
   pinMode(A5, INPUT_PULLUP);
   pinMode(A6, INPUT_PULLUP);
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, LOW);
-  
-  pinMode(11, INPUT);                                           // PA08
-  pinMode(12, INPUT);                                           // PA09
-  pinMode(26, OUTPUT);digitalWrite(26,0);                       //PA12
-  pinMode(27, INPUT);                                           //PA13
-  pinMode(28, OUTPUT);digitalWrite(28,0);                       //PA14
-  pinMode(29, INPUT); digitalWrite(29,0);                       //PA15
-  pinMode(21, OUTPUT);digitalWrite(7,0);                        //PA07
-  pinMode(2, OUTPUT);digitalWrite(10,0);                        //PA10
-  pinMode(3, OUTPUT);digitalWrite(11,0);                        //PA11
-  pinMode(35, OUTPUT);digitalWrite(28,0);                       //PA28
-  pinMode(24, INPUT);                                           //PA18
-  pinMode(30, INPUT);                                           //PB08
-  
+
+  pinMode(26, INPUT_PULLUP);
+  pinMode(27, INPUT_PULLUP);
+  pinMode(28, INPUT_PULLUP);
+  pinMode(29, INPUT_PULLUP);
+
   #ifdef DEBUG
     startSerial();
   #else
@@ -59,26 +47,28 @@ void setup() {
     USBDevice.detach();
   #endif
 
+  setupNodeSleep();
+
   setupSD();
-  
+
   setupAnalogSensors();
 }
 
 /**
- * MAIN LOOP: Calls for the sensing procedure to run before 
+ * MAIN LOOP: Calls for the sensing procedure to run before
  * putting the node to sleep
  */
 void loop() {
- if (batteryLow) 
+ if (batteryLow)
     batteryError();
  else{
     #ifdef DEBUG
       SerialUSB.println("\n-----------------");
     #endif
-    
+
     doSenseCycle();
   }
-   
+
   #ifdef DEBUG
     delay(5000); // keeps USB connection on instead
   #else
