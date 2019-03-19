@@ -49,7 +49,6 @@ void doSenseCycle()
     readings->seq = seq;
     getBatteryVoltage(readings); 
 
-    #ifdef TRANSMIT
       if (connectGSM())
       {
         if (connectMQTT())
@@ -63,10 +62,6 @@ void doSenseCycle()
         }
         disconnectGSM();
       }
-    #else
-      result_transmit = true;
-      readings->unixtime = 0;
-    #endif  
         
     result_store = writeDataToFile(readings);
 

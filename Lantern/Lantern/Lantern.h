@@ -5,15 +5,11 @@
 
 #define SD_CS_PIN 4                           // "4" for MKR1400, "SS1" for MKRZero
 
-// TODO: Remove transmit
-#define TRANSMIT 1                            // Comment out to not use SIM card
-
 #define SERIAL_SPEED 9600                     // Serial speed
 #define STARTUP_DELAY 5000                    // How long to delay before the node starts
 
 //SAMPLE PERIOD
 #define RTC_SAMPLE_TIME 25                    // SET RTC alarm off every xth second in a minute
-//KB: Time specified in lowPower.sleep()
 #define LANTERN_SLEEP_TIME 60000              //Set lantern to sleep for 1 min = 60000ms
 
 //SIP THRESHOLDS

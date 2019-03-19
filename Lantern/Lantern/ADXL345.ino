@@ -64,12 +64,12 @@ void setInterrupts(){
  * Setups the ADXL345 sensor by powering on and setting the registers required.
  */
 void setupADXL345() {
-  Wire.begin();
   adxl.powerOn();
   debug("ADXL345 on");
   configureADXL345();
-
+  
   debug("ADXL345 configured");
+  
 }
 
 /**
@@ -78,7 +78,6 @@ void setupADXL345() {
  */
 int movement = 0;
 void adxl345GetInterrupt(Data* reading){
-
   byte interrupts = adxl.getInterruptSource(); //Clear interrupts by reading INT_SOURCE register
 
   reading->interrupt = interrupts;
