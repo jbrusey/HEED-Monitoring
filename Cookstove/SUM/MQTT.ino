@@ -9,6 +9,7 @@ const String MQTT_TOPIC = String("SUM/") + NODE_ID + "/temperature";
  * Connects the node to the MQTT broker
  */
 bool connectMQTT() {
+  // TODO remove this var
   bool mqtt_connected = false;
   if (!client.connected())
     {
@@ -18,15 +19,18 @@ bool connectMQTT() {
       dbg("MQTT: Connecting to broker...");
       bool res = client.connect("SUM1", MQTT_USER, MQTT_PASS);
       if(res){
+	// TODO return true here 
         mqtt_connected = true;
         dbg("MQTT: Connected!");
       }
       else
 	{
+	  // TODO do a disconnect here and return false
 	  reportError(ERR_MQTT_CONNECTION_FAILED);
 	  dbg("MQTT: Can't connect!");
 	}  
     }
+  // TODO return true
   else mqtt_connected = true;
   return mqtt_connected;
 }

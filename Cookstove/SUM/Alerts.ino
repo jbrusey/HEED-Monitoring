@@ -16,6 +16,7 @@ void nodeFunctional(){
 }
 
 void batteryError(){
+  // TODO implement instead an extremely long sleep to avoid over-depleting the battery
   dbg("battery dead");
   uint8_t x = 0;
   while (x < 3){
