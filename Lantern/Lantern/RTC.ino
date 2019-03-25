@@ -1,9 +1,6 @@
 //Include the RTC Libraries
 #include "ArduinoLowPower.h"
 
-void setupNodeSleep() {
-  LowPower.attachInterruptWakeup(RTC_ALARM_WAKEUP, dummy_ISR, CHANGE);
-}
 
 // TODO consider calling directly from main code
 /**
@@ -11,6 +8,14 @@ void setupNodeSleep() {
  */
 void nodeSleep(){
   LowPower.sleep(LANTERN_SLEEP_TIME);
+}
+
+void setupNodeSleep() {
+  LowPower.attachInterruptWakeup(RTC_ALARM_WAKEUP, dummy_ISR, CHANGE);
+}
+
+void nodeSleepLowBattery(){
+  LowPower.sleep(60000*10);   //Sleep for 10 minutes
 }
 
 void dummy_ISR() {}

@@ -3,11 +3,11 @@
  */
  void startSerial(){
    // Wait for serial USB port to open
-   
+
    for (int i = 0; i < 1000 && !SerialUSB; i++) {
      delay(1);
    }
-   
+
    //while(!SerialUSB);
    dbg("SUM Test");
  }

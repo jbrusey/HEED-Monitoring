@@ -9,7 +9,8 @@ enum {
   ERR_MQTT_CONNECTION_FAILED = 3,
   ERR_MQTT_TRANSMISSION_FAILED = 5,
   ERR_CSV_OPEN = 7,
-  ERR_CSV_WRITE = 11
+  ERR_CSV_WRITE = 11,
+  ERR_GSM_ATTACH_FAILED = 13
   };
 
 bool batteryLow = false;

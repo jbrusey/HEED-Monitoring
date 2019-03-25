@@ -1,5 +1,5 @@
 #pragma once
-#include "Credentials.h"                      // Header file with MQTT server and SIM credentials. Look below for sample.                  
+#include "Credentials.h"                      // Header file with MQTT server and SIM credentials. Look below for sample.
 
 //GENERAL
 #define NODE_ID "1"                           // Set ID of the arduino (make sure this is unique)
@@ -39,7 +39,7 @@
 #define DIGITAL_ON_WAIT 100                   // Wait 10ms to ensure digital pin has switched high
 
 #define MAX31850_POWER_PIN A2                 // Arduino Pin the MAX31850 3V3 is connected to
-#define MAX31850_ADDR 0                       // Address of MAX31850 on 1-wire bus 
+#define MAX31850_ADDR 0                       // Address of MAX31850 on 1-wire bus
 #define ONE_WIRE_BUS 0                        // Arduino Pin the MAX31850 data line is connected to
 #define Si7021_POWER_PIN A1                   // Arduino Pin the Si7021 power is connected to
 
@@ -64,5 +64,5 @@
 
 //CREDENTIALS - MQTT
 //#define MQTT_SERVER ""                        // MQTT broker address
-//#define MQTT_USER ""                          
-//#define MQTT_PASS ""        
+//#define MQTT_USER ""
+//#define MQTT_PASS ""

@@ -8,8 +8,8 @@ void setupAnalogSensors() {
 
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, HIGH); //turn LED on until first successfull write
-  
-  debug("Digital pins set");
+
+  dbg("Digital pins set");
 }
 
 
@@ -35,5 +35,5 @@ void getBatteryVoltage(Data* readings)
 void getSolarBatteryVoltage(Data* readings)
 {
   readings->solarBatt = (analogRead(A1) / ADC_BITS ) * ADC_VREF;
-  debug("Solar Battery: " + String(readings->solarBatt));
+  dbg("Solar Battery: " + String(readings->solarBatt));
 }
