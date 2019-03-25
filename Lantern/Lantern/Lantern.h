@@ -70,9 +70,9 @@
 
 //Macro for print time
 #ifdef DEBUG
-  #define debug(msg) _PRINT_TIME(String(msg))
+#define dbg(msg) _PRINT_TIME(String(msg))
 #else
-  #define debug(msg) _DO_NOTHING();
+#define dbg(msg) do {} while (0)
 #endif
 
 // Below is how Credentials.h should look like:

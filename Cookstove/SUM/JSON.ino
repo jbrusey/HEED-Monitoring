@@ -8,12 +8,12 @@
 const size_t bufferSize = JSON_OBJECT_SIZE(NUM_JSON_FIELDS);
 DynamicJsonBuffer jsonBuffer(bufferSize);
 JsonObject& payload = jsonBuffer.createObject();
-  
+
 String constructJSON(Data* reading)
 {
   dbg("JSON constructing...");
   String dataString = "";
-  
+
   payload["unixtime"] = reading->unixtime;
   payload["NODE_ID"] = NODE_ID;
   payload["tempThermocouple"] =  reading->tempThermocouple;
@@ -22,7 +22,7 @@ String constructJSON(Data* reading)
   payload["nodeBatt"] =  reading->nodeBatt;
   payload["error"] =  reading->error;
   payload["seq"] =  reading->seq;
-  
+
   payload.printTo(dataString);
   return dataString;
 }

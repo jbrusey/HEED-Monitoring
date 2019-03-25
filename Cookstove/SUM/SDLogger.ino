@@ -2,13 +2,13 @@
 //Import SD card library and define variables
 #include <SdFat.h>
 SdFat SD;
-  
+
 char fileName[10] = "SUM_" NODE_ID ".csv";
-  
+
 SdFile file;
 
 // TODO this should be a method of Data
-void _write(Data* reading){ 
+void _write(Data* reading){
   file.print(reading->unixtime);
   file.print(",");
   file.print(reading->tempThermocouple);
@@ -23,24 +23,24 @@ void _write(Data* reading){
   file.print(",");
   file.println(reading->seq);
 }
-  
+
 /**
  * Configure the SD card for use. This function checks to
  * see if the card is present and can be initialized:
  */
 void setupSD() {
   dbg("Setting up SD");
-    
+
   if (!SD.begin(SD_CS_PIN, SPI_HALF_SPEED)) {
     dbg("SD card failed, or not present");
     return; //Need to turn LED on or similar
   }
-  
+
   dbg(fileName);
-  
+
   dbg("SD card initialized");
 }
-  
+
 /**
  * Logs a string to a datafile
  * @param pointer to a data struct
@@ -54,9 +54,9 @@ bool writeDataToFile(Data* reading)
     reportError(ERR_CSV_OPEN);
     return false;
   }
-    
+
   _write(reading);
-  
+
   // Force data to SD and update the directory entry to avoid data loss.
   if (!file.close() || file.getWriteError()) {
     dbg("SD: Write error");

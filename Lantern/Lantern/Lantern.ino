@@ -5,7 +5,7 @@
 
 /**
  * Setups the program by
- * 1. Starting USB serial if in debug mode
+ * 1. Starting USB serial if in dbg mode
  * 2. Setting up the RTC
  * 3. Setting up a connection to the SD Card
  * 4. Setting up all sensors
@@ -13,7 +13,7 @@
  */
 void setup() {
   pinMode(0, INPUT_PULLUP);
-  pinMode(1, INPUT_PULLUP);     //Pin2 is connected to INT1    
+  pinMode(1, INPUT_PULLUP);     //Pin2 is connected to INT1
   pinMode(3, INPUT_PULLUP);     //Pin 4 used for Mem card
   pinMode(5, INPUT_PULLUP);     //Pin 6 is the built-in LED
   pinMode(7, INPUT_PULLUP);     //Pins 8,9,10 are connected to Mem board; 11,12 to ADXL
@@ -27,7 +27,7 @@ void setup() {
   pinMode(A6, INPUT_PULLUP);
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, LOW);
-  
+
   pinMode(26, INPUT_PULLUP);
   pinMode(27, INPUT_PULLUP);
   pinMode(28, INPUT_PULLUP);
@@ -42,26 +42,26 @@ void setup() {
 
   setupNodeSleep();
   setupSD();
-  
+
   setupAnalogSensors();
   setupADXL345();
 }
 
 /**
- * MAIN LOOP: Calls for the sensing procedure to run before 
+ * MAIN LOOP: Calls for the sensing procedure to run before
  * putting the node to sleep
  */
 void loop() {
- if (batteryLow) 
+ if (batteryLow)
     batteryError();
  else{
     #ifdef DEBUG
       SerialUSB.println("\n-----------------");
     #endif
-    
+
     doSenseCycle();
   }
-   
+
   #ifdef DEBUG
     delay(5000); // keeps USB connection on instead
   #else

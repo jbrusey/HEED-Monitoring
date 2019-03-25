@@ -44,7 +44,7 @@ void setupAnalogSensors() {
   //Turn the built in LED on
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, HIGH);
-  
+
   dbg("Digital pins Set");
 }
 
@@ -58,7 +58,7 @@ void setupSi7021()
   Wire.write(0xC9);
   Wire.endTransmission();
   Wire.requestFrom(0x40,1);
-  
+
   if(Wire.read() == 0x15)
   {
     dbg("Si7021 detected");
@@ -72,7 +72,7 @@ void setupSi7021()
 /**
  * Power up the MAX31850
  */
-void powerMAX31850() { 
+void powerMAX31850() {
   digitalWrite(MAX31850_POWER_PIN, HIGH);
   // TODO could this be lowpower.idle() or sleep()?
   delay(DIGITAL_ON_WAIT);//Slight delay to allow the switch to happen
@@ -88,7 +88,7 @@ void unpowerMAX31850() {
 }
 
 /**
- * Gets the current temperature for the MAX31850 1-wire 
+ * Gets the current temperature for the MAX31850 1-wire
  * interface
  * @param pointer to a data struct
  */
@@ -99,14 +99,14 @@ void getTemperatureThermocouple(Data* readings) {
   sensors.requestTemperatures(); // Send the command to get temperatures
   readings->tempThermocouple = sensors.getTempCByIndex(MAX31850_ADDR); //get temp
   dbg(String("MAX31850: Temp: ") + String(readings->tempThermocouple) + "c");
-  
+
   unpowerMAX31850(); //turn off sensor
 }
 
 /**
  * Power up the Si7021
  */
-void powerSi7021() { 
+void powerSi7021() {
   digitalWrite(Si7021_POWER_PIN, HIGH);
   delay(DIGITAL_ON_WAIT);//Slight delay to allow the switch to happen
   dbg("Si7021: On");
@@ -126,7 +126,7 @@ void unpowerSi7021() {
  * @param pointer to a data struct
  */
 void getSi7021Data(Data* readings) {
-  
+
   powerSi7021(); //turn on sensor
   //dbg("Si7021: Reading temperature + humidity...");
 

@@ -13,6 +13,8 @@ void nodeFunctional(){
     delay(1000);
     x++;
   }
+  //LED turned off if GSM or MQTT fail in the first cycle - So ensure LED is off after nodeFuncitonal is called!
+  digitalWrite(LED_BUILTIN, LOW);
 }
 
 void batteryError(){
@@ -25,6 +27,7 @@ void batteryError(){
     delay(250);
     x++;
   }
+  nodeSleepLowBattery();      //Device sleeps for 10 minutes - wakes up and signals battery low again through LED - check if required - and goes back to sleep
 }
 
 /** reportError records a code to be sent on the next transmission.

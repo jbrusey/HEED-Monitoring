@@ -1,7 +1,6 @@
 //Include GSM library
 #include <MKRGSM.h>
-
-
+  
 // initialize the library instances
 GSMClient net;
 GPRS gprs;
@@ -16,23 +15,32 @@ const char GPRS_PASSWORD[] = SECRET_GPRS_PASSWORD;
 /**
  * Connects the node to a GSM netwrok
  */
- bool connectGSM() {
-  bool GSMConnected = false;
-  debug("GSM: Connecting to cellular network...");
+bool connectGSM() {
+  dbg("GSM: Connecting to cellular network...");
 
   // After starting the modem with GSM.begin()
   // attach the shield to the GPRS network with the APN, login and password
-  if ((gsmAccess.begin(PINNUMBER) == GSM_READY) &&
-      (gprs.attachGPRS(GPRS_APN, GPRS_LOGIN, GPRS_PASSWORD) == GPRS_READY)) 
-  {
-        gsmAccess.lowPowerMode();
-        debug("GSM: Ready");
-        GSMConnected = true;
-  } 
-  else {
-    reportError(ERR_GSM_CONNECTION_FAILED);
+  if (gsmAccess.begin(PINNUMBER) == GSM_READY) {
+    if (gprs.attachGPRS(GPRS_APN, GPRS_LOGIN, GPRS_PASSWORD) == GPRS_READY) {
+      gsmAccess.lowPowerMode();
+      dbg("GSM: Ready");
+      return true;
+    }
+    else {
+      // Incorrect GSM settings
+      disconnectGSM();
+      digitalWrite(LED_BUILTIN, LOW);
+      reportError(ERR_GSM_ATTACH_FAILED);
+      return false;
+    }
   }
-  return GSMConnected;
+  else {
+    // GSM begin failed
+    gsmAccess.shutdown();
+    digitalWrite(LED_BUILTIN, LOW);
+    reportError(ERR_GSM_CONNECTION_FAILED);
+    return false;
+  }
 }
 
 void getGSMTime(Data* readings) {
@@ -43,5 +51,5 @@ void disconnectGSM() {
   //TODO: Implement some check if GPRS is still online, otherwise the program will freeze here
   gprs.detachGPRS();
   gsmAccess.shutdown();
-  debug("GSM: Disconnected");
+  dbg("GSM: Disconnected");
 }

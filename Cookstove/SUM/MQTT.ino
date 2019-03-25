@@ -1,15 +1,14 @@
 //Include MQTT library
 #include <MQTT.h>
 MQTTClient client(MQTT_JSON_BUFFER);
-  
-//SETUP TOPIC STRING BASED ON NODE_ID 
+
+//SETUP TOPIC STRING BASED ON NODE_ID
 const String MQTT_TOPIC = String("SUM/") + NODE_ID + "/temperature";
-  
+
 /**
  * Connects the node to the MQTT broker
  */
 bool connectMQTT() {
-  bool mqtt_connected = false;
   if (!client.connected())
     {
       //Set options: Keep alive for 10 hours, clean session, 1 second timeout
@@ -18,28 +17,28 @@ bool connectMQTT() {
       dbg("MQTT: Connecting to broker...");
       bool res = client.connect("SUM1", MQTT_USER, MQTT_PASS);
       if(res){
-        mqtt_connected = true;
         dbg("MQTT: Connected!");
+        return true;
       }
-      else
-	{
-	  reportError(ERR_MQTT_CONNECTION_FAILED);
-	  dbg("MQTT: Can't connect!");
-	}  
+      else {
+	digitalWrite(LED_BUILTIN, LOW);
+	reportError(ERR_MQTT_CONNECTION_FAILED);
+	dbg("MQTT: Can't connect!");
+	return false;
+      }
     }
-  else mqtt_connected = true;
-  return mqtt_connected;
+  else return true;
 }
-  
-  
+
+
 /**
  * Disconnects the node from the MQTT broker
  */
 void disconnectMQTT() {
   client.disconnect();
-  dbg("MQTT: Disconnected"); 
+  dbg("MQTT: Disconnected");
 }
-  
+
 /**
  * Transmits a packet via MQTT
  * @param topic The MQTT topic to send to
