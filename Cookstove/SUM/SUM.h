@@ -16,7 +16,7 @@
 //SIP THRESHOLDS
 #define HEART_LIMIT 1440
 
-#define BATTERY_LOW_VOLTAGE 3.35              // Low battery threshold (3.35 suggested, set to -1 to disable)
+#define BATTERY_LOW_VOLTAGE 816               // Low battery threshold (3.35 / 4.2 * 1023)
 #define SIP_TEMP_THERMOCOUPLE_THRESH 5        // Temperature threshold (0.5C suggested, set to -1 for sense-and-send)
 #define SIP_TEMP_SI7021_THRESH 5              // Temperature threshold (0.5C suggested, set to -1 for sense-and-send)
 #define SIP_HUMIDITY_THRESH 10                // Humidity threshold (2% suggested, set to -1 for sense-and-send)

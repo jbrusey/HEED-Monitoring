@@ -146,9 +146,8 @@ void getSi7021Data(Data* readings) {
  */
 void getBatteryVoltage(Data* readings)
 {
-  // TODO avoid converting to floating point as this is not needed.
-  readings->nodeBatt = ( analogRead(ADC_BATTERY) / ADC_BITS ) * INT_BATTERY_DIVIDER_MAX;
+  readings->nodeBatt = analogRead(ADC_BATTERY);
   if (readings->nodeBatt < BATTERY_LOW_VOLTAGE){
-    batteryLow=true;
+    batteryLow = true;
   }
 }
