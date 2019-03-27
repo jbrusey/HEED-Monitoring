@@ -25,8 +25,7 @@ void configureADXL345(){
  * 3. Set activity threshold
  */
 void configureActivityInterrupt(){
-   //Set the link bit, we only want
-  //KB: No setLinkBit function found in adxl source code - please verify why it has been implemented
+   //Set the link bit, we only want to detect interrupts if change in state
   adxl.setLinkBit(LINK_BIT_ENABLE);
   adxl.setActivityXYZ(ACTIVITY_X_AXIS_ENABLE,
                       ACTIVITY_Y_AXIS_ENABLE,
@@ -55,7 +54,6 @@ void configureInactivityInterrupt(){
 void setInterrupts(){
   // Turn on/off Interrupts for each mode (1 == ON, 0 == OFF)
 
-  //KB: Interrupts need to be mapped to INT1 pin on ADXL
   adxl.setImportantInterruptMapping(1,1,1,1,1);
   adxl.InactivityINT(INACTIVITY_INT_ENABLE);
   adxl.ActivityINT(ACTIVITY_INT_ENABLE);
