@@ -21,24 +21,10 @@ void setupAnalogSensors() {
 
   //Set MAX3150 power pin to output and make sure it is off
   pinMode(MAX31850_POWER_PIN, OUTPUT);
-  digitalWrite(MAX31850_POWER_PIN, HIGH);
-  // TODO: should this just be ordinary .begin() call?
-  delay(DIGITAL_ON_WAIT);//Slight delay to allow the switch to happen
-
-  //KB: Power off after setting up to make setup of device consistent with other sense cycles
   digitalWrite(MAX31850_POWER_PIN, LOW);
 
   //Set Si7021 power pin to output and make sure they are off
   pinMode(Si7021_POWER_PIN, OUTPUT);
-  digitalWrite(Si7021_POWER_PIN, HIGH);
-  // TODO: should this be begin call?
-  delay(DIGITAL_ON_WAIT);//Slight delay to allow the switch to happen
-
-  // TODO - why are we not using the library code here?
-  //Si7021.begin();
-  setupSi7021(); // low level version of Si7021.begin() function
-
-  //KB: Power off after setting up to make setup of device consistent with other sense cycles
   digitalWrite(Si7021_POWER_PIN, LOW);
 
   //Turn the built in LED on
@@ -48,34 +34,12 @@ void setupAnalogSensors() {
   dbg("Digital pins Set");
 }
 
-// TODO should we just be using a library call?
-void setupSi7021()
-{
-  Wire.begin();
-
-  Wire.beginTransmission(0x40);
-  Wire.write(0xFC);
-  Wire.write(0xC9);
-  Wire.endTransmission();
-  Wire.requestFrom(0x40,1);
-
-  if(Wire.read() == 0x15)
-  {
-    dbg("Si7021 detected");
-    //Serial.println(ID_Temp_Hum, HEX);
-  }
-  else
-    dbg("Si7021 not detected!");
-    //Serial.println(ID_Temp_Hum, HEX);
-}
-
 /**
  * Power up the MAX31850
  */
 void powerMAX31850() {
   digitalWrite(MAX31850_POWER_PIN, HIGH);
-  // TODO could this be lowpower.idle() or sleep()?
-  delay(DIGITAL_ON_WAIT);//Slight delay to allow the switch to happen
+  delay(DIGITAL_ON_WAIT); //Slight delay to allow the switch to happen
   dbg("MAX31850: On");
 }
 
@@ -94,7 +58,6 @@ void unpowerMAX31850() {
  */
 void getTemperatureThermocouple(Data* readings) {
   powerMAX31850(); //turn on sensor
-  //dbg("MAX31850: Reading temperature...");
 
   sensors.requestTemperatures(); // Send the command to get temperatures
   readings->tempThermocouple = sensors.getTempCByIndex(MAX31850_ADDR); //get temp
@@ -108,7 +71,8 @@ void getTemperatureThermocouple(Data* readings) {
  */
 void powerSi7021() {
   digitalWrite(Si7021_POWER_PIN, HIGH);
-  delay(DIGITAL_ON_WAIT);//Slight delay to allow the switch to happen
+  delay(DIGITAL_ON_WAIT);
+  Si7021.begin();
   dbg("Si7021: On");
 }
 
@@ -128,7 +92,6 @@ void unpowerSi7021() {
 void getSi7021Data(Data* readings) {
 
   powerSi7021(); //turn on sensor
-  //dbg("Si7021: Reading temperature + humidity...");
 
   readings->tempSi7021 = Si7021.getTemp(); // Send the command to get temperatures
   readings->humidity = Si7021.getRH(); // Send the command to get humidity

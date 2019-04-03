@@ -7,22 +7,6 @@ char fileName[10] = "SUM_" NODE_ID ".csv";
 
 SdFile file;
 
-// TODO this should be a method of Data
-void _write(Data* reading){
-  file.print(reading->unixtime);
-  file.print(",");
-  file.print(reading->tempThermocouple);
-  file.print(",");
-  file.print(reading->tempSi7021);
-  file.print(",");
-  file.print(reading->humidity);
-  file.print(",");
-  file.print(reading->nodeBatt);
-  file.print(",");
-  file.print(reading->error);
-  file.print(",");
-  file.println(reading->seq);
-}
 
 /**
  * Configure the SD card for use. This function checks to
@@ -55,7 +39,7 @@ bool writeDataToFile(Data* reading)
     return false;
   }
 
-  _write(reading);
+  reading->print(&file);
 
   // Force data to SD and update the directory entry to avoid data loss.
   if (!file.close() || file.getWriteError()) {

@@ -2,7 +2,6 @@
 #include "ArduinoLowPower.h"
 
 
-// TODO consider calling directly from main code
 /**
  * Puts the node into its sleep mode
  */
@@ -15,7 +14,7 @@ void setupNodeSleep() {
 }
 
 void nodeSleepLowBattery(){
-  LowPower.sleep(60000*10);   //Sleep for 10 minutes
+  LowPower.sleep(CS_LOW_BATTERY_SLEEP);   //Sleep for 10 minutes
 }
 
 /* Function called on waking up by LowPower

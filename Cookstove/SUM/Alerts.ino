@@ -18,7 +18,6 @@ void nodeFunctional(){
 }
 
 void batteryError(){
-  // TODO implement instead an extremely long sleep to avoid over-depleting the battery
   dbg("battery dead");
   uint8_t x = 0;
   while (x < 3){
@@ -28,7 +27,9 @@ void batteryError(){
     delay(250);
     x++;
   }
-  nodeSleepLowBattery();      //Device sleeps for 10 minutes - wakes up and signals battery low again through LED - check if required - and goes back to sleep
+  nodeSleepLowBattery();
+  // Device sleeps for 10 minutes - wakes up and signals battery low
+  // again through LED - check if required - and goes back to sleep
 }
 
 /** reportError records a code to be sent on the next transmission.

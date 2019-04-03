@@ -2,7 +2,7 @@
 int heartCount = 0;
 
 bool isHeartbeat(){
-  heartCount++; //TODO predicate should not have side-effects
+  heartCount++;
   if (heartCount > HEART_LIMIT){
     heartCount=0;
     return true;

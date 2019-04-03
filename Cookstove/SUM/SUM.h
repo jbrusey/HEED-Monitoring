@@ -12,6 +12,7 @@
 //SAMPLE PERIOD
 #define RTC_SAMPLE_TIME 25                    // SET RTC alarm off every xth second in a minute
 #define CS_SLEEP_TIME 60000                    //Set the device to sleep mode for a min
+#define CS_LOW_BATTERY_SLEEP 600000            //Set device to sleep for 10 mins - 60000*10
 
 //SIP THRESHOLDS
 #define HEART_LIMIT 1440
@@ -36,7 +37,7 @@
 
 
 //Sensors
-#define DIGITAL_ON_WAIT 100                   // Wait 10ms to ensure digital pin has switched high
+#define DIGITAL_ON_WAIT 25                   // Wait 10ms to ensure digital pin has switched high
 
 #define MAX31850_POWER_PIN A2                 // Arduino Pin the MAX31850 3V3 is connected to
 #define MAX31850_ADDR 0                       // Address of MAX31850 on 1-wire bus
