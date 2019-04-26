@@ -34,7 +34,7 @@
  * beta - second order smoothing parameter in range (0,1)
  */
 DEWMA::DEWMA(float alpha, float beta):
-  _count(0),
+  _first(true),
   _alpha(alpha),
   _beta(beta)
 { 
@@ -55,10 +55,10 @@ void DEWMA::estimate(State * s_new,
 		     State *s_old) 
 {
   siptime_t delta_t;
-  if (_count == 0) {
+  if (_first) {
     s_new->x[0] = value;
     s_new->x[1] = 0.f;
-    _count++;
+    _first = false;
   }
   else {
     delta_t = subtract_time(current, s_old->time);

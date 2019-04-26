@@ -45,7 +45,7 @@ public:
 		       siptime_t prev_time);
 
 private:
-  unsigned int _count;
+  bool _first;
   float _alpha, _beta;
 
 };
