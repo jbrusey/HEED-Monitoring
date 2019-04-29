@@ -1,9 +1,12 @@
+#include "ArduinoLowPower.h"
+
 //ADXL345 LIBRARY
 #include <SparkFun_ADXL345.h>
 ADXL345 adxl = ADXL345();
 #include <Wire.h>
 
-
+volatile int state = 1;
+volatile int adxl_step = 0;
 /**
  * Configures the ADXL345 by:
  * 1. Setting the measurement range
@@ -12,9 +15,19 @@ ADXL345 adxl = ADXL345();
  * 4. Enabling interrupts
  */
 void configureADXL345(){
-  adxl.setRangeSetting(4);
+  //Initially disabled
+  adxl.InactivityINT(0);
+  adxl.ActivityINT(0);
+  adxl.FreeFallINT(0);
+  adxl.doubleTapINT(0);
+  adxl.singleTapINT(0);
+
+  adxl.setRangeSetting(4);           // Give the range settings
+                                      // Accepted values are 2g, 4g, 8g or 16g
+                                      // Higher Values = Wider Measurement Range
+                                      // Lower Values = Greater Sensitivity
   configureActivityInterrupt();
-  configureInactivityInterrupt();
+  configureFreefallInterrupt();
   setInterrupts();
 }
 
@@ -36,15 +49,12 @@ void configureActivityInterrupt(){
 /**
  * Configure inactivity interrupt
  * 1. Set axis to monitor
- * 2. Set inactivity threshold
- * 3. Set inactivity time threshold
+ * 2. Set freefall threshold
+ * 3. Set freefall time threshold
  */
-void configureInactivityInterrupt(){
-  adxl.setInactivityXYZ(INACTIVITY_X_AXIS_ENABLE,
-                        INACTIVITY_Y_AXIS_ENABLE,
-                        INACTIVITY_Z_AXIS_ENABLE);
-  adxl.setInactivityThreshold(INACTIVITY_THRESH);
-  adxl.setTimeInactivity(INACTIVITY_TIME);      // 30 seconds of no movement is inactivity
+void configureFreefallInterrupt(){
+  adxl.setFreeFallThreshold(FREEFALL_THRESH);
+  adxl.setFreeFallDuration(FREEFALL_TIME);
 }
 
 
@@ -60,6 +70,8 @@ void setInterrupts(){
   adxl.FreeFallINT(FREEFALL_INT_ENABLE);
   adxl.doubleTapINT(DOUBLETAP_INT_ENABLE);
   adxl.singleTapINT(TAP_INT_ENABLE);
+  LowPower.attachInterruptWakeup(INTERRUPT_PIN, ADXL_ISR, RISING); //Attach interrupt for sleep
+  delay(1000);
 }
 
 /**
@@ -75,22 +87,36 @@ void setupADXL345() {
 }
 
 /**
- * Get any interrupt on the ADXL345 buffer, and checks for activity or inactivity triggers
+ * Get any interrupt on the ADXL345 buffer, and checks for activity or freefall triggers
  * * @param pointer to a data struct
  */
-int movement = 0;
-void adxl345GetInterrupt(Data* reading){
-  byte interrupts = adxl.getInterruptSource(); //Clear interrupts by reading INT_SOURCE register
 
-  reading->interrupt = interrupts;
-  // TODO Activity and Inactivity interrupts should be coded as if and else if.
-  reading->activity = adxl.triggered(interrupts, ADXL345_ACTIVITY);
-  if (reading->activity==1) reading->movement = 1;
-  reading->inactivity = adxl.triggered(interrupts, ADXL345_INACTIVITY);
-  if (reading->inactivity==1) reading->movement = 0;
-
-  dbg("Interrupt: " + String(reading->interrupt));
-  dbg("Activity: " + String(reading->activity));
-  dbg("Inactivity: " + String (reading->inactivity));
-  dbg("Movement: " + String (reading->movement));
+void freefall_detected() {
+  if (state == 2) {
+    state = 1;
+    adxl_step++;
+  }
 }
+
+void activity_detected() {
+  if (state == 1) {
+    state = 2;
+  }
+}
+
+void ADXL_ISR() {
+  // getInterruptSource clears all triggered actions after returning value
+  // Do not call again until you need to recheck for triggered actions
+  byte interrupts = adxl.getInterruptSource();
+
+  // Free Fall Detection
+  if(adxl.triggered(interrupts, ADXL345_FREE_FALL)){
+    freefall_detected();
+  }
+
+  // Activity
+  if(adxl.triggered(interrupts, ADXL345_ACTIVITY)){
+    activity_detected();
+  }
+}
+

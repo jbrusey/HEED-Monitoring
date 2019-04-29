@@ -1,3 +1,4 @@
+
 #include <ArduinoJson.h>
 #include "Lantern.h" // Header file with consts/config
 #include "struct.h" // Header file with data struct fetched in sense cycle
@@ -13,10 +14,12 @@
  */
 void setup() {
   pinMode(0, INPUT_PULLUP);
-  pinMode(1, INPUT_PULLUP);     //Pin2 is connected to INT1
-  pinMode(3, INPUT_PULLUP);     //Pin 4 used for Mem card
-  pinMode(5, INPUT_PULLUP);     //Pin 6 is the built-in LED
-  pinMode(7, INPUT_PULLUP);     //Pins 8,9,10 are connected to Mem board; 11,12 to ADXL
+  pinMode(1, INPUT_PULLUP);
+  pinMode(2, INPUT_PULLUP);
+  pinMode(3, INPUT_PULLUP);     //Pin 4 is used for mem breakout board, 5 for ADXL interrupt from INT 1 and 6 is the built-in LED
+  pinMode(7, INPUT_PULLUP);     //Pins 8,9,10 are connected to Mem board; 
+  pinMode(11, INPUT_PULLUP);    //Pin 11 is connected to SDA on ADXL
+  pinMode(12, INPUT_PULLUP);    //Pin 12 is connected to SCL on ADXL
   pinMode(13, INPUT_PULLUP);
   pinMode(14, INPUT_PULLUP);
   pinMode(A0, INPUT_PULLUP);     //A1 used for solar battery
@@ -32,6 +35,8 @@ void setup() {
   pinMode(27, INPUT_PULLUP);
   pinMode(28, INPUT_PULLUP);
   pinMode(29, INPUT_PULLUP);
+
+  pinMode(INTERRUPT_PIN, INPUT_PULLDOWN);
 
   #ifdef DEBUG
     startSerial();

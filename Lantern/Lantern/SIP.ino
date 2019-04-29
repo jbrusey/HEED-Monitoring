@@ -11,8 +11,9 @@ float prev_solat_batt = -1;
  */
 bool hasEvent(Data* readings)
 {
-    return fabs(readings->solarBatt - prev_solat_batt) >= SIP_SOLAR_BATTERY_THRESH || //if solar battery has changed
-    readings->interrupt != INT_SOURCE_NO_INTERRUPT;
+    return fabs(readings->solarBatt - prev_solat_batt) >= SIP_SOLAR_BATTERY_THRESH || //if solar battery has changed significantly
+    //TODO replace interrupt check with check for change in num of steps
+      false;
 }
 
 
@@ -22,4 +23,5 @@ bool hasEvent(Data* readings)
  */
 void updateState(Data* readings){
   prev_solat_batt = readings->solarBatt;
+  //TODO store prev_steps
 }

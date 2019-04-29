@@ -16,9 +16,6 @@ void resetErrors(){
 void resetReadings(Data* readings){
   readings->unixtime=0;
   readings->solarBatt=0;
-  readings->interrupt=0;
-  readings->inactivity=0;
-  readings->activity=0;
   readings->nodeBatt=0;
   readings->error=0;
   readings->seq=0;
@@ -38,12 +35,11 @@ void doSenseCycle()
   bool result_final = false;
 
   getSolarBatteryVoltage(readings);
-  adxl345GetInterrupt(readings);
 
   if (last_errno != 1) readings->error = last_errno;
   last_transmitted_errno = last_errno;
 
-  if (hasEvent(readings) || isHeartbeat())
+  if (hasEvent(readings) || isHeartbeat())    //if change in solarbatt is significant or interrupt is detected - activity or freefall
     {
       readings->seq = seq;
       getBatteryVoltage(readings);

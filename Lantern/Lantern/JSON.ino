@@ -17,10 +17,7 @@ String constructJSON(Data* reading)
   payload["unixtime"] = reading->unixtime;
   payload["NODE_ID"] = NODE_ID;
   payload["solarBatt"] =  reading->solarBatt;
-  payload["interrupt"] =  String(reading->interrupt, HEX);
-  payload["inactivity"] =  reading->inactivity;
-  payload["activity"] =  reading->activity;
-  payload["movement"] =  reading->movement;
+  payload["steps"] =  reading->steps;
   payload["nodeBatt"] = reading->nodeBatt;
   payload["error"] =  reading->error;
   payload["seq"] =  reading->seq;
@@ -28,4 +25,3 @@ String constructJSON(Data* reading)
   payload.printTo(dataString);
   return dataString;
 }
-

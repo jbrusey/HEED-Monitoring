@@ -2,29 +2,10 @@
 #include "SdFat.h"
 SdFat SD;
 
-char fileName[9] = "ML_" NODE_ID ".csv";
+char fileName[] = "ML_" NODE_ID ".csv";
 
 SdFile file;
 
-void _write(Data* reading){
-  file.print(reading->unixtime);
-  file.print(",");
-  file.print(reading->solarBatt);
-  file.print(",");
-  file.print(reading->interrupt, HEX);
-  file.print(",");
-  file.print(reading->inactivity);
-  file.print(",");
-  file.print(reading->activity);
-  file.print(",");
-  file.print(reading->movement);
-  file.print(",");
-  file.print(reading->nodeBatt);
-  file.print(",");
-  file.print(reading->error);
-  file.print(",");
-  file.println(reading->seq);
-}
 
 /**
  * Configure the SD card for use. This function checks to
@@ -57,7 +38,7 @@ bool writeDataToFile(Data* reading)
     return false;
   }
 
-  _write(reading);
+  reading->print(&file);
 
   // Force data to SD and update the directory entry to avoid data loss.
   if (!file.close() || file.getWriteError()) {

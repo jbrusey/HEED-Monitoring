@@ -8,8 +8,6 @@
 #define SERIAL_SPEED 9600                     // Serial speed
 #define STARTUP_DELAY 5000                    // How long to delay before the node starts
 
-//SAMPLE PERIOD
-#define RTC_SAMPLE_TIME 25                    // SET RTC alarm off every xth second in a minute
 #define LANTERN_SLEEP_TIME 60000              //Set lantern to sleep for 1 min = 60000ms
 
 //SIP THRESHOLDS
@@ -21,7 +19,7 @@
 #define INT_SOURCE_NO_INTERRUPT 0x83        // DATA_READY, Watermark, and Overun are always active so interrupt source will always read 0x83 if no other interrupt has been triggered
 
 //GSM
-#define GSM_CONNECT_RETRY_TIME 500            // How long to retry between gsm connection tries (0.5s)
+#define GSM_CONNECT_RETRY_TIME 60000            // How long to retry between gsm connection tries (0.5s)
 
 
 //MQTT
@@ -47,23 +45,20 @@
 
 //ADXL345 settings
 // TODO set threshold values based on data collected and learning - Decision trees or LDA
-#define INACTIVITY_TIME 30
-#define INACTIVITY_THRESH 30                  // 62.5mg per increment   // Set activity   // Activity thresholds (0-255) (CHECK!!!!)
-#define ACTIVITY_THRESH 30                    // 62.5mg per increment   // Set activity   // Activity thresholds (0-255) (CHECK!!!!)
+const int INTERRUPT_PIN = 5;
+#define FREEFALL_TIME 20                      //// (20 - 70) recommended - 5ms per increment
+#define FREEFALL_THRESH 14                  // 62.5mg per increment   // Set activity   // Activity thresholds (0-255) - Set to 0.7829181 g
+#define ACTIVITY_THRESH 18                    // 62.5mg per increment   // Set activity   // Activity thresholds (0-255) - Set to 1.16137 g
 
-#define INACTIVITY_INT_ENABLE 1
+#define INACTIVITY_INT_ENABLE 0
 #define ACTIVITY_INT_ENABLE 1
-#define FREEFALL_INT_ENABLE 0
+#define FREEFALL_INT_ENABLE 1
 #define DOUBLETAP_INT_ENABLE 0
 #define TAP_INT_ENABLE 0
 
-#define INACTIVITY_X_AXIS_ENABLE 1
-#define INACTIVITY_Y_AXIS_ENABLE 1
-#define INACTIVITY_Z_AXIS_ENABLE 1
-
 #define ACTIVITY_X_AXIS_ENABLE 1
-#define ACTIVITY_Y_AXIS_ENABLE 1
-#define ACTIVITY_Z_AXIS_ENABLE 1
+#define ACTIVITY_Y_AXIS_ENABLE 0
+#define ACTIVITY_Z_AXIS_ENABLE 0
 
 #define LINK_BIT_ENABLE true
 

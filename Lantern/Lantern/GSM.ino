@@ -18,6 +18,10 @@ const char GPRS_PASSWORD[] = SECRET_GPRS_PASSWORD;
 bool connectGSM() {
   dbg("GSM: Connecting to cellular network...");
 
+  //set a timeout of 60 s for the GPRS and GSM operation
+  gprs.setTimeout(GSM_CONNECT_RETRY_TIME);
+  gsmAccess.setTimeout(GSM_CONNECT_RETRY_TIME);
+  
   // After starting the modem with GSM.begin()
   // attach the shield to the GPRS network with the APN, login and password
   if (gsmAccess.begin(PINNUMBER) == GSM_READY) {
