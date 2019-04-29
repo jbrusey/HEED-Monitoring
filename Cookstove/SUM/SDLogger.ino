@@ -3,7 +3,7 @@
 #include <SdFat.h>
 SdFat SD;
 
-char fileName[10] = "SUM_" NODE_ID ".csv";
+char fileName[] = "SUM_" NODE_ID ".csv";
 
 SdFile file;
 
