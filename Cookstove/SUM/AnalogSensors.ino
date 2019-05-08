@@ -73,6 +73,7 @@ void powerSi7021() {
   digitalWrite(Si7021_POWER_PIN, HIGH);
   delay(DIGITAL_ON_WAIT);
   Si7021.begin();
+  delay(DIGITAL_ON_WAIT);
   dbg("Si7021: On");
 }
 

@@ -24,7 +24,7 @@
 
 
 //GSM
-#define GSM_CONNECT_RETRY_TIME 500            // How long to retry between gsm connection tries (0.5s)
+#define GSM_CONNECT_RETRY_TIME 60000            // How long to retry between gsm connection tries (0.5s)
 
 
 //MQTT
