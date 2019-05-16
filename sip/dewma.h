@@ -19,8 +19,8 @@
 #define _DEWMA_H
 
 
-typedef unsigned int siptime_t;
-#define TIME_MAX UINT_MAX
+typedef unsigned long siptime_t;
+#define TIME_MAX ULONG_MAX
 
 struct State {
   siptime_t time;

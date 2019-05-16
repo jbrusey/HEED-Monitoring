@@ -4,3 +4,8 @@ UnitTestSenseCycle
 UnitTestHB
 Credentials.h
 .Rhistory
+*~
+*.o
+sip.zip
+
+test_sip

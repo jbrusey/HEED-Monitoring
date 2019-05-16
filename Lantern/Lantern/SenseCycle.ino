@@ -1,7 +1,10 @@
 //GLOBALS
-uint32_t seq = 0;
 bool first = true;
-Data* readings = new Data();
+Packet readings;
+SIP sip(0.2, 0.2, SIP_STEP_THRESHOLD, HEARTBEAT);
+#ifdef DEBUG
+uint32_t count = 0;
+#endif
 
 void resetErrors(){
   /* the error code has been transmitted and so can now be reset.  The
@@ -13,14 +16,6 @@ void resetErrors(){
     last_errno = 1;
 }
 
-void resetReadings(Data* readings){
-  readings->unixtime=0;
-  readings->solarBatt=0;
-  readings->nodeBatt=0;
-  readings->error=0;
-  readings->seq=0;
-}
-
 /**
  * The function takes readings from the battery sensors, and checks the ADXL345 for
  * an interrupt. The data is then checked if it is eventful, and if so is stored
@@ -28,26 +23,27 @@ void resetReadings(Data* readings){
  */
 void doSenseCycle()
 {
-  dbg("Start Sense " + String(seq));
+  seq_t seq;
+
+  dbg("Start Sense " + String(++count));
 
   bool result_transmit = false;
   bool result_store = false;
   bool result_final = false;
 
-  getSolarBatteryVoltage(readings);
-
-  if (last_errno != 1) readings->error = last_errno;
+  // TODO check this code
+  if (last_errno != 1) readings.error = last_errno;
   last_transmitted_errno = last_errno;
 
-  if (hasEvent(readings) || isHeartbeat())    //if change in solarbatt is significant or interrupt is detected - activity or freefall
-    {
-      readings->seq = seq;
-      getBatteryVoltage(readings);
+  if (sip.update(&readings.steps, &seq, adxl_step, rtc.getEpoch())) {
+      readings.seq = seq;
+      readings.solarBatt = getSolarBatteryVoltage();
+      readings.nodeBatt = getBatteryVoltage();
 
       if (connectGSM()) {
 	if (connectMQTT()) {
-	  getGSMTime(readings);
-	  String JSON = constructJSON(readings);
+	  readings.gsmTime = getGSMTime();
+	  String JSON = readings.json();
 	  dbg("JSON created : " + JSON);
 	  result_transmit = transmit(MQTT_TOPIC, JSON);
 
@@ -56,7 +52,10 @@ void doSenseCycle()
 	disconnectGSM();
       }
 
-      result_store = writeDataToFile(readings);
+      if (result_transmit)
+	sip.transmitted_ok(seq);
+
+      result_store = writeDataToFile(&readings);
 
       result_final = result_transmit && result_store;
 
@@ -68,11 +67,8 @@ void doSenseCycle()
 	    first = false;
 	  }
 
-	  updateState(readings);
 	  resetErrors();
 	}
-      resetReadings(readings);
-      seq++; //increment sequence number
     }
 
   dbg("End Sense");

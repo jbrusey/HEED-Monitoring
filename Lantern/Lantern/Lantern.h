@@ -1,3 +1,4 @@
+#pragma once
 #include "Credentials.h"                      // Header file with MQTT server and SIM credentials. Look below for sample.
 
 //GENERAL
@@ -8,18 +9,18 @@
 #define SERIAL_SPEED 9600                     // Serial speed
 #define STARTUP_DELAY 5000                    // How long to delay before the node starts
 
-#define LANTERN_SLEEP_TIME 60000              //Set lantern to sleep for 1 min = 60000ms
+const uint32_t LANTERN_SLEEP_TIME = 60;       //the value is number of seconds = 1 min
 
 //SIP THRESHOLDS
-#define HEART_LIMIT 1440
+#define HEARTBEAT 86400                         // 1 day in secs
+#define SIP_STEP_THRESHOLD 10                 // transmit if > 10 steps error
 
-#define BATTERY_LOW_VOLTAGE 3.35
-#define SIP_SOLAR_BATTERY_THRESH 0.2         // Threshold to define when the solar lantern battery is eventful (TO-DO)
-#define SIP_STATE_THRESH 1000                 // Threshold to define when the solar state has changed (TO-DO)
-#define INT_SOURCE_NO_INTERRUPT 0x83        // DATA_READY, Watermark, and Overun are always active so interrupt source will always read 0x83 if no other interrupt has been triggered
+#define ADC_SOLAR_BATTERY A1                  // pin that solar battery is connected to.
+
+#define BATTERY_LOW_VOLTAGE 816               // 816 / 1023 * 3.3 = 2.63V
 
 //GSM
-#define GSM_CONNECT_RETRY_TIME 60000            // How long to retry between gsm connection tries (0.5s)
+#define GSM_CONNECT_RETRY_TIME 60000            // How long to retry between gsm connection tries (1min)
 
 
 //MQTT
@@ -37,11 +38,10 @@
 #define ADC_MIN 0                             // Min value extect from the ADC
 #define ADC_MAX 1023                          // Max value extect from the ADC
 
-#define INT_BATTERY_DIVIDER_MAX 4.2           // Max voltage that can be sensed from the internal voltage divider with 3.3v reference
-
-#define ADC_VREF 6.6                          // Max voltage that can be sensed from the voltage divider
-#define ADC_BITS 1023.0                       // number of bits
-
+/* voltage for solar battery can be calculated as REF_VOLTAGE * 2 *
+   (adc_value / 1023) where REF_VOLTAGE is 3.3V. The multiplier of 2
+   is due to the voltage divider with equal resistors.
+ */
 
 //ADXL345 settings
 // TODO set threshold values based on data collected and learning - Decision trees or LDA
@@ -59,8 +59,6 @@ const int INTERRUPT_PIN = 5;
 #define ACTIVITY_X_AXIS_ENABLE 1
 #define ACTIVITY_Y_AXIS_ENABLE 0
 #define ACTIVITY_Z_AXIS_ENABLE 0
-
-#define LINK_BIT_ENABLE true
 
 
 //Macro for print time

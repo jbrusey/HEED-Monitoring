@@ -3,13 +3,11 @@
  */
  void startSerial(){
    // Wait for serial USB port to open
-   
    for (int i = 0; i < 1000 && !SerialUSB; i++) {
      delay(1);
    }
 
-   //while(!SerialUSB);
-   dbg("SUM Test");
+   dbg("Lantern Test");
  }
 
 /**
@@ -22,6 +20,3 @@ void _PRINT_TIME(String msg) {
   sprintf(formattedtime, "%09lu", localtime);
   SerialUSB.println(String(formattedtime) + ": " + msg);
 }
-
-
-

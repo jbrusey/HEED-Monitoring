@@ -18,9 +18,7 @@ void setup() {
   pinMode(2, INPUT_PULLUP);
   pinMode(3, INPUT_PULLUP);     //Pin 4 is used for mem breakout board, 5 for ADXL interrupt from INT 1 and 6 is the built-in LED
   pinMode(7, INPUT_PULLUP);     //Pins 8,9,10 are connected to Mem board; 
-  pinMode(11, INPUT_PULLUP);    //Pin 11 is connected to SDA on ADXL
-  pinMode(12, INPUT_PULLUP);    //Pin 12 is connected to SCL on ADXL
-  pinMode(13, INPUT_PULLUP);
+  pinMode(13, INPUT_PULLUP);    //Pins 11 and 12 are connected to SDA and SCL of ADXL respectively and to VCC for bus termination using 4.3Kohm resistors
   pinMode(14, INPUT_PULLUP);
   pinMode(A0, INPUT_PULLUP);     //A1 used for solar battery
   pinMode(A2, INPUT_PULLUP);
@@ -28,6 +26,7 @@ void setup() {
   pinMode(A4, INPUT_PULLUP);
   pinMode(A5, INPUT_PULLUP);
   pinMode(A6, INPUT_PULLUP);
+
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, LOW);
 
@@ -35,8 +34,6 @@ void setup() {
   pinMode(27, INPUT_PULLUP);
   pinMode(28, INPUT_PULLUP);
   pinMode(29, INPUT_PULLUP);
-
-  pinMode(INTERRUPT_PIN, INPUT_PULLDOWN);
 
   #ifdef DEBUG
     startSerial();
@@ -63,13 +60,12 @@ void loop() {
     #ifdef DEBUG
       SerialUSB.println("\n-----------------");
     #endif
-
-    doSenseCycle();
+      doSenseCycle();
   }
 
   #ifdef DEBUG
     delay(5000); // keeps USB connection on instead
   #else
-    nodeSleep(); //go back to sleep
+    nodeSleep(LANTERN_SLEEP_TIME); //go back to sleep
   #endif
 }

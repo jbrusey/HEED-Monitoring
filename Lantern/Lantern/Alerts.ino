@@ -13,7 +13,7 @@ void nodeFunctional(){
     delay(1000);
     x++;
   }
-  //LED turned off if GSM or MQTT fail in the first cycle - So ensure LED is off after nodeFuncitonal is called!
+  //LED turned off if GSM or MQTT fail in the first cycle - So ensure LED is off after nodeFunctional is called!
   digitalWrite(LED_BUILTIN, LOW);
 }
 

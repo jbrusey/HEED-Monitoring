@@ -15,25 +15,22 @@ void setupAnalogSensors() {
 
 
 /**
- * Gets the battery voltage from the MKR Zero's internal
- * voltage divider
- * @param pointer to a data struct
+ * Gets the battery voltage from the MKR Zero's internal voltage
+ * divider
+ * @return battery voltage in range 0 - 1023 (see ADC_MAX) where 1023
+ * means 4.2 volts
  */
-void getBatteryVoltage(Data* readings)
+short int getBatteryVoltage()
 {
-  readings->nodeBatt = (analogRead(ADC_BATTERY) / ADC_BITS ) * INT_BATTERY_DIVIDER_MAX;
-  if (readings->nodeBatt < BATTERY_LOW_VOLTAGE){
-    batteryLow=true;
-  }
+  return analogRead(ADC_BATTERY);
 }
 
 /**
- * Gets the battery voltage from the Lantern monitoris
- * voltage divider
- * @param pointer to a data struct
+ * Gets the battery voltage from the lantern's solar recharged battery
+ * @return battery voltage in range 0 - 1023 (for MKR) where 1023
+ * means 2 * 3.3V
  */
-void getSolarBatteryVoltage(Data* readings)
+short int getSolarBatteryVoltage()
 {
-  readings->solarBatt = (analogRead(A1) / ADC_BITS ) * ADC_VREF;
-  dbg("Solar Battery: " + String(readings->solarBatt));
+  return analogRead(ADC_SOLAR_BATTERY);
 }

@@ -1,25 +1,57 @@
+#pragma once
 #include <SdFat.h>
+#include "sip.h"
 
-struct Data {
-  uint32_t unixtime;
+//Create JSON buffer and object
+
+const size_t bufferSize = JSON_OBJECT_SIZE(NUM_JSON_FIELDS);
+DynamicJsonBuffer jsonBuffer(bufferSize);
+JsonObject& payload = jsonBuffer.createObject();
+
+struct Packet {
+  unsigned long gsmTime;
+  State steps;
   float solarBatt;
-  int steps;
   float nodeBatt;
   uint32_t error;
-  uint32_t seq;
+  seq_t seq;
 
   void print(SdFile *file){
-    file->print(this->unixtime);
+    file->print(gsmTime);
     file->print(",");
-    file->print(this->solarBatt);
+    file->print(steps.x[0]);
     file->print(",");
-    file->print(this->steps);
+    file->print(steps.x[1]);
     file->print(",");
-    file->print(this->nodeBatt);
+    file->print(solarBatt);
     file->print(",");
-    file->print(this->error);
+    file->print(nodeBatt);
     file->print(",");
-    file->println(this->seq);
+    file->print(error);
+    file->print(",");
+    file->println(seq);
+  }
+
+
+  /**
+   * Constructs a json packet from the packet
+   * @return A string of all the sensor values as json
+   */
+  String json()
+  {
+    String dataString = "";
+
+    payload["unixtime"] = gsmTime;
+    payload["NODE_ID"] = NODE_ID;
+    payload["steps"] =  steps.x[0];
+    payload["stepsRate"] =  steps.x[1];
+    payload["solarBatt"] =  solarBatt;
+    payload["nodeBatt"] = nodeBatt;
+    payload["error"] =  error;
+    payload["seq"] =  seq;
+
+    payload.printTo(dataString);
+    return dataString;
   }
 
 };

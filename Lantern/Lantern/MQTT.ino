@@ -15,7 +15,7 @@ bool connectMQTT() {
       client.setOptions(MQTT_KEEP_ALIVE, MQTT_CLEAN_SESSION, MQTT_TIMEOUT);
       client.begin(MQTT_SERVER, net);  //Start a connection
       dbg("MQTT: Connecting to broker...");
-      bool res = client.connect("SUM1", MQTT_USER, MQTT_PASS);
+      bool res = client.connect("Lantern1", MQTT_USER, MQTT_PASS);
       if(res){
         dbg("MQTT: Connected!");
         return true;

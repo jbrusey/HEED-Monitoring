@@ -47,8 +47,8 @@ bool connectGSM() {
   }
 }
 
-void getGSMTime(Data* readings) {
-  readings->unixtime = gsmAccess.getTime();
+unsigned long getGSMTime() {
+  return gsmAccess.getTime();
 }
 
 void disconnectGSM() {

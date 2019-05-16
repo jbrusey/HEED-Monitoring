@@ -1,5 +1,5 @@
 //Import SD card library and define variables
-#include "SdFat.h"
+#include <SdFat.h>
 SdFat SD;
 
 char fileName[] = "ML_" NODE_ID ".csv";
@@ -29,7 +29,7 @@ void setupSD() {
  * @param pointer to a data struct
  * @return True if the String was saved
  */
-bool writeDataToFile(Data* reading)
+bool writeDataToFile(Packet* reading)
 {
   dbg("SD: Write start");
   if (!file.open(fileName, O_APPEND | O_CREAT | O_WRITE )) {

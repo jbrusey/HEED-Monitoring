@@ -6,12 +6,12 @@
 # Datatypes (KEYWORD1)
 #######################################
 
+SIP    KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
 
-SIP    KEYWORD2
 update	KEYWORD2
 transmitted_ok	KEYWORD2
 

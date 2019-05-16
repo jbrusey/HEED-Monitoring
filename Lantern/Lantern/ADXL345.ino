@@ -38,8 +38,6 @@ void configureADXL345(){
  * 3. Set activity threshold
  */
 void configureActivityInterrupt(){
-   //Set the link bit, we only want to detect interrupts if change in state
-  adxl.setLinkBit(LINK_BIT_ENABLE);
   adxl.setActivityXYZ(ACTIVITY_X_AXIS_ENABLE,
                       ACTIVITY_Y_AXIS_ENABLE,
                       ACTIVITY_Z_AXIS_ENABLE);
@@ -62,16 +60,18 @@ void configureFreefallInterrupt(){
  * Enable/Disable Interrupts
  */
 void setInterrupts(){
-  // Turn on/off Interrupts for each mode (1 == ON, 0 == OFF)
-
   adxl.setImportantInterruptMapping(1,1,1,1,1);
+
+  pinMode(INTERRUPT_PIN, INPUT_PULLDOWN);
+  LowPower.attachInterruptWakeup(INTERRUPT_PIN, ADXL_ISR, RISING); //Attach interrupt for sleep
+  delay(1000);
+
+  // Turn on/off Interrupts for each mode (1 == ON, 0 == OFF)
   adxl.InactivityINT(INACTIVITY_INT_ENABLE);
   adxl.ActivityINT(ACTIVITY_INT_ENABLE);
   adxl.FreeFallINT(FREEFALL_INT_ENABLE);
   adxl.doubleTapINT(DOUBLETAP_INT_ENABLE);
   adxl.singleTapINT(TAP_INT_ENABLE);
-  LowPower.attachInterruptWakeup(INTERRUPT_PIN, ADXL_ISR, RISING); //Attach interrupt for sleep
-  delay(1000);
 }
 
 /**
@@ -119,4 +119,3 @@ void ADXL_ISR() {
     activity_detected();
   }
 }
-
