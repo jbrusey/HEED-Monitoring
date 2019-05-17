@@ -46,7 +46,7 @@ const uint32_t LANTERN_SLEEP_TIME = 60;       //the value is number of seconds =
 //ADXL345 settings
 // TODO set threshold values based on data collected and learning - Decision trees or LDA
 const int INTERRUPT_PIN = 5;
-#define FREEFALL_TIME 20                      //// (20 - 70) recommended - 5ms per increment
+#define FREEFALL_TIME 10                      //// (20 - 70) recommended - 5ms per increment
 #define FREEFALL_THRESH 14                  // 62.5mg per increment   // Set activity   // Activity thresholds (0-255) - Set to 0.7829181 g
 #define ACTIVITY_THRESH 18                    // 62.5mg per increment   // Set activity   // Activity thresholds (0-255) - Set to 1.16137 g
 

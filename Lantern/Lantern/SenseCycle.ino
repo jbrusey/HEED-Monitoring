@@ -36,6 +36,7 @@ void doSenseCycle()
   last_transmitted_errno = last_errno;
 
   if (sip.update(&readings.steps, &seq, adxl_step, rtc.getEpoch())) {
+      readings.rawSteps = adxl_step;
       readings.seq = seq;
       readings.solarBatt = getSolarBatteryVoltage();
       readings.nodeBatt = getBatteryVoltage();

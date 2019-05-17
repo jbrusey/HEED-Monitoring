@@ -10,6 +10,7 @@ JsonObject& payload = jsonBuffer.createObject();
 
 struct Packet {
   unsigned long gsmTime;
+  int rawSteps;
   State steps;
   float solarBatt;
   float nodeBatt;
@@ -18,6 +19,8 @@ struct Packet {
 
   void print(SdFile *file){
     file->print(gsmTime);
+    file->print(",");
+    file->print(rawSteps);
     file->print(",");
     file->print(steps.x[0]);
     file->print(",");
@@ -43,6 +46,7 @@ struct Packet {
 
     payload["unixtime"] = gsmTime;
     payload["NODE_ID"] = NODE_ID;
+    payload["rawSteps"] = rawSteps;
     payload["steps"] =  steps.x[0];
     payload["stepsRate"] =  steps.x[1];
     payload["solarBatt"] =  solarBatt;
