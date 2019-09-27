@@ -12,7 +12,8 @@
 const uint32_t LANTERN_SLEEP_TIME = 60;       //the value is number of seconds = 1 min
 
 //SIP THRESHOLDS
-#define HEARTBEAT 86400                         // 1 day in secs
+#define HEARTBEAT 21600                       // 6 hours in secs
+
 #define SIP_STEP_THRESHOLD 10                 // transmit if > 10 steps error
 
 #define ADC_SOLAR_BATTERY A1                  // pin that solar battery is connected to.
@@ -20,7 +21,7 @@ const uint32_t LANTERN_SLEEP_TIME = 60;       //the value is number of seconds =
 #define BATTERY_LOW_VOLTAGE 816               // 816 / 1023 * 3.3 = 2.63V
 
 //GSM
-#define GSM_CONNECT_RETRY_TIME 60000            // How long to retry between gsm connection tries (1min)
+#define GSM_CONNECT_RETRY_TIME 60000          // How long to retry between gsm connection tries (1min)
 
 
 //MQTT
@@ -47,7 +48,7 @@ const uint32_t LANTERN_SLEEP_TIME = 60;       //the value is number of seconds =
 // TODO set threshold values based on data collected and learning - Decision trees or LDA
 const int INTERRUPT_PIN = 5;
 #define FREEFALL_TIME 10                      //// (20 - 70) recommended - 5ms per increment
-#define FREEFALL_THRESH 14                  // 62.5mg per increment   // Set activity   // Activity thresholds (0-255) - Set to 0.7829181 g
+#define FREEFALL_THRESH 14                    // 62.5mg per increment   // Set activity   // Activity thresholds (0-255) - Set to 0.7829181 g
 #define ACTIVITY_THRESH 18                    // 62.5mg per increment   // Set activity   // Activity thresholds (0-255) - Set to 1.16137 g
 
 #define INACTIVITY_INT_ENABLE 0
