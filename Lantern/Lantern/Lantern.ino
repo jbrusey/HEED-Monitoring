@@ -47,6 +47,8 @@ void setup() {
 
   setupAnalogSensors();
   setupADXL345();
+
+  watchdog_setup();
 }
 
 /**

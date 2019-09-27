@@ -1,4 +1,9 @@
 //GLOBALS
+
+//External RTC module
+#include "RTClib.h"
+RTC_DS3231 rtc;
+
 bool first = true;
 Packet readings;
 SIP sip(0.2, 0.2, SIP_STEP_THRESHOLD, HEARTBEAT);
@@ -27,50 +32,29 @@ void doSenseCycle()
 
   dbg("Start Sense " + String(++count));
 
-  bool result_transmit = false;
-  bool result_store = false;
-  bool result_final = false;
-
   // TODO check this code
   if (last_errno != 1) readings.error = last_errno;
   last_transmitted_errno = last_errno;
 
   if (sip.update(&readings.steps, &seq, adxl_step, rtc.getEpoch())) {
+      readings.rtcTime = rtc.now().unixtime();
       readings.rawSteps = adxl_step;
       readings.seq = seq;
       readings.solarBatt = getSolarBatteryVoltage();
       readings.nodeBatt = getBatteryVoltage();
 
-      if (connectGSM()) {
-	if (connectMQTT()) {
-	  readings.gsmTime = getGSMTime();
-	  String JSON = readings.json();
-	  dbg("JSON created : " + JSON);
-	  result_transmit = transmit(MQTT_TOPIC, JSON);
+      if (writeDataToFile(&readings)) {
+        sip.transmitted_ok(seq);
 
-	  disconnectMQTT();
+        // If this was the first successful cycle, turn off the LED
+	if (first) {
+          nodeFunctional();
+          first = false;
 	}
-	disconnectGSM();
+
+	resetErrors();
       }
-
-      if (result_transmit)
-	sip.transmitted_ok(seq);
-
-      result_store = writeDataToFile(&readings);
-
-      result_final = result_transmit && result_store;
-
-      if (result_final)
-	{
-	  // If this was the first successfull cycle, turn off the LED
-	  if (first){
-	    nodeFunctional();
-	    first = false;
-	  }
-
-	  resetErrors();
-	}
-    }
+  }
 
   dbg("End Sense");
 }

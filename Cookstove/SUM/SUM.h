@@ -11,11 +11,11 @@
 
 //SAMPLE PERIOD
 #define RTC_SAMPLE_TIME 25                    // SET RTC alarm off every xth second in a minute
-#define CS_SLEEP_TIME 60000                    //Set the device to sleep mode for a min
-#define CS_LOW_BATTERY_SLEEP 600000            //Set device to sleep for 10 mins - 60000*10
+#define CS_SLEEP_TIME 60000                   // Set the device to sleep mode for a min
+#define CS_LOW_BATTERY_SLEEP 600000           // Set device to sleep for 10 mins - 60000*10
 
 //SIP THRESHOLDS
-#define HEART_LIMIT 1440
+#define HEART_LIMIT 360                       // 6 hours in mins
 
 #define BATTERY_LOW_VOLTAGE 816               // Low battery threshold (3.35 / 4.2 * 1023)
 #define SIP_TEMP_THERMOCOUPLE_THRESH 5        // Temperature threshold (0.5C suggested, set to -1 for sense-and-send)
