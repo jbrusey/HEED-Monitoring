@@ -5,6 +5,10 @@ uint32_t seq = 0;
 bool first = true;
 Data* readings = new Data();
 
+//External RTC module
+#include "RTClib.h"
+RTC_DS3231 rtc;
+
 void resetErrors(){
   /* the error code has been transmitted and so can now be reset.  The
    *  method of resetting used here allows for errors to have occurred
@@ -34,10 +38,6 @@ void doSenseCycle()
 {
   dbg("Start Sense " + String(seq));
 
-  bool result_transmit = false;
-  bool result_store = false;
-  bool result_final = false;
-
   getTemperatureThermocouple(readings);
   getSi7021Data(readings);
 
@@ -46,28 +46,15 @@ void doSenseCycle()
 
   if (hasEvent(readings) || isHeartbeat())
     {
+      dbg("Event detected");
+      readings->unixtime = rtc.now().unixtime();
+      dbg("RTC saved");
       readings->seq = seq;
       getBatteryVoltage(readings);
 
-      if (connectGSM()) {
-	if (connectMQTT()) {
-	  getGSMTime(readings);
-	  String JSON = constructJSON(readings);
-	  dbg("JSON created : " + JSON);
-	  result_transmit = transmit(MQTT_TOPIC, JSON);
-
-	  disconnectMQTT();
-	}
-	disconnectGSM();
-      }
-
-      result_store = writeDataToFile(readings);
-
-      result_final = result_transmit && result_store;
-
-      if (result_final)
+      if (writeDataToFile(readings))
 	{
-	  // If this was the first successfull cycle, turn off the LED
+	  // If this was the first successful cycle, turn off the LED
 	  if (first){
 	    nodeFunctional();
 	    first = false;
