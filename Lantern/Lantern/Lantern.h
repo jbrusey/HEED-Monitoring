@@ -9,7 +9,7 @@
 #define SERIAL_SPEED 9600                     // Serial speed
 #define STARTUP_DELAY 5000                    // How long to delay before the node starts
 
-const uint32_t LANTERN_SLEEP_TIME = 60;       //the value is number of seconds = 1 min
+const uint32_t LANTERN_SLEEP_TIME = 10;       //the value is number of seconds
 
 //SIP THRESHOLDS
 #define HEARTBEAT 21600                       // 6 hours in secs

@@ -15,6 +15,7 @@ void nodeFunctional(){
   }
   //LED turned off if GSM or MQTT fail in the first cycle - So ensure LED is off after nodeFunctional is called!
   digitalWrite(LED_BUILTIN, LOW);
+  watchdog_clear();
 }
 
 void batteryError(){

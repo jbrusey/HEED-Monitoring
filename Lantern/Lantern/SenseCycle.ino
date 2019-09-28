@@ -2,7 +2,7 @@
 
 //External RTC module
 #include "RTClib.h"
-RTC_DS3231 rtc;
+RTC_DS3231 rtc_ext;
 
 bool first = true;
 Packet readings;
@@ -37,7 +37,7 @@ void doSenseCycle()
   last_transmitted_errno = last_errno;
 
   if (sip.update(&readings.steps, &seq, adxl_step, rtc.getEpoch())) {
-    readings.rtcTime = rtc.now().unixtime();
+    readings.rtcTime = rtc_ext.now().unixtime();
     readings.rawSteps = adxl_step;
     readings.seq = seq;
     readings.solarBatt = getSolarBatteryVoltage();
