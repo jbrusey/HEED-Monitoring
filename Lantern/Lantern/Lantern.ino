@@ -42,13 +42,15 @@ void setup() {
     USBDevice.detach();
   #endif
 
+  watchdog_setup();
+
   setupNodeSleep();
   setupSD();
 
   setupAnalogSensors();
   setupADXL345();
 
-  watchdog_setup();
+  watchdog_clear();
 }
 
 /**
