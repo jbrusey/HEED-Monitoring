@@ -1,3 +1,14 @@
+/** @file SDLogger.ino
+ *  @brief Set up SD card and write to file.  
+ *
+ *  This contains the functions to set up the SD card
+ *  connections and write data to file.
+ *  
+ *  @author Kriti Bhargava
+ *  @author James Brusey
+ *  @bug No known bugs.
+ */
+ 
 //Import SD card library and define variables
 #include <SdFat.h>
 SdFat SD;

@@ -1,4 +1,13 @@
-
+/** @file Lantern.ino
+ *  @brief Implement setup and loop routines.  
+ *
+ *  This contains the functions for setup and loop.
+ *
+ *  @author Kriti Bhargava
+ *  @author James Brusey
+ *  @bug No known bugs.
+ */
+ 
 #include <ArduinoJson.h>
 #include "Lantern.h" // Header file with consts/config
 #include "struct.h" // Header file with data struct fetched in sense cycle

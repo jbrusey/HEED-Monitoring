@@ -1,3 +1,14 @@
+/** @file SenseCycle.ino
+ *  @brief Sense, process and write eventful data to file.  
+ *  
+ *  This contains the function for periodic sensing, 
+ *  processing and logging of data.
+ *  
+ *  @author Kriti Bhargava
+ *  @author James Brusey
+ *  @bug No known bugs.
+ */
+ 
 #include "HeartBeat.h"
 #include "Transmit.h"
 //GLOBALS

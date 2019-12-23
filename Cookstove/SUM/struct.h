@@ -1,3 +1,12 @@
+/** @file struct.h
+ *  @brief This contains the packet structure and 
+ *  function to print data to file. 
+ *  
+ *  @author Kriti Bhargava
+ *  @author James Brusey
+ *  @bug No known bugs.
+ */
+ 
 #include <SdFat.h>
 
 struct Data {
@@ -26,4 +35,3 @@ struct Data {
   }
 
 };
-

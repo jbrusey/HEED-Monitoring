@@ -1,7 +1,12 @@
-/**
- * Constructs a data string from the sensed values
- * @param pointer to a data struct
- * @return A string of all the sensor values as a csv
+/** @file JSON.ino
+ *  @brief Create a data string with payload.  
+ *
+ *  This contains the function to create a data string
+ *  and assign sensor values to payload.
+ *  
+ *  @author Kriti Bhargava
+ *  @author James Brusey
+ *  @bug No known bugs.
  */
 
 //Create JSON buffer and object
@@ -9,6 +14,11 @@ const size_t bufferSize = JSON_OBJECT_SIZE(NUM_JSON_FIELDS);
 DynamicJsonBuffer jsonBuffer(bufferSize);
 JsonObject& payload = jsonBuffer.createObject();
 
+/**
+ * Constructs a data string from the sensed values
+ * @param pointer to a data struct
+ * @return A string of all the sensor values as a csv
+ */
 String constructJSON(Data* reading)
 {
   dbg("JSON constructing...");
@@ -26,4 +36,3 @@ String constructJSON(Data* reading)
   payload.printTo(dataString);
   return dataString;
 }
-

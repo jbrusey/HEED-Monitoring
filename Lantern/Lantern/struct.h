@@ -1,3 +1,12 @@
+/** @file struct.h
+ *  @brief This contains the packet structure and 
+ *  function to print data to file. 
+ *  
+ *  @author Kriti Bhargava
+ *  @author James Brusey
+ *  @bug No known bugs.
+ */
+ 
 #pragma once
 #include <SdFat.h>
 #include "sip.h"

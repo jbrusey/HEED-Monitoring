@@ -1,9 +1,19 @@
-//GLOBALS
-
+/** @file SenseCycle.ino
+ *  @brief Sense, process and write eventful data to file.  
+ *  
+ *  This contains the function for checking SIP updates based
+ *  on step count, sensing voltage and logging of data.
+ *  
+ *  @author Kriti Bhargava
+ *  @author James Brusey
+ *  @bug No known bugs.
+ */
+ 
 //External RTC module
 #include "RTClib.h"
 RTC_DS3231 rtc_ext;
 
+//GLOBALS
 bool first = true;
 Packet readings;
 SIP sip(0.2, 0.2, SIP_STEP_THRESHOLD, HEARTBEAT);

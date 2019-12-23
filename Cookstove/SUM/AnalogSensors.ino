@@ -1,3 +1,14 @@
+/** @file AnalogSensors.ino
+ *  @brief Initialise sensors and get data.  
+ *
+ *  This contains the functions to set up,  
+ *  power/unpower and get data from sensors.
+ *  
+ *  @author Kriti Bhargava
+ *  @author James Brusey
+ *  @bug No known bugs.
+ */
+
 //Include 1-wire and thermocouple libraries
 #include <OneWire.h>
 #include <DallasTemperature.h>

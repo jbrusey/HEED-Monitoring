@@ -1,3 +1,13 @@
+/** @file Alerts.ino
+ *  @brief Alerts created by a functional node.  
+ *
+ *  This contains the functions to detect 
+ *  and report errors.
+ *  
+ *  @author Kriti Bhargava
+ *  @author James Brusey
+ *  @bug No known bugs.
+ */
 
 /**
  * Turn the LED off when a

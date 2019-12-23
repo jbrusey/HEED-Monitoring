@@ -1,3 +1,12 @@
+/** @file Credentials_template.h
+ *  @brief This contains the template to define macros 
+ *  needed for GPRS and MQTT connections.
+ *  
+ *  @author Kriti Bhargava
+ *  @author James Brusey
+ *  @bug No known bugs.
+ */
+ 
 //CREDENTIALS - SIM
 #define SECRET_PINNUMBER     ""               // SIM Pin number
 #define SECRET_GPRS_APN      "giffgaff.com"               // replace GPRS APN

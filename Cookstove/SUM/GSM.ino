@@ -1,3 +1,14 @@
+/** @file GSM.ino
+ *  @brief Connect and disconnect to GSM.  
+ *
+ *  This contains the functions to connect and disconnect 
+ *  from GSM and collect timestamp values.
+ *  
+ *  @author Kriti Bhargava
+ *  @author James Brusey
+ *  @bug No known bugs.
+ */
+
 //Include GSM library
 #include <MKRGSM.h>
 

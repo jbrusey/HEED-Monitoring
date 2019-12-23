@@ -1,4 +1,16 @@
+/** @file SUM.ino
+ *  @brief Implement setup and loop routines.  
+ *
+ *  This contains the functions for setup and loop.
+ *
+ *  @author Kriti Bhargava
+ *  @author James Brusey
+ *  @bug No known bugs.
+ */
+
 //Production code on Github with pullup resistors
+
+brief description of the file, function names, author, date of creation and history to record modifications
 
 #include <ArduinoJson.h>
 #include "SUM.h" // Header file with consts/config

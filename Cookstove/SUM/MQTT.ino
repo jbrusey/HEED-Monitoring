@@ -1,3 +1,14 @@
+/** @file MQTT.ino
+ *  @brief Connect and disconnect to MQTT.  
+ *
+ *  This contains the functions to connect and disconnect 
+ *  to MQTT service and transmit packets.
+ *  
+ *  @author Kriti Bhargava
+ *  @author James Brusey
+ *  @bug No known bugs.
+ */
+ 
 //Include MQTT library
 #include <MQTT.h>
 MQTTClient client(MQTT_JSON_BUFFER);

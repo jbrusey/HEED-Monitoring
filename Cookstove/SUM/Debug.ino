@@ -1,3 +1,14 @@
+/** @file Debug.ino
+ *  @brief Start serial to print messages in debug mode.  
+ *
+ *  This contains the functions to connect the serial
+ *  port and print messages in debug mode.
+ *  
+ *  @author Kriti Bhargava
+ *  @author James Brusey
+ *  @bug No known bugs.
+ */
+ 
 /**
  * Starts the USB serial connection
  */
@@ -22,6 +33,3 @@ void _PRINT_TIME(String msg) {
   sprintf(formattedtime, "%09lu", localtime);
   SerialUSB.println(String(formattedtime) + ": " + msg);
 }
-
-
-

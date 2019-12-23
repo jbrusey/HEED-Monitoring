@@ -1,3 +1,11 @@
+/** @file Transmit.h
+ *  @brief Declare GSM and MQTT functions. 
+ *  
+ *  @author Kriti Bhargava
+ *  @author James Brusey
+ *  @bug No known bugs.
+ */
+ 
 #pragma once
 
 bool connectMQTT(void);

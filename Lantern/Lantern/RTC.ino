@@ -1,3 +1,14 @@
+/** @file RTC.ino
+ *  @brief Implement sleep functions for low power mode.  
+ *
+ *  This contains the functions to set up and set the node 
+ *  in low power mode, and setup and clear watchdog timer.
+ *  
+ *  @author Kriti Bhargava
+ *  @author James Brusey
+ *  @bug No known bugs.
+ */
+ 
 //Include the RTC Libraries
 #include "ArduinoLowPower.h"
 

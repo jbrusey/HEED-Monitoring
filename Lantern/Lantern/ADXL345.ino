@@ -1,3 +1,14 @@
+/** @file ADXL345.ino
+ *  @brief Initialise ADXL345 sensor.  
+ *
+ *  This contains the functions to configure and set up  
+ *  the ADXL interrupt routine and estimate step count.
+ *  
+ *  @author Kriti Bhargava
+ *  @author James Brusey
+ *  @bug No known bugs.
+ */
+ 
 #include "ArduinoLowPower.h"
 
 //ADXL345 LIBRARY

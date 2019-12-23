@@ -1,3 +1,14 @@
+/** @file AnalogSensors.ino
+ *  @brief Initialise sensors and get data.  
+ *
+ *  This contains the functions to set up  
+ *  and get voltage data from analog sensors.
+ *  
+ *  @author Kriti Bhargava
+ *  @author James Brusey
+ *  @bug No known bugs.
+ */
+ 
 /**
  * Setups the Analog sensors
  * 1. Sets the reference voltage

@@ -1,3 +1,11 @@
+/** @file SUM.h
+ *  @brief This contains the global variables needed.  
+ *  
+ *  @author Kriti Bhargava
+ *  @author James Brusey
+ *  @bug No known bugs.
+ */
+ 
 #pragma once
 #include "Credentials.h"                      // Header file with MQTT server and SIM credentials. Look below for sample.
 

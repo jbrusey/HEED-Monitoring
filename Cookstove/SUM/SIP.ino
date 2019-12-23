@@ -1,3 +1,14 @@
+/** @file SIP.ino
+ *  @brief Threshold-based event detection.  
+ *
+ *  This contains the functions to check for events
+ *  and update local copy of sink state.
+ *  
+ *  @author Kriti Bhargava
+ *  @author James Brusey
+ *  @bug No known bugs.
+ */
+ 
 //GLOBALS
 //TODO: remove these global vars and replace with appropriate array
 float prev_temp_thermocouple = -1;
@@ -45,4 +56,3 @@ void updateState(Data* readings)
   prev_temp_Si7021 = readings->tempSi7021;
   prev_humidity = readings->humidity;
 }
-
